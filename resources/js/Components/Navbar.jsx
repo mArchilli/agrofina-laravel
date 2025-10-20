@@ -1,55 +1,224 @@
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function Navbar({ variant = 'client' }) {
-    const { auth } = usePage().props;
+    const { auth, ziggy } = usePage().props;
     const isAdmin = !!auth?.user;
+    const [scrolled, setScrolled] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 4);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    // Bloquear scroll del body cuando el menú móvil está abierto
+    useEffect(() => {
+        if (!open) return;
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = prev;
+        };
+    }, [open]);
+
+    const linkBase = 'px-2 py-1 rounded-md transition-colors text-white/90 hover:text-white hover:bg-white/10';
+
+    const isCurrent = (nameOrPath) => {
+        try {
+            // Si es nombre de ruta de Ziggy
+            if (typeof nameOrPath === 'string' && nameOrPath.includes('.')) {
+                // route().current sólo disponible globalmente si Ziggy está presente
+                // fallback a comparar pathname
+                // eslint-disable-next-line no-undef
+                if (typeof route === 'function' && route().current) return route().current(nameOrPath);
+            }
+        } catch {}
+        // Si es path, comparar con location.pathname
+        if (typeof window !== 'undefined' && nameOrPath?.startsWith('/')) {
+            return window.location.pathname === nameOrPath;
+        }
+        return false;
+    };
+
+    const clientLinks = [
+        { label: 'Inicio', href: '/' },
+        { label: 'Servicio Técnico', href: route('servicio-tecnico') },
+        { label: 'Red Comercial', href: route('red-comercial') },
+        { label: 'I+D', href: route('i-d') },
+        { label: 'Planta de Producción', href: route('planta-produccion') },
+        { label: 'Contacto', href: route('contacto') },
+    ];
+
+    const adminLinks = [
+        { label: 'Dashboard', href: route('dashboard') },
+    ];
+
+    const links = variant === 'client' ? clientLinks : adminLinks;
 
     return (
-        <nav className="border-b border-gray-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-            <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center gap-6">
-                    <Link href="/" className="text-lg font-semibold text-gray-800">
-                        Agrofina
-                    </Link>
-                    <div className="hidden gap-4 sm:flex">
-                        {variant === 'client' ? (
-                            <>
-                                <Link href={route('i-d')} className="text-sm text-gray-600 hover:text-gray-900">I+D</Link>
-                                <Link href={route('servicio-tecnico')} className="text-sm text-gray-600 hover:text-gray-900">Servicio Técnico</Link>
-                                <Link href={route('red-comercial')} className="text-sm text-gray-600 hover:text-gray-900">Red Comercial</Link>
-                                <Link href={route('planta-produccion')} className="text-sm text-gray-600 hover:text-gray-900">Planta de Producción</Link>
-                                <Link href={route('contacto')} className="text-sm text-gray-600 hover:text-gray-900">Contacto</Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link href={route('dashboard')} className="text-sm text-gray-600 hover:text-gray-900">Dashboard</Link>
-                            </>
-                        )}
-                    </div>
-                </div>
+        <header
+            data-scrolled={scrolled && !open}
+            className="fixed inset-x-0 top-0 z-[999999] w-full border-b border-transparent bg-transparent text-white transition-colors duration-300 data-[scrolled=true]:bg-emerald-600/85 data-[scrolled=true]:border-emerald-700 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm group"
+        >
+            <div className="mx-auto max-w-6xl h-16 px-4 flex items-center justify-between">
+                <Link href="/" className="flex items-center gap-2" aria-label="Ir al inicio">
+                    <img
+                        src="/images/logo-agrofina.png"
+                        alt="Agrofina"
+                        className="h-10 md:h-11 w-auto select-none drop-shadow-md transition"
+                        draggable="false"
+                    />
+                </Link>
 
-                <div className="flex items-center gap-3">
+                {/* Navegación desktop */}
+                <nav className="hidden md:flex items-center gap-1 text-sm">
+                    {links.map((item) => (
+                        <Link
+                            key={item.label}
+                            href={item.href}
+                            className={`${linkBase} ${isCurrent(item.href) ? 'text-white font-medium bg-white/10' : ''}`}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                </nav>
+
+                {/* Botones auth (opcional) */}
+                <div className="hidden md:flex items-center gap-3">
                     {variant === 'client' && !isAdmin && (
                         <>
                             <Link
                                 href={route('login')}
-                                className="rounded px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+                                className="rounded-md border border-white/30 bg-white/10 px-3 py-1.5 text-sm text-white hover:bg-white/15"
                             >
                                 Ingresar
                             </Link>
                             <Link
                                 href={route('register')}
-                                className="rounded bg-indigo-600 px-3 py-1.5 text-sm text-white hover:bg-indigo-500"
+                                className="rounded-md bg-white px-3 py-1.5 text-sm font-medium text-emerald-700 hover:bg-emerald-50"
                             >
                                 Crear cuenta
                             </Link>
                         </>
                     )}
                     {variant === 'admin' && isAdmin && (
-                        <span className="text-sm text-gray-600">{auth.user.name}</span>
+                        <span className="text-sm text-white/90">{auth.user.name}</span>
                     )}
                 </div>
+
+                {/* Botón hamburguesa (mobile) */}
+                <button
+                    type="button"
+                    aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+                    aria-controls="mobile-menu"
+                    aria-expanded={open}
+                    onClick={() => setOpen((v) => !v)}
+                    className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/10 hover:bg-white/15 text-white/90"
+                >
+                    <span className="sr-only">Toggle menu</span>
+                    <span className="relative block h-4 w-5" aria-hidden>
+                        <span className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition-transform ${open ? 'translate-y-1.5 rotate-45' : ''}`} />
+                        <span className={`absolute left-0 top-1.5 h-0.5 w-5 bg-current transition-opacity ${open ? 'opacity-0' : 'opacity-100'}`} />
+                        <span className={`absolute left-0 top-3 h-0.5 w-5 bg-current transition-transform ${open ? '-translate-y-1.5 -rotate-45' : ''}`} />
+                    </span>
+                </button>
             </div>
-        </nav>
+
+            {/* Overlay móvil a pantalla completa (portal fuera del header) */}
+            {createPortal(
+                <div
+                    id="mobile-menu"
+                    className={`fixed inset-0 z-[1000000] bg-emerald-600 text-white transition-[opacity,transform] duration-300 ease-out ${open ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'}`}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-hidden={!open}
+                    onClick={() => setOpen(false)}
+                >
+                    <div className="mx-auto max-w-6xl px-4 pt-6 pb-10 h-full flex flex-col" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-between">
+                            <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
+                                <img
+                                    src="/images/logo-agrofina.png"
+                                    alt="Agrofina"
+                                    className="h-10 w-auto select-none drop-shadow-md"
+                                    draggable="false"
+                                />
+                            </Link>
+                            <button
+                                type="button"
+                                aria-label="Cerrar menú"
+                                onClick={() => setOpen(false)}
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/10 hover:bg-white/15"
+                            >
+                                <span className="sr-only">Cerrar menú</span>
+                                <span className="relative block h-4 w-5" aria-hidden>
+                                    <span className="absolute left-0 top-1.5 block h-0.5 w-5 bg-white rotate-45" />
+                                    <span className="absolute left-0 top-1.5 block h-0.5 w-5 bg-white -rotate-45" />
+                                </span>
+                            </button>
+                        </div>
+
+                        <nav className="mt-10 grid gap-2 text-lg">
+                            {links.map((item) => (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    onClick={() => setOpen(false)}
+                                    className={`block rounded-lg px-4 py-3 font-medium ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10'}`}
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
+                        </nav>
+
+                        {/* Footer del menú móvil: Redes + © anclados abajo */}
+                        <div className="mt-auto px-4">
+                            <div className="text-white/80 text-sm mb-2">Seguinos</div>
+                            <div className="flex items-center gap-3">
+                                <a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                                        <path d="M8.25 10.5v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <circle cx="8.25" cy="7.75" r="1.25" fill="currentColor" />
+                                        <path d="M12 16.5v-3.6c0-1.325 1.075-2.4 2.4-2.4h0c1.325 0 2.4 1.075 2.4 2.4v3.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/agrofinaoficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
+                                        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
+                                        <circle cx="17" cy="7" r="1" fill="currentColor" />
+                                    </svg>
+                                </a>
+                                <a href="https://www.youtube.com/watch?v=YBaXGmzZL60" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="7" width="18" height="10" rx="3" stroke="currentColor" strokeWidth="1.5" />
+                                        <path d="M11 10v4l4-2-4-2z" fill="currentColor" />
+                                    </svg>
+                                </a>
+                                <a href="https://www.facebook.com/AgrofinaArgentina" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2L16 11h-3V9a1 1 0 0 1 1-1Z" fill="currentColor" />
+                                    </svg>
+                                </a>
+                                <a href="https://x.com/Agrofinatec" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 4l7.5 9.2L6 20h2.6l4.2-4.9L16.8 20H20l-7.6-9.3L18 4h-2.6l-4 4.7L8 4H4z" fill="currentColor" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <div className="text-white/80 text-sm mt-6">
+                                <p>© {new Date().getFullYear()} Agrofina</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
+        </header>
     );
 }
