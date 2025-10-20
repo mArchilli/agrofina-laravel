@@ -48,9 +48,9 @@ export default function ServicioTecnico() {
 
 function Hero() {
   return (
-    <section className="relative w-full overflow-hidden" aria-label="Imagen principal - Desarrollo y Servicio Técnico">
+    <section className="relative w-full overflow-hidden h-[46vh] md:h-screen" aria-label="Imagen principal - Desarrollo y Servicio Técnico">
       <div
-        className="h-[46vh] md:h-[58vh] w-full bg-cover bg-center"
+        className="h-[46vh] md:h-screen w-full bg-cover bg-center"
   style={{ backgroundImage: `url(${bannerImg})` }}
         aria-hidden
       />

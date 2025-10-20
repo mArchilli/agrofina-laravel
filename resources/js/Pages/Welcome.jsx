@@ -40,7 +40,7 @@ function Hero() {
 
             {/* Headline content */}
             <div className="absolute inset-0 z-10">
-                <div className="mx-auto max-w-6xl h-full px-4">
+                <div className="mx-auto max-w-7xl h-full px-4">
                     <div className="flex h-full items-end">
                         <div className="pb-6 md:pb-8 lg:pb-10">
                             <p className="text-lime-300/90 font-medium tracking-wide">Innovación y tecnología propia</p>

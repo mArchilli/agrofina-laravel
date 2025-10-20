@@ -40,9 +40,9 @@ export default function IplusD() {
 
 function Hero({ heroImg }) {
   return (
-    <section className="relative w-full overflow-hidden" aria-label="Imagen principal - Investigación y Desarrollo">
+    <section className="relative w-full overflow-hidden h-[46vh] md:h-screen" aria-label="Imagen principal - Investigación y Desarrollo">
       <div
-        className={`h-[36vh] md:h-[46vh] w-full ${heroImg ? '' : 'bg-gradient-to-br from-emerald-700 via-emerald-600 to-lime-600'}`}
+        className={`h-[36vh] md:h-screen w-full ${heroImg ? '' : 'bg-gradient-to-br from-emerald-700 via-emerald-600 to-lime-600'}`}
         style={heroImg ? { backgroundImage: `url(${heroImg})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
         aria-hidden
       />
