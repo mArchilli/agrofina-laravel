@@ -3,7 +3,8 @@ import { createPortal } from 'react-dom';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function Navbar({ variant = 'client' }) {
-    const { auth, ziggy } = usePage().props;
+    const page = usePage();
+    const { auth, ziggy } = page.props;
     const isAdmin = !!auth?.user;
     const [scrolled, setScrolled] = useState(false);
     const [open, setOpen] = useState(false);
@@ -27,21 +28,18 @@ export default function Navbar({ variant = 'client' }) {
 
     const linkBase = 'px-2 py-1 rounded-md transition-colors text-white/90 hover:text-white hover:bg-white/10';
 
-    const isCurrent = (nameOrPath) => {
-        try {
-            // Si es nombre de ruta de Ziggy
-            if (typeof nameOrPath === 'string' && nameOrPath.includes('.')) {
-                // route().current sólo disponible globalmente si Ziggy está presente
-                // fallback a comparar pathname
-                // eslint-disable-next-line no-undef
-                if (typeof route === 'function' && route().current) return route().current(nameOrPath);
-            }
-        } catch {}
-        // Si es path, comparar con location.pathname
-        if (typeof window !== 'undefined' && nameOrPath?.startsWith('/')) {
-            return window.location.pathname === nameOrPath;
-        }
-        return false;
+    const isCurrent = (href) => {
+        // Extraer el path de la URL (sin query params)
+        const getPath = (url) => {
+            if (!url) return '';
+            const urlObj = new URL(url, window.location.origin);
+            return urlObj.pathname;
+        };
+        
+        const currentPath = getPath(window.location.href);
+        const hrefPath = getPath(href);
+        
+        return currentPath === hrefPath;
     };
 
     const clientLinks = [
