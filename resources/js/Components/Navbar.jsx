@@ -83,15 +83,15 @@ export default function Navbar({ variant = 'client' }) {
                 </Link>
 
                 {/* Derecha: ENG + Hamburguesa */}
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                     {/* ENG como enlace SVG, sin fondo */}
                     <Link
                         href={route('eng')}
                         aria-label="Cambiar idioma a inglés"
-                        className="inline-flex h-12 w-12 items-center justify-center text-white/90 hover:text-white"
+                        className="inline-flex h-14 w-14 items-center justify-center text-white/90 hover:text-white"
                     >
-                        <svg viewBox="0 0 24 24" className="h-5 w-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                            <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="currentColor" fontSize="12" fontFamily="inherit">ENG</text>
+                        <svg viewBox="0 0 180 100" className="h-[27px] w-[48px]" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                            <text x="90" y="68" textAnchor="middle" fill="currentColor" font-size="80" font-family="sans-serif" font-weight="bold">ENG</text>
                         </svg>
                     </Link>
 
@@ -102,13 +102,13 @@ export default function Navbar({ variant = 'client' }) {
                         aria-controls="menu"
                         aria-expanded={open}
                         onClick={() => setOpen((v) => !v)}
-                        className="inline-flex h-12 w-12 items-center justify-center text-white/90 hover:text-white"
+                        className="inline-flex h-14 w-14 items-center justify-center text-white/90 hover:text-white"
                     >
                         <span className="sr-only">Toggle menu</span>
-                        <span className="relative block h-5 w-6" aria-hidden>
-                            <span className={`absolute left-0 top-0 h-0.5 w-6 bg-current transition-transform ${open ? 'translate-y-2 rotate-45' : ''}`} />
-                            <span className={`absolute left-0 top-2 h-0.5 w-6 bg-current transition-opacity ${open ? 'opacity-0' : 'opacity-100'}`} />
-                            <span className={`absolute left-0 top-4 h-0.5 w-6 bg-current transition-transform ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+                        <span className="relative block h-[27px] w-8" aria-hidden>
+                            <span className={`absolute left-0 top-0 h-[3px] w-[25px] bg-current transition-transform ${open ? 'translate-y-[9px] rotate-45' : ''}`} />
+                            <span className={`absolute left-0 top-[9px] h-[3px] w-[25px] bg-current transition-opacity ${open ? 'opacity-0' : 'opacity-100'}`} />
+                            <span className={`absolute left-0 top-[18px] h-[3px] w-[25px] bg-current transition-transform ${open ? '-translate-y-[9px] -rotate-45' : ''}`} />
                         </span>
                     </button>
                 </div>
