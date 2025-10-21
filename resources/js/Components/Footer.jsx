@@ -1,13 +1,15 @@
 
 import { Link } from '@inertiajs/react';
 
-const navLinks = [
+const leftLinks = [
   { label: 'Inicio', href: '/' },
   { label: 'Servicio Técnico', href: route('servicio-tecnico') },
   { label: 'Red Comercial', href: route('red-comercial') },
   { label: 'I+D', href: route('i-d') },
   { label: 'Planta de Producción', href: route('planta-produccion') },
   { label: 'Contacto', href: route('contacto') },
+];
+const rightLinks = [
   { label: 'Institucional', href: route('institucional') },
   { label: 'Políticas', href: route('politicas') },
   { label: 'Novedades', href: route('novedades') },
@@ -22,18 +24,23 @@ export default function Footer() {
       {/* Mini sección de navegación */}
       <div className="w-full bg-emerald-800/95 text-emerald-50 border-t border-emerald-700 flex justify-center">
         <div className="mx-auto max-w-6xl w-full px-2 py-2 flex flex-col items-center">
-          <div className="font-bold tracking-wide text-base mb-1 text-center">NAVEGACIÓN</div>
-          <div className="w-full flex flex-row flex-nowrap items-center justify-center gap-1 overflow-x-auto">
-            {navLinks.map((link, idx) => (
-              <>
-                <Link key={link.label} href={link.href} className="text-emerald-50/90 hover:text-white px-1 py-0.5 rounded transition-colors text-xs font-medium whitespace-nowrap">
+          <div className="font-bold tracking-wide text-base mb-1 w-full text-center">NAVEGACIÓN</div>
+          <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-2">
+            <nav className="flex flex-row flex-wrap justify-center gap-2">
+              {leftLinks.map(link => (
+                <Link key={link.label} href={link.href} className="text-emerald-50/90 hover:text-white px-2 py-1 rounded transition-colors text-sm font-medium whitespace-nowrap">
                   {link.label}
                 </Link>
-                {link.label === 'Contacto' && (
-                  <span className="inline-block h-4 w-px bg-emerald-50 mx-2 align-middle" />
-                )}
-              </>
-            ))}
+              ))}
+            </nav>
+            <span className="inline-block bg-emerald-50 mx-2 sm:my-0 my-2 h-px w-20 sm:h-7 sm:w-px" />
+            <nav className="flex flex-row flex-wrap justify-center gap-2">
+              {rightLinks.map(link => (
+                <Link key={link.label} href={link.href} className="text-emerald-50/90 hover:text-white px-2 py-1 rounded transition-colors text-sm font-medium whitespace-nowrap">
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
           </div>
         </div>
       </div>
