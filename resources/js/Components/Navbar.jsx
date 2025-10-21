@@ -59,7 +59,6 @@ export default function Navbar({ variant = 'client' }) {
         { label: 'AgroNews', href: route('agro-news') },
         { label: 'Trabajá con nosotros', href: route('trabaja') },
         { label: 'Proveedores', href: route('proveedores') },
-        { label: 'Contacto', href: route('contacto') },
     ];
 
     const adminLinks = [
@@ -198,41 +197,82 @@ export default function Navbar({ variant = 'client' }) {
                                 </button>
                             </div>
 
-                            <div className="mt-10 grid grid-cols-1 md:grid-cols-[1fr_2px_1fr] gap-6 md:gap-10 items-start">
-                                {/* Columna izquierda (existente) */}
-                                <nav className="grid gap-2 text-lg">
-                                    {links.map((item) => (
-                                        <Link
-                                            key={item.label}
-                                            href={item.href}
-                                            onClick={() => setOpen(false)}
-                                            className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    ))}
-                                </nav>
+                            <div className="mt-10">
+                                {/* Mobile: columnas apiladas */}
+                                <div className="md:hidden grid gap-6">
+                                    {/* Columna izquierda (mobile) */}
+                                    <nav className="grid gap-2 text-lg">
+                                        {links.map((item) => (
+                                            <Link
+                                                key={item.label}
+                                                href={item.href}
+                                                onClick={() => setOpen(false)}
+                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        ))}
+                                    </nav>
 
-                                {/* Divisor vertical */}
-                                <div className="hidden md:block w-[2px] h-full bg-[#5FC48D] rounded-full opacity-90" aria-hidden />
+                                    {/* Divisor horizontal mobile (entre contacto e institucional) */}
+                                    <div className="w-full h-[2px] bg-[#5FC48D] rounded-full opacity-90" aria-hidden />
 
-                                {/* Columna derecha (nueva) */}
-                                <nav className="grid gap-2 text-lg">
-                                    {extraLinks.map((item) => (
-                                        <Link
-                                            key={item.label}
-                                            href={item.href}
-                                            onClick={() => setOpen(false)}
-                                            className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    ))}
-                                </nav>
+                                    {/* Columna derecha (mobile) */}
+                                    <nav className="grid gap-2 text-lg">
+                                        {extraLinks.map((item) => (
+                                            <Link
+                                                key={item.label}
+                                                href={item.href}
+                                                onClick={() => setOpen(false)}
+                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        ))}
+                                    </nav>
+                                </div>
+
+                                {/* Desktop: columnas lado a lado */}
+                                <div className="hidden md:grid grid-cols-[1fr_2px_1fr] gap-6 md:gap-10 items-start">
+                                    {/* Columna izquierda (desktop) */}
+                                    <nav className="grid gap-2 text-lg">
+                                        {links.map((item) => (
+                                            <Link
+                                                key={item.label}
+                                                href={item.href}
+                                                onClick={() => setOpen(false)}
+                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        ))}
+                                    </nav>
+
+                                    {/* Divisor vertical (desktop) */}
+                                    <div className="w-[2px] h-full bg-[#5FC48D] rounded-full opacity-90" aria-hidden />
+
+                                    {/* Columna derecha (desktop) */}
+                                    <nav className="grid gap-2 text-lg">
+                                        {extraLinks.map((item) => (
+                                            <Link
+                                                key={item.label}
+                                                href={item.href}
+                                                onClick={() => setOpen(false)}
+                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        ))}
+                                    </nav>
+                                </div>
                             </div>
+
+                            {/* Divisor horizontal mobile (entre proveedores y redes) */}
+                            <div className="md:hidden w-full h-[2px] bg-[#5FC48D] rounded-full opacity-90 mb-6 mt-6" aria-hidden />
 
                             {/* Footer del menú: Redes + © anclados abajo */}
                             <div className="mt-auto px-4">
+                                
                                 <div className="text-white/80 text-sm mb-2">Seguinos</div>
                                 <div className="flex items-center gap-3">
                                     <a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
