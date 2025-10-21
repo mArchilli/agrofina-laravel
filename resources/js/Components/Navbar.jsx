@@ -198,7 +198,7 @@ export default function Navbar({ variant = 'client' }) {
                                                 key={item.label}
                                                 href={item.href}
                                                 onClick={() => setOpen(false)}
-                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10'}`}
                                             >
                                                 {item.label}
                                             </Link>
@@ -215,7 +215,7 @@ export default function Navbar({ variant = 'client' }) {
                                                 key={item.label}
                                                 href={item.href}
                                                 onClick={() => setOpen(false)}
-                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10'}`}
                                             >
                                                 {item.label}
                                             </Link>
