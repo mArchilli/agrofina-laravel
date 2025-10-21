@@ -24,10 +24,15 @@ export default function Footer() {
         <div className="mx-auto max-w-6xl w-full px-2 py-2 flex flex-col items-center">
           <div className="font-bold tracking-wide text-base mb-1 text-center">NAVEGACIÓN</div>
           <div className="w-full flex flex-row flex-nowrap items-center justify-center gap-1 overflow-x-auto">
-            {navLinks.map(link => (
-              <Link key={link.label} href={link.href} className="text-emerald-50/90 hover:text-white px-1 py-0.5 rounded transition-colors text-xs font-medium whitespace-nowrap">
-                {link.label}
-              </Link>
+            {navLinks.map((link, idx) => (
+              <>
+                <Link key={link.label} href={link.href} className="text-emerald-50/90 hover:text-white px-1 py-0.5 rounded transition-colors text-xs font-medium whitespace-nowrap">
+                  {link.label}
+                </Link>
+                {link.label === 'Contacto' && (
+                  <span className="inline-block h-4 w-px bg-emerald-50 mx-2 align-middle" />
+                )}
+              </>
             ))}
           </div>
         </div>
