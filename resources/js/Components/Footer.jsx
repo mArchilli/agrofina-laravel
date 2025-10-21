@@ -22,7 +22,7 @@ export default function Footer() {
   return (
     <>
       {/* Mini sección de navegación */}
-      <div className="w-full bg-emerald-800/95 text-emerald-50 border-t border-emerald-700 flex justify-center">
+      {/* <div className="w-full bg-emerald-800/95 text-emerald-50 border-t border-emerald-700 flex justify-center">
         <div className="mx-auto max-w-6xl w-full px-2 py-2 flex flex-col items-center">
           <div className="font-bold tracking-wide text-base mb-1 w-full text-center">NAVEGACIÓN</div>
           <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-2">
@@ -43,10 +43,10 @@ export default function Footer() {
             </nav>
           </div>
         </div>
-      </div>
+      </div> */}
       <footer className="w-full bg-emerald-900 text-emerald-50">
         <div className="mx-auto max-w-6xl px-4 py-20">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <div className="text-lg font-semibold">Agrofina</div>
             <p className="mt-2 text-emerald-100/80 text-sm">
@@ -54,19 +54,35 @@ export default function Footer() {
             </p>
           </div>
           <div>
+            <div className="font-medium">Navegación</div>
+            <ul className="mt-3 space-y-1 text-sm text-emerald-100/90">
+              {leftLinks.map(link => (
+                <li key={link.label}>
+                  <Link href={link.href} className="hover:text-emerald-50 transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div className="font-medium">Empresa</div>
+            <ul className="mt-3 space-y-1 text-sm text-emerald-100/90">
+              {rightLinks.map(link => (
+                <li key={link.label}>
+                  <Link href={link.href} className="hover:text-emerald-50 transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
             <div className="font-medium">Contacto</div>
             <ul className="mt-3 space-y-1 text-sm text-emerald-100/90">
               <li>Argentina</li>
               <li>+54 11 4837 7800</li>
               <li>info@agrofina.com.ar</li>
-            </ul>
-          </div>
-          <div>
-            <div className="font-medium">Productos</div>
-            <ul className="mt-3 space-y-1 text-sm text-emerald-100/90">
-              <li>Herbicidas</li>
-              <li>Fungicidas</li>
-              <li>Insecticidas</li>
             </ul>
           </div>
           <div>
