@@ -61,6 +61,9 @@ Route::get('/proveedores', function () {
     return Inertia::render('Proveedores');
 })->name('proveedores');
 
+// ENG (solo creación, sin estilos)
+Route::get('/eng', fn() => Inertia::render('Eng'))->name('eng');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

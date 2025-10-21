@@ -82,75 +82,36 @@ export default function Navbar({ variant = 'client' }) {
                     />
                 </Link>
 
-                {/* Navegación desktop */}
-                <nav className="hidden md:flex items-center gap-1 text-sm">
-                    {links.map((item) => (
-                        <Link
-                            key={item.label}
-                            href={item.href}
-                            className={`${linkBase} ${isCurrent(item.href) ? 'text-white font-medium bg-white/10' : ''}`}
-                        >
-                            {item.label}
-                        </Link>
-                    ))}
-                </nav>
+                {/* Derecha: ENG + Hamburguesa */}
+                <div className="flex items-center gap-1">
+                    {/* ENG como enlace SVG, sin fondo */}
+                    <Link
+                        href={route('eng')}
+                        aria-label="Cambiar idioma a inglés"
+                        className="inline-flex h-12 w-12 items-center justify-center text-white/90 hover:text-white"
+                    >
+                        <svg viewBox="0 0 24 24" className="h-5 w-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                            <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="currentColor" fontSize="12" fontFamily="inherit">ENG</text>
+                        </svg>
+                    </Link>
 
-                {/* Botones auth (opcional) */}
-                <div className="hidden md:flex items-center gap-3">
-                    {variant === 'client' && !isAdmin && (
-                        <>
-                            <Link
-                                href={route('login')}
-                                className="rounded-md border border-white/30 bg-white/10 px-3 py-1.5 text-sm text-white hover:bg-white/15"
-                            >
-                                Ingresar
-                            </Link>
-                            <Link
-                                href={route('register')}
-                                className="rounded-md bg-white px-3 py-1.5 text-sm font-medium text-emerald-700 hover:bg-emerald-50"
-                            >
-                                Crear cuenta
-                            </Link>
-                        </>
-                    )}
-                    {variant === 'admin' && isAdmin && (
-                        <span className="text-sm text-white/90">{auth.user.name}</span>
-                    )}
+                    {/* Botón hamburguesa (más grande) */}
+                    <button
+                        type="button"
+                        aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+                        aria-controls="menu"
+                        aria-expanded={open}
+                        onClick={() => setOpen((v) => !v)}
+                        className="inline-flex h-12 w-12 items-center justify-center text-white/90 hover:text-white"
+                    >
+                        <span className="sr-only">Toggle menu</span>
+                        <span className="relative block h-5 w-6" aria-hidden>
+                            <span className={`absolute left-0 top-0 h-0.5 w-6 bg-current transition-transform ${open ? 'translate-y-2 rotate-45' : ''}`} />
+                            <span className={`absolute left-0 top-2 h-0.5 w-6 bg-current transition-opacity ${open ? 'opacity-0' : 'opacity-100'}`} />
+                            <span className={`absolute left-0 top-4 h-0.5 w-6 bg-current transition-transform ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+                        </span>
+                    </button>
                 </div>
-
-                {/* Botón hamburguesa (mobile) */}
-                <button
-                    type="button"
-                    aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-                    aria-controls="mobile-menu"
-                    aria-expanded={open}
-                    onClick={() => setOpen((v) => !v)}
-                    className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/10 hover:bg-white/15 text-white/90"
-                >
-                    <span className="sr-only">Toggle menu</span>
-                    <span className="relative block h-4 w-5" aria-hidden>
-                        <span className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition-transform ${open ? 'translate-y-1.5 rotate-45' : ''}`} />
-                        <span className={`absolute left-0 top-1.5 h-0.5 w-5 bg-current transition-opacity ${open ? 'opacity-0' : 'opacity-100'}`} />
-                        <span className={`absolute left-0 top-3 h-0.5 w-5 bg-current transition-transform ${open ? '-translate-y-1.5 -rotate-45' : ''}`} />
-                    </span>
-                </button>
-
-                {/* Botón hamburguesa (desktop) - arriba a la derecha */}
-                <button
-                    type="button"
-                    aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-                    aria-controls="desktop-menu"
-                    aria-expanded={open}
-                    onClick={() => setOpen((v) => !v)}
-                    className="hidden md:inline-flex h-10 w-10 items-center justify-center rounded-md bg-white/10 hover:bg-white/15 text-white/90"
-                >
-                    <span className="sr-only">Toggle menu</span>
-                    <span className="relative block h-4 w-6" aria-hidden>
-                        <span className={`absolute left-0 top-0 h-0.5 w-6 bg-current transition-transform duration-300 ${open ? 'translate-y-1.5 rotate-45' : ''}`} />
-                        <span className={`absolute left-0 top-1.5 h-0.5 w-6 bg-current transition-opacity duration-300 ${open ? 'opacity-0' : 'opacity-100'}`} />
-                        <span className={`absolute left-0 top-3 h-0.5 w-6 bg-current transition-transform duration-300 ${open ? '-translate-y-1.5 -rotate-45' : ''}`} />
-                    </span>
-                </button>
             </div>
 
             {/* Overlay/panel a pantalla completa (portal fuera del header) */}
@@ -162,11 +123,7 @@ export default function Navbar({ variant = 'client' }) {
                     aria-modal="true"
                     aria-hidden={!open}
                 >
-                    {/* Overlay semitransparente */}
-                    <div
-                        className={`absolute inset-0 bg-[rgba(0,0,0,0.4)] transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
-                        onClick={() => setOpen(false)}
-                    />
+                    {/* Overlay ELIMINADO - sin fondo semitransparente */}
 
                     {/* Panel deslizante desde la derecha */}
                     <aside
