@@ -70,7 +70,7 @@ export default function Navbar({ variant = 'client' }) {
     return (
         <header
             data-scrolled={scrolled && !open}
-            className="fixed inset-x-0 top-0 z-[999999] w-full border-b border-transparent bg-transparent text-white transition-colors duration-300 data-[scrolled=true]:bg-emerald-600/85 data-[scrolled=true]:border-emerald-700 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm group"
+            className="fixed inset-x-0 top-0 z-[999999] w-full border-b border-transparent bg-transparent text-white transition-colors duration-300 data-[scrolled=true]:bg-[#00833E] data-[scrolled=true]:border-[#00833E] data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm group"
         >
             <div className="mx-auto max-w-6xl h-16 px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2" aria-label="Ir al inicio">
@@ -144,12 +144,12 @@ export default function Navbar({ variant = 'client' }) {
                                     type="button"
                                     aria-label="Cerrar menú"
                                     onClick={() => setOpen(false)}
-                                    className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-white/10 hover:bg-white/15"
+                                    className="inline-flex h-14 w-14 items-center justify-center"
                                 >
                                     <span className="sr-only">Cerrar menú</span>
-                                    <span className="relative block h-4 w-6" aria-hidden>
-                                        <span className="absolute left-0 top-1.5 block h-0.5 w-6 bg-white rotate-45" />
-                                        <span className="absolute left-0 top-1.5 block h-0.5 w-6 bg-white -rotate-45" />
+                                    <span className="relative block h-[27px] w-8" aria-hidden>
+                                        <span className="absolute left-0 top-0 block h-[3px] w-[25px] bg-white rotate-45" />
+                                        <span className="absolute left-0 top-0 block h-[3px] w-[25px] bg-white -rotate-45" />
                                     </span>
                                 </button>
                             </div>
