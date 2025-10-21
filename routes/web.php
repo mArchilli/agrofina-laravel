@@ -36,6 +36,31 @@ Route::get('/contacto', function () {
     return Inertia::render('Contacto');
 })->name('contacto');
 
+// Segunda zona del menú (páginas adicionales)
+Route::get('/institucional', function () {
+    return Inertia::render('Institucional');
+})->name('institucional');
+
+Route::get('/politicas', function () {
+    return Inertia::render('Politicas');
+})->name('politicas');
+
+Route::get('/novedades', function () {
+    return Inertia::render('Novedades');
+})->name('novedades');
+
+Route::get('/agro-news', function () {
+    return Inertia::render('AgroNews');
+})->name('agro-news');
+
+Route::get('/trabaja-con-nosotros', function () {
+    return Inertia::render('TrabajaConNosotros');
+})->name('trabaja');
+
+Route::get('/proveedores', function () {
+    return Inertia::render('Proveedores');
+})->name('proveedores');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

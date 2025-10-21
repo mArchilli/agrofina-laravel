@@ -51,6 +51,17 @@ export default function Navbar({ variant = 'client' }) {
         { label: 'Contacto', href: route('contacto') },
     ];
 
+    // Segunda zona (derecha)
+    const extraLinks = [
+        { label: 'Institucional', href: route('institucional') },
+        { label: 'Políticas', href: route('politicas') },
+        { label: 'Novedades', href: route('novedades') },
+        { label: 'AgroNews', href: route('agro-news') },
+        { label: 'Trabajá con nosotros', href: route('trabaja') },
+        { label: 'Proveedores', href: route('proveedores') },
+        { label: 'Contacto', href: route('contacto') },
+    ];
+
     const adminLinks = [
         { label: 'Dashboard', href: route('dashboard') },
     ];
@@ -124,96 +135,144 @@ export default function Navbar({ variant = 'client' }) {
                         <span className={`absolute left-0 top-3 h-0.5 w-5 bg-current transition-transform ${open ? '-translate-y-1.5 -rotate-45' : ''}`} />
                     </span>
                 </button>
+
+                {/* Botón hamburguesa (desktop) - arriba a la derecha */}
+                <button
+                    type="button"
+                    aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+                    aria-controls="desktop-menu"
+                    aria-expanded={open}
+                    onClick={() => setOpen((v) => !v)}
+                    className="hidden md:inline-flex h-10 w-10 items-center justify-center rounded-md bg-white/10 hover:bg-white/15 text-white/90"
+                >
+                    <span className="sr-only">Toggle menu</span>
+                    <span className="relative block h-4 w-6" aria-hidden>
+                        <span className={`absolute left-0 top-0 h-0.5 w-6 bg-current transition-transform duration-300 ${open ? 'translate-y-1.5 rotate-45' : ''}`} />
+                        <span className={`absolute left-0 top-1.5 h-0.5 w-6 bg-current transition-opacity duration-300 ${open ? 'opacity-0' : 'opacity-100'}`} />
+                        <span className={`absolute left-0 top-3 h-0.5 w-6 bg-current transition-transform duration-300 ${open ? '-translate-y-1.5 -rotate-45' : ''}`} />
+                    </span>
+                </button>
             </div>
 
-            {/* Overlay móvil a pantalla completa (portal fuera del header) */}
+            {/* Overlay/panel a pantalla completa (portal fuera del header) */}
             {createPortal(
                 <div
-                    id="mobile-menu"
-                    className={`fixed inset-0 z-[1000000] bg-emerald-600 text-white transition-[opacity,transform] duration-300 ease-out ${open ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3 pointer-events-none'}`}
+                    id="desktop-menu"
+                    className={`fixed inset-0 z-[1000000] transition-[opacity] duration-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                     role="dialog"
                     aria-modal="true"
                     aria-hidden={!open}
-                    onClick={() => setOpen(false)}
                 >
-                    <div className="mx-auto max-w-6xl px-4 pt-6 pb-10 h-full flex flex-col" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex items-center justify-between">
-                            <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-                                <img
-                                    src="/images/logo-agrofina.png"
-                                    alt="Agrofina"
-                                    className="h-10 w-auto select-none drop-shadow-md"
-                                    draggable="false"
-                                />
-                            </Link>
-                            <button
-                                type="button"
-                                aria-label="Cerrar menú"
-                                onClick={() => setOpen(false)}
-                                className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/10 hover:bg-white/15"
-                            >
-                                <span className="sr-only">Cerrar menú</span>
-                                <span className="relative block h-4 w-5" aria-hidden>
-                                    <span className="absolute left-0 top-1.5 block h-0.5 w-5 bg-white rotate-45" />
-                                    <span className="absolute left-0 top-1.5 block h-0.5 w-5 bg-white -rotate-45" />
-                                </span>
-                            </button>
-                        </div>
+                    {/* Overlay semitransparente */}
+                    <div
+                        className={`absolute inset-0 bg-[rgba(0,0,0,0.4)] transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
+                        onClick={() => setOpen(false)}
+                    />
 
-                        <nav className="mt-10 grid gap-2 text-lg">
-                            {links.map((item) => (
-                                <Link
-                                    key={item.label}
-                                    href={item.href}
-                                    onClick={() => setOpen(false)}
-                                    className={`block rounded-lg px-4 py-3 font-medium ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10'}`}
-                                >
-                                    {item.label}
+                    {/* Panel deslizante desde la derecha */}
+                    <aside
+                        className={`absolute inset-y-0 right-0 w-full bg-[#00833E] text-white shadow-xl transform transition-transform duration-300 ease-out overflow-y-auto ${open ? 'translate-x-0' : 'translate-x-full'}`}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="mx-auto max-w-6xl px-4 pt-6 pb-10 min-h-full flex flex-col">
+                            <div className="flex items-center justify-between">
+                                <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
+                                    <img
+                                        src="/images/logo-agrofina.png"
+                                        alt="Agrofina"
+                                        className="h-10 w-auto select-none drop-shadow-md"
+                                        draggable="false"
+                                    />
                                 </Link>
-                            ))}
-                        </nav>
-
-                        {/* Footer del menú móvil: Redes + © anclados abajo */}
-                        <div className="mt-auto px-4">
-                            <div className="text-white/80 text-sm mb-2">Seguinos</div>
-                            <div className="flex items-center gap-3">
-                                <a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                                        <path d="M8.25 10.5v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                        <circle cx="8.25" cy="7.75" r="1.25" fill="currentColor" />
-                                        <path d="M12 16.5v-3.6c0-1.325 1.075-2.4 2.4-2.4h0c1.325 0 2.4 1.075 2.4 2.4v3.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    </svg>
-                                </a>
-                                <a href="https://www.instagram.com/agrofinaoficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
-                                        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
-                                        <circle cx="17" cy="7" r="1" fill="currentColor" />
-                                    </svg>
-                                </a>
-                                <a href="https://www.youtube.com/watch?v=YBaXGmzZL60" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="3" y="7" width="18" height="10" rx="3" stroke="currentColor" strokeWidth="1.5" />
-                                        <path d="M11 10v4l4-2-4-2z" fill="currentColor" />
-                                    </svg>
-                                </a>
-                                <a href="https://www.facebook.com/AgrofinaArgentina" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2L16 11h-3V9a1 1 0 0 1 1-1Z" fill="currentColor" />
-                                    </svg>
-                                </a>
-                                <a href="https://x.com/Agrofinatec" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4 4l7.5 9.2L6 20h2.6l4.2-4.9L16.8 20H20l-7.6-9.3L18 4h-2.6l-4 4.7L8 4H4z" fill="currentColor" />
-                                    </svg>
-                                </a>
+                                <button
+                                    type="button"
+                                    aria-label="Cerrar menú"
+                                    onClick={() => setOpen(false)}
+                                    className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-white/10 hover:bg-white/15"
+                                >
+                                    <span className="sr-only">Cerrar menú</span>
+                                    <span className="relative block h-4 w-6" aria-hidden>
+                                        <span className="absolute left-0 top-1.5 block h-0.5 w-6 bg-white rotate-45" />
+                                        <span className="absolute left-0 top-1.5 block h-0.5 w-6 bg-white -rotate-45" />
+                                    </span>
+                                </button>
                             </div>
-                            <div className="text-white/80 text-sm mt-6">
-                                <p>© {new Date().getFullYear()} Agrofina</p>
+
+                            <div className="mt-10 grid grid-cols-1 md:grid-cols-[1fr_2px_1fr] gap-6 md:gap-10 items-start">
+                                {/* Columna izquierda (existente) */}
+                                <nav className="grid gap-2 text-lg">
+                                    {links.map((item) => (
+                                        <Link
+                                            key={item.label}
+                                            href={item.href}
+                                            onClick={() => setOpen(false)}
+                                            className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    ))}
+                                </nav>
+
+                                {/* Divisor vertical */}
+                                <div className="hidden md:block w-[2px] h-full bg-[#5FC48D] rounded-full opacity-90" aria-hidden />
+
+                                {/* Columna derecha (nueva) */}
+                                <nav className="grid gap-2 text-lg">
+                                    {extraLinks.map((item) => (
+                                        <Link
+                                            key={item.label}
+                                            href={item.href}
+                                            onClick={() => setOpen(false)}
+                                            className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    ))}
+                                </nav>
+                            </div>
+
+                            {/* Footer del menú: Redes + © anclados abajo */}
+                            <div className="mt-auto px-4">
+                                <div className="text-white/80 text-sm mb-2">Seguinos</div>
+                                <div className="flex items-center gap-3">
+                                    <a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                                            <path d="M8.25 10.5v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                            <circle cx="8.25" cy="7.75" r="1.25" fill="currentColor" />
+                                            <path d="M12 16.5v-3.6c0-1.325 1.075-2.4 2.4-2.4h0c1.325 0 2.4 1.075 2.4 2.4v3.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        </svg>
+                                    </a>
+                                    <a href="https://www.instagram.com/agrofinaoficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
+                                            <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
+                                            <circle cx="17" cy="7" r="1" fill="currentColor" />
+                                        </svg>
+                                    </a>
+                                    <a href="https://www.youtube.com/watch?v=YBaXGmzZL60" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="3" y="7" width="18" height="10" rx="3" stroke="currentColor" strokeWidth="1.5" />
+                                            <path d="M11 10v4l4-2-4-2z" fill="currentColor" />
+                                        </svg>
+                                    </a>
+                                    <a href="https://www.facebook.com/AgrofinaArgentina" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2L16 11h-3V9a1 1 0 0 1 1-1Z" fill="currentColor" />
+                                        </svg>
+                                    </a>
+                                    <a href="https://x.com/Agrofinatec" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4 4l7.5 9.2L6 20h2.6l4.2-4.9L16.8 20H20l-7.6-9.3L18 4h-2.6l-4 4.7L8 4H4z" fill="currentColor" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div className="text-white/80 text-sm mt-6">
+                                    <p>© {new Date().getFullYear()} Agrofina</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </aside>
                 </div>,
                 document.body
             )}
