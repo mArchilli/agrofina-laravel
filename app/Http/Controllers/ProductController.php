@@ -187,10 +187,36 @@ class ProductController extends Controller
     }
 
     /**
+     * Toggle the status of the specified product.
+     */
+    public function toggleStatus(Producto $producto)
+    {
+        $producto->activo = !$producto->activo;
+        $producto->save();
+
+        $status = $producto->activo ? 'activado' : 'desactivado';
+        
+        return redirect()->route('admin.productos')->with('success', "Producto {$status} exitosamente.");
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Producto $producto)
     {
+        // Eliminar archivos asociados si existen
+        if ($producto->imagen && file_exists(public_path($producto->imagen))) {
+            unlink(public_path($producto->imagen));
+        }
+        
+        if ($producto->pdfs) {
+            foreach ($producto->pdfs as $pdfPath) {
+                if (file_exists(public_path($pdfPath))) {
+                    unlink(public_path($pdfPath));
+                }
+            }
+        }
+
         $producto->delete();
 
         return redirect()->route('admin.productos')->with('success', 'Producto eliminado exitosamente.');

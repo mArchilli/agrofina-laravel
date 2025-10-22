@@ -7,6 +7,7 @@ export default function ProductosDashboard({ productos, categorias }) {
     const [productToDelete, setProductToDelete] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [processingToggle, setProcessingToggle] = useState(null);
 
     useEffect(() => {
         if (selectedCategory === 'all') {
@@ -32,6 +33,18 @@ export default function ProductosDashboard({ productos, categorias }) {
                 },
             });
         }
+    };
+
+    const handleToggleStatus = (producto) => {
+        setProcessingToggle(producto.id);
+        router.patch(route('admin.productos.toggle-status', producto.id), {}, {
+            onSuccess: () => {
+                setProcessingToggle(null);
+            },
+            onError: () => {
+                setProcessingToggle(null);
+            }
+        });
     };
 
     return (
@@ -146,6 +159,31 @@ export default function ProductosDashboard({ productos, categorias }) {
                                                         {new Date(producto.created_at).toLocaleDateString()}
                                                     </span>
                                                     <div className="flex gap-2">
+                                                        <button
+                                                            onClick={() => handleToggleStatus(producto)}
+                                                            disabled={processingToggle === producto.id}
+                                                            className={`inline-flex items-center p-2 rounded-full transition-colors duration-200 ${
+                                                                producto.activo 
+                                                                    ? 'text-orange-600 hover:text-orange-900 hover:bg-orange-50'
+                                                                    : 'text-green-600 hover:text-green-900 hover:bg-green-50'
+                                                            } ${processingToggle === producto.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                            title={producto.activo ? 'Desactivar producto' : 'Activar producto'}
+                                                        >
+                                                            {processingToggle === producto.id ? (
+                                                                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                                    <path className="opacity-75" fill="currentColor" d="m100 50c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10s-10 4.477-10 10zm-9-3h12l-4-4m0 8l4-4"></path>
+                                                                </svg>
+                                                            ) : producto.activo ? (
+                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" />
+                                                                </svg>
+                                                            ) : (
+                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                                </svg>
+                                                            )}
+                                                        </button>
                                                         <Link
                                                             href={route('admin.productos.edit', producto.id)}
                                                             className="inline-flex items-center p-2 text-indigo-600 hover:text-indigo-900 hover:bg-indigo-50 rounded-full transition-colors duration-200"
@@ -233,15 +271,70 @@ export default function ProductosDashboard({ productos, categorias }) {
                                         />
                                     </svg>
                                 </div>
-                                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                    <h3 className="text-lg leading-6 font-medium text-gray-900">
+                                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
                                         Eliminar producto
                                     </h3>
+                                    
+                                    {/* Información del producto */}
+                                    {productToDelete && (
+                                        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                                            <div className="flex items-start space-x-4">
+                                                {/* Imagen del producto */}
+                                                <div className="w-16 h-16 bg-white rounded-lg border border-gray-200 flex-shrink-0 overflow-hidden">
+                                                    {productToDelete.imagen ? (
+                                                        <img
+                                                            src={productToDelete.imagen}
+                                                            alt={productToDelete.nombre}
+                                                            className="w-full h-full object-contain"
+                                                        />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center">
+                                                            <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 112.828 2.828L16 19M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                            </svg>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                
+                                                {/* Información del producto */}
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="text-sm font-medium text-gray-900 truncate">
+                                                        {productToDelete.nombre}
+                                                    </h4>
+                                                    <p className="text-sm text-gray-500">
+                                                        <span className="font-medium">Categoría:</span> {productToDelete.categoria?.nombre || 'Sin categoría'}
+                                                    </p>
+                                                    {productToDelete.principio_activo && (
+                                                        <p className="text-sm text-gray-500">
+                                                            <span className="font-medium">Principio activo:</span> {productToDelete.principio_activo}
+                                                        </p>
+                                                    )}
+                                                    <div className="mt-2">
+                                                        <span
+                                                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                                                productToDelete.activo
+                                                                    ? 'bg-green-100 text-green-800'
+                                                                    : 'bg-red-100 text-red-800'
+                                                            }`}
+                                                        >
+                                                            {productToDelete.activo ? 'Activo' : 'Inactivo'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    
                                     <div className="mt-2">
                                         <p className="text-sm text-gray-500">
-                                            ¿Estás seguro que deseas eliminar el producto "{productToDelete?.nombre}"?
-                                            Esta acción no se puede deshacer.
+                                            ¿Estás seguro que deseas eliminar este producto? Esta acción eliminará toda la información asociada, incluyendo imágenes y documentos PDF.
                                         </p>
+                                        <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                                            <p className="text-sm text-yellow-800">
+                                                <span className="font-medium">⚠️ Advertencia:</span> Esta acción no se puede deshacer.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +344,7 @@ export default function ProductosDashboard({ productos, categorias }) {
                                     onClick={confirmDelete}
                                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                                 >
-                                    Eliminar
+                                    Sí, eliminar producto
                                 </button>
                                 <button
                                     type="button"

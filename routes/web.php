@@ -87,6 +87,9 @@ Route::middleware('auth')->group(function () {
             'destroy' => 'productos.destroy',
         ]);
         
+        // Ruta para cambiar estado del producto
+        Route::patch('productos/{producto}/toggle-status', [ProductController::class, 'toggleStatus'])->name('productos.toggle-status');
+        
         Route::resource('categorias', CategoriaController::class)->names([
             'index' => 'categorias',
             'create' => 'categorias.create',
