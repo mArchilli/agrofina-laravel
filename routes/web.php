@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoriaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -72,6 +74,32 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // Rutas del admin para productos
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('productos', ProductController::class)->names([
+            'index' => 'productos',
+            'create' => 'productos.create',
+            'store' => 'productos.store',
+            'show' => 'productos.show',
+            'edit' => 'productos.edit',
+            'update' => 'productos.update',
+            'destroy' => 'productos.destroy',
+        ]);
+        
+        Route::resource('categorias', CategoriaController::class)->names([
+            'index' => 'categorias',
+            'create' => 'categorias.create',
+            'store' => 'categorias.store',
+            'show' => 'categorias.show',
+            'edit' => 'categorias.edit',
+            'update' => 'categorias.update',
+            'destroy' => 'categorias.destroy',
+        ]);
+        
+        // Ruta adicional para obtener categorías activas (para selects)
+        Route::get('categorias-activas', [CategoriaController::class, 'getActive'])->name('categorias.active');
+    });
 });
 
 require __DIR__.'/auth.php';
