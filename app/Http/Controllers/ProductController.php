@@ -17,10 +17,15 @@ class ProductController extends Controller
     {
         $productos = Producto::with('categoria')
             ->latest()
-            ->paginate(10);
+            ->paginate(50); // Aumentamos para mostrar más productos en las tarjetas
+        
+        $categorias = Categoria::where('activo', true)
+            ->orderBy('nombre')
+            ->get();
         
         return Inertia::render('Admin/ProductosDashboard', [
             'productos' => $productos,
+            'categorias' => $categorias,
         ]);
     }
 
@@ -105,8 +110,13 @@ class ProductController extends Controller
      */
     public function edit(Producto $producto)
     {
-        return Inertia::render('Admin/ProductoEdit', [
-            'producto' => $producto,
+        $categorias = Categoria::active()
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
+        return Inertia::render('Admin/EditProduct', [
+            'producto' => $producto->load('categoria'),
+            'categorias' => $categorias,
         ]);
     }
 

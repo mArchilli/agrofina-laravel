@@ -1,10 +1,22 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function ProductosDashboard({ productos }) {
+export default function ProductosDashboard({ productos, categorias }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
+    useEffect(() => {
+        if (selectedCategory === 'all') {
+            setFilteredProducts(productos.data || []);
+        } else {
+            setFilteredProducts((productos.data || []).filter(
+                producto => producto.categoria_id == selectedCategory
+            ));
+        }
+    }, [selectedCategory, productos.data]);
 
     const handleDelete = (producto) => {
         setProductToDelete(producto);
@@ -42,152 +54,121 @@ export default function ProductosDashboard({ productos }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    {/* Filtros */}
+                    <div className="mb-6">
+                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="p-4">
+                                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                                    <label htmlFor="category-filter" className="text-sm font-medium text-gray-700">
+                                        Filtrar por categoría:
+                                    </label>
+                                    <select
+                                        id="category-filter"
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                        className="border border-gray-300 rounded-md px-7 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="all">Todas las categorías</option>
+                                        {categorias && categorias.map((categoria) => (
+                                            <option key={categoria.id} value={categoria.id}>
+                                                {categoria.nombre}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <span className="text-sm text-gray-500">
+                                        Mostrando {filteredProducts.length} de {productos.data?.length || 0} productos
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            {productos.data.length > 0 ? (
-                                <div className="overflow-x-auto">
-                                    <table className="min-w-full divide-y divide-gray-200">
-                                        <thead className="bg-gray-50">
-                                            <tr>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Nombre
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Categoría
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Principio Activo
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Formulación
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Estado
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Fecha
-                                                </th>
-                                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Acciones
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="bg-white divide-y divide-gray-200">
-                                            {productos.data.map((producto) => (
-                                                <tr key={producto.id} className="hover:bg-gray-50">
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div>
-                                                            <div className="text-sm font-medium text-gray-900">
-                                                                {producto.nombre}
-                                                            </div>
-                                                            {producto.descripcion && (
-                                                                <div className="text-sm text-gray-500 truncate max-w-xs">
-                                                                    {producto.descripcion}
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {producto.categoria?.nombre || 'Sin categoría'}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {producto.principio_activo || 'No definido'}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {producto.formulacion || 'No definida'}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <span
-                                                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                                                producto.activo
-                                                                    ? 'bg-green-100 text-green-800'
-                                                                    : 'bg-red-100 text-red-800'
-                                                            }`}
-                                                        >
-                                                            {producto.activo ? 'Activo' : 'Inactivo'}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {new Date(producto.created_at).toLocaleDateString()}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <div className="flex justify-end gap-2">
-                                                            <Link
-                                                                href={route('admin.productos.show', producto.id)}
-                                                                className="text-blue-600 hover:text-blue-900"
-                                                            >
-                                                                Ver
-                                                            </Link>
-                                                            <Link
-                                                                href={route('admin.productos.edit', producto.id)}
-                                                                className="text-indigo-600 hover:text-indigo-900"
-                                                            >
-                                                                Editar
-                                                            </Link>
-                                                            <button
-                                                                onClick={() => handleDelete(producto)}
-                                                                className="text-red-600 hover:text-red-900"
-                                                            >
-                                                                Eliminar
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-
-                                    {/* Paginación */}
-                                    {productos.links && productos.links.length > 3 && (
-                                        <div className="flex items-center justify-between px-4 py-3 sm:px-6">
-                                            <div className="flex-1 flex justify-between sm:hidden">
-                                                {productos.prev_page_url && (
-                                                    <Link
-                                                        href={productos.prev_page_url}
-                                                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                                                    >
-                                                        Anterior
-                                                    </Link>
-                                                )}
-                                                {productos.next_page_url && (
-                                                    <Link
-                                                        href={productos.next_page_url}
-                                                        className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                                                    >
-                                                        Siguiente
-                                                    </Link>
+                            {filteredProducts.length > 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {filteredProducts.map((producto) => (
+                                        <div key={producto.id} className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                                            {/* Imagen del producto */}
+                                            <div className="aspect-w-16 aspect-h-9 w-full h-48 bg-gray-100 rounded-t-lg overflow-hidden">
+                                                {producto.imagen ? (
+                                                    <img
+                                                        src={producto.imagen}
+                                                        alt={producto.nombre}
+                                                        className="w-full h-full object-contain bg-white"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center bg-gray-50">
+                                                        <svg className="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 112.828 2.828L16 19M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
+                                                    </div>
                                                 )}
                                             </div>
-                                            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                                                <div>
-                                                    <p className="text-sm text-gray-700">
-                                                        Mostrando{' '}
-                                                        <span className="font-medium">{productos.from}</span> a{' '}
-                                                        <span className="font-medium">{productos.to}</span> de{' '}
-                                                        <span className="font-medium">{productos.total}</span> resultados
-                                                    </p>
+
+                                            {/* Contenido de la tarjeta */}
+                                            <div className="p-4">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <h3 className="text-lg font-semibold text-gray-900 truncate">
+                                                        {producto.nombre}
+                                                    </h3>
+                                                    <span
+                                                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                                            producto.activo
+                                                                ? 'bg-green-100 text-green-800'
+                                                                : 'bg-red-100 text-red-800'
+                                                        }`}
+                                                    >
+                                                        {producto.activo ? 'Activo' : 'Inactivo'}
+                                                    </span>
                                                 </div>
-                                                <div>
-                                                    <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-                                                        {productos.links.map((link, index) => (
-                                                            <Link
-                                                                key={index}
-                                                                href={link.url || '#'}
-                                                                className={`relative inline-flex items-center px-2 py-2 border text-sm font-medium ${
-                                                                    link.active
-                                                                        ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
-                                                                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                                                                } ${index === 0 ? 'rounded-l-md' : ''} ${
-                                                                    index === productos.links.length - 1 ? 'rounded-r-md' : ''
-                                                                }`}
-                                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                                            />
-                                                        ))}
-                                                    </nav>
+
+                                                <div className="mb-3">
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        <span className="font-medium">Categoría:</span>{' '}
+                                                        {producto.categoria?.nombre || 'Sin categoría'}
+                                                    </p>
+                                                    {producto.principio_activo && (
+                                                        <p className="text-sm text-gray-600 mb-1">
+                                                            <span className="font-medium">Principio activo:</span>{' '}
+                                                            {producto.principio_activo}
+                                                        </p>
+                                                    )}
+                                                    {producto.descripcion && (
+                                                        <p className="text-sm text-gray-500 line-clamp-2">
+                                                            {producto.descripcion}
+                                                        </p>
+                                                    )}
+                                                </div>
+
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-xs text-gray-400">
+                                                        {new Date(producto.created_at).toLocaleDateString()}
+                                                    </span>
+                                                    <div className="flex gap-2">
+                                                        <Link
+                                                            href={route('admin.productos.edit', producto.id)}
+                                                            className="inline-flex items-center p-2 text-indigo-600 hover:text-indigo-900 hover:bg-indigo-50 rounded-full transition-colors duration-200"
+                                                            title="Editar producto"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                            </svg>
+                                                        </Link>
+                                                        <button
+                                                            onClick={() => handleDelete(producto)}
+                                                            className="inline-flex items-center p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-full transition-colors duration-200"
+                                                            title="Eliminar producto"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    )}
+                                    ))}
                                 </div>
                             ) : (
                                 <div className="text-center py-12">
@@ -205,9 +186,14 @@ export default function ProductosDashboard({ productos }) {
                                             d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
                                         />
                                     </svg>
-                                    <h3 className="mt-2 text-sm font-medium text-gray-900">No hay productos</h3>
+                                    <h3 className="mt-2 text-sm font-medium text-gray-900">
+                                        {selectedCategory === 'all' ? 'No hay productos' : 'No hay productos en esta categoría'}
+                                    </h3>
                                     <p className="mt-1 text-sm text-gray-500">
-                                        Comienza creando un nuevo producto.
+                                        {selectedCategory === 'all' 
+                                            ? 'Comienza creando un nuevo producto.' 
+                                            : 'Prueba seleccionando otra categoría o crea un producto nuevo.'
+                                        }
                                     </p>
                                     <div className="mt-6">
                                         <Link

@@ -1,39 +1,81 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { Head, Link, useForm, router } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
 
-export default function CreateProduct({ categorias }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        nombre: '',
+export default function EditProduct({ producto, categorias }) {
+    const { data, setData, put, processing, errors, reset } = useForm({
+        nombre: producto.nombre || '',
         imagen: null,
-        categoria_id: '',
-        principio_activo: '',
-        formulacion: '',
-        descripcion: '',
-        presentacion: '',
-        accion: '',
-        banda: '',
-        mecanismo_de_accion: '',
-        malezas: '',
-        cultivos: '',
-        dosis: '',
-        recomendaciones_de_uso: '',
-        banda_toxicologica: '',
-        arbol_de_recomendacion: '',
-        activo: true,
+        categoria_id: producto.categoria_id || '',
+        principio_activo: producto.principio_activo || '',
+        formulacion: producto.formulacion || '',
+        descripcion: producto.descripcion || '',
+        presentacion: producto.presentacion || '',
+        accion: producto.accion || '',
+        banda: producto.banda || '',
+        mecanismo_de_accion: producto.mecanismo_de_accion || '',
+        malezas: producto.malezas || '',
+        cultivos: producto.cultivos || '',
+        dosis: producto.dosis || '',
+        recomendaciones_de_uso: producto.recomendaciones_de_uso || '',
+        banda_toxicologica: producto.banda_toxicologica || '',
+        arbol_de_recomendacion: producto.arbol_de_recomendacion || '',
+        activo: producto.activo ?? true,
         pdfs: [],
     });
 
     const [imagePreview, setImagePreview] = useState(null);
 
+    // Configurar la imagen existente al cargar el componente
+    useEffect(() => {
+        if (producto.imagen) {
+            setImagePreview(producto.imagen);
+        }
+    }, [producto.imagen]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        post(route('admin.productos.store'), {
-            forceFormData: true,
+        // Crear FormData manualmente para asegurar que todos los campos se envíen
+        const formData = new FormData();
+        
+        // Agregar todos los campos del formulario
+        formData.append('nombre', data.nombre || '');
+        formData.append('categoria_id', data.categoria_id || '');
+        formData.append('principio_activo', data.principio_activo || '');
+        formData.append('formulacion', data.formulacion || '');
+        formData.append('descripcion', data.descripcion || '');
+        formData.append('presentacion', data.presentacion || '');
+        formData.append('accion', data.accion || '');
+        formData.append('banda', data.banda || '');
+        formData.append('mecanismo_de_accion', data.mecanismo_de_accion || '');
+        formData.append('malezas', data.malezas || '');
+        formData.append('cultivos', data.cultivos || '');
+        formData.append('dosis', data.dosis || '');
+        formData.append('recomendaciones_de_uso', data.recomendaciones_de_uso || '');
+        formData.append('banda_toxicologica', data.banda_toxicologica || '');
+        formData.append('arbol_de_recomendacion', data.arbol_de_recomendacion || '');
+        formData.append('activo', data.activo ? '1' : '0');
+        
+        // Agregar imagen si hay una nueva
+        if (data.imagen) {
+            formData.append('imagen', data.imagen);
+        }
+        
+        // Agregar PDFs si hay nuevos
+        if (data.pdfs && data.pdfs.length > 0) {
+            for (let i = 0; i < data.pdfs.length; i++) {
+                formData.append('pdfs[]', data.pdfs[i]);
+            }
+        }
+        
+        // Simular PUT method para Laravel
+        formData.append('_method', 'PUT');
+        
+        // Usar post en lugar de put con FormData
+        router.post(route('admin.productos.update', producto.id), formData, {
             onSuccess: () => {
-                reset();
-                setImagePreview(null);
+                // Redirigir o mostrar mensaje de éxito
             },
         });
     };
@@ -49,7 +91,13 @@ export default function CreateProduct({ categorias }) {
             };
             reader.readAsDataURL(file);
         } else {
-            setImagePreview(null);
+            // Si se elimina el archivo, volver a la imagen original si existe
+            if (producto.imagen) {
+                setImagePreview(producto.imagen);
+                setData('imagen', null);
+            } else {
+                setImagePreview(null);
+            }
         }
     };
 
@@ -71,10 +119,10 @@ export default function CreateProduct({ categorias }) {
                 <div className="flex justify-between items-center">
                     <div>
                         <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-                            Crear Nuevo Producto
+                            Editar Producto: {producto.nombre}
                         </h2>
                         <p className="text-sm text-gray-600 mt-1">
-                            Completa la información del producto para agregarlo al catálogo
+                            Modifica la información del producto en el catálogo
                         </p>
                     </div>
                     <Link
@@ -89,7 +137,7 @@ export default function CreateProduct({ categorias }) {
                 </div>
             }
         >
-            <Head title="Crear Producto" />
+            <Head title={`Editar - ${producto.nombre}`} />
 
             <div className="py-8">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -98,10 +146,10 @@ export default function CreateProduct({ categorias }) {
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                             <div className="flex items-center space-x-4">
                                 <div className="flex items-center">
-                                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
-                                        1
+                                    <div className="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                                        ✓
                                     </div>
-                                    <span className="ml-2 text-sm font-medium text-gray-900">Información del Producto</span>
+                                    <span className="ml-2 text-sm font-medium text-gray-900">Editando Producto</span>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +195,7 @@ export default function CreateProduct({ categorias }) {
                                         <div className="space-y-4">
                                             {imagePreview ? (
                                                 <div className="relative">
-                                                    <div className="w-full h-48 rounded-lg border-2 border-dashed border-gray-200 overflow-hidden">
+                                                    <div className="w-full h-48 rounded-lg border-2 border-dashed border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center">
                                                         <img
                                                             src={imagePreview}
                                                             alt="Preview"
@@ -163,6 +211,11 @@ export default function CreateProduct({ categorias }) {
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                                         </svg>
                                                     </button>
+                                                    {producto.imagen && imagePreview === producto.imagen && (
+                                                        <div className="absolute bottom-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-xs">
+                                                            Imagen actual
+                                                        </div>
+                                                    )}
                                                 </div>
                                             ) : (
                                                 <div className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center hover:border-blue-400 transition-colors duration-200">
@@ -183,7 +236,7 @@ export default function CreateProduct({ categorias }) {
                                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                                             />
                                             <p className="text-xs text-gray-500">
-                                                Formatos: JPG, PNG, GIF, SVG (máx. 2MB)
+                                                Formatos: JPG, PNG, GIF, SVG (máx. 2MB) - Deja vacío para mantener la imagen actual
                                             </p>
                                         </div>
                                         {errors.imagen && <p className="text-red-600 text-sm mt-2">{errors.imagen}</p>}
@@ -209,7 +262,8 @@ export default function CreateProduct({ categorias }) {
                                         </select>
                                         {categorias && categorias.length > 0 && (
                                             <p className="text-xs text-gray-500 mt-1">
-                                                {categorias.length} categorías disponibles: {categorias.map(cat => cat.nombre).join(', ')}
+                                                Categoría actual: {producto.categoria ? producto.categoria.nombre : 'Sin categoría'} | 
+                                                Disponibles: {categorias.map(cat => cat.nombre).join(', ')}
                                             </p>
                                         )}
                                         {errors.categoria_id && <p className="text-red-600 text-sm mt-2">{errors.categoria_id}</p>}
@@ -489,9 +543,33 @@ export default function CreateProduct({ categorias }) {
                             </div>
                             
                             <div className="p-6">
+                                {/* PDFs Existentes */}
+                                {producto.pdfs && producto.pdfs.length > 0 && (
+                                    <div className="mb-6">
+                                        <h4 className="text-sm font-medium text-gray-900 mb-3">
+                                            Documentos actuales ({producto.pdfs.length}):
+                                        </h4>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                            {producto.pdfs.map((pdf, index) => (
+                                                <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
+                                                    <svg className="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span className="text-sm text-gray-700 truncate">
+                                                        {pdf.split('/').pop()}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <p className="text-xs text-gray-500 mt-2">
+                                            Los documentos actuales se mantendrán. Solo selecciona nuevos archivos si quieres reemplazarlos.
+                                        </p>
+                                    </div>
+                                )}
+
                                 <div>
                                     <label htmlFor="pdfs" className="block text-sm font-medium text-gray-900 mb-3">
-                                        PDFs / Documentos
+                                        {producto.pdfs && producto.pdfs.length > 0 ? 'Reemplazar documentos' : 'PDFs / Documentos'}
                                     </label>
                                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors duration-200">
                                         <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -517,14 +595,14 @@ export default function CreateProduct({ categorias }) {
                                     </div>
                                     
                                     {data.pdfs && data.pdfs.length > 0 && (
-                                        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                                        <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                                             <h4 className="text-sm font-medium text-gray-900 mb-2">
-                                                Archivos seleccionados ({data.pdfs.length}):
+                                                Nuevos archivos para subir ({data.pdfs.length}):
                                             </h4>
                                             <ul className="space-y-2">
                                                 {Array.from(data.pdfs).map((pdf, index) => (
                                                     <li key={index} className="flex items-center text-sm text-gray-600">
-                                                        <svg className="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                                        <svg className="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                                             <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
                                                         </svg>
                                                         {pdf.name}
@@ -544,7 +622,7 @@ export default function CreateProduct({ categorias }) {
                             <div className="flex flex-col sm:flex-row gap-4 justify-end">
                                 <Link
                                     href={route('admin.productos')}
-                                    className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                                    className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
                                 >
                                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -554,7 +632,7 @@ export default function CreateProduct({ categorias }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                                 >
                                     {processing ? (
                                         <>
@@ -562,14 +640,14 @@ export default function CreateProduct({ categorias }) {
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                 <path className="opacity-75" fill="currentColor" d="m100 50c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10s-10 4.477-10 10zm-9-3h12l-4-4m0 8l4-4"></path>
                                             </svg>
-                                            Creando producto...
+                                            Actualizando producto...
                                         </>
                                     ) : (
                                         <>
                                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                             </svg>
-                                            Crear Producto
+                                            Actualizar Producto
                                         </>
                                     )}
                                 </button>
