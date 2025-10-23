@@ -118,7 +118,7 @@ export default function Navbar({ variant = 'client' }) {
                                 </Link>
                                 
                                 {/* Usuario logueado */}
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center justify-between gap-3 w-full">
                                     <span className="text-sm text-gray-700">
                                         {auth?.user?.name || 'Admin'}
                                     </span>
@@ -410,6 +410,7 @@ export default function Navbar({ variant = 'client' }) {
                                             <path d="M4 4l7.5 9.2L6 20h2.6l4.2-4.9L16.8 20H20l-7.6-9.3L18 4h-2.6l-4 4.7L8 4H4z" fill="currentColor" />
                                         </svg>
                                     </a>
+                                    <span className="ml-auto text-white/80 text-sm whitespace-nowrap">Atención al Cliente: +54 11 4837 7800</span>
                                 </div>
                                 <div className="text-white/80 text-sm mt-6">
                                     <p>© {new Date().getFullYear()} Agrofina</p>
