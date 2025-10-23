@@ -211,12 +211,12 @@ export default function Navbar({ variant = 'client' }) {
         >
             <div className="mx-auto max-w-6xl h-16 px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2" aria-label="Ir al inicio">
-                    <img
-                        src="/images/logo-agrofina.png"
-                        alt="Agrofina"
-                        className="h-10 md:h-11 w-auto select-none drop-shadow-md transition"
-                        draggable="false"
-                    />
+                                    <img
+                                        src="/images/minilogo-agrofina.png"
+                                        alt="Agrofina"
+                                        className="h-10 md:h-11 w-auto select-none drop-shadow-md transition"
+                                        draggable="false"
+                                    />
                 </Link>
 
                 {/* Derecha: ENG + Hamburguesa */}
@@ -270,12 +270,12 @@ export default function Navbar({ variant = 'client' }) {
                         <div className="mx-auto max-w-6xl px-4 pt-6 pb-10 min-h-screen flex flex-col">
                             <div className="flex items-center justify-between">
                                 <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-                                    <img
-                                        src="/images/logo-agrofina.png"
-                                        alt="Agrofina"
-                                        className="h-10 w-auto select-none drop-shadow-md"
-                                        draggable="false"
-                                    />
+                                        <img
+                                            src="/images/minilogo-agrofina.png"
+                                            alt="Agrofina"
+                                            className="h-10 w-auto select-none drop-shadow-md"
+                                            draggable="false"
+                                        />
                                 </Link>
                                 <button
                                     type="button"
