@@ -19,6 +19,7 @@ class Producto extends Model
         'nombre',
         'imagen',
         'categoria_id',
+        'principio_activo_id',
         'principio_activo',
         'formulacion',
         'descripcion',
@@ -72,6 +73,14 @@ class Producto extends Model
     public function categoria()
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');
+    }
+
+    /**
+     * Get the principio activo that owns the product.
+     */
+    public function principioActivo()
+    {
+        return $this->belongsTo(PrincipioActivo::class, 'principio_activo_id');
     }
 
     /**

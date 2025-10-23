@@ -22,10 +22,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Seed categories and cultivos
+        // Seed categories, cultivos and principios activos
         $this->call([
             CategorySeeder::class,
             CultivoSeeder::class,
+            PrincipioActivoSeeder::class,
         ]);
     }
 }

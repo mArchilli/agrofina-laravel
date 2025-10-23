@@ -2,11 +2,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function CreateProduct({ categorias, cultivos }) {
+export default function CreateProduct({ categorias, cultivos, principiosActivos }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         nombre: '',
         imagen: null,
         categoria_id: '',
+        principio_activo_id: '',
         principio_activo: '',
         formulacion: '',
         descripcion: '',
@@ -234,18 +235,28 @@ export default function CreateProduct({ categorias, cultivos }) {
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                     {/* Principio Activo */}
                                     <div>
-                                        <label htmlFor="principio_activo" className="block text-sm font-medium text-gray-900 mb-2">
+                                        <label htmlFor="principio_activo_id" className="block text-sm font-medium text-gray-900 mb-2">
                                             Principio Activo
                                         </label>
-                                        <input
-                                            type="text"
-                                            id="principio_activo"
-                                            value={data.principio_activo}
-                                            onChange={(e) => setData('principio_activo', e.target.value)}
+                                        <select
+                                            id="principio_activo_id"
+                                            value={data.principio_activo_id}
+                                            onChange={(e) => setData('principio_activo_id', e.target.value)}
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                            placeholder="Ej: Glifosato"
-                                        />
-                                        {errors.principio_activo && <p className="text-red-600 text-sm mt-2">{errors.principio_activo}</p>}
+                                        >
+                                            <option value="">Seleccionar principio activo</option>
+                                            {principiosActivos && principiosActivos.map((principio) => (
+                                                <option key={principio.id} value={principio.id}>
+                                                    {principio.nombre}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        {principiosActivos && principiosActivos.length > 0 && (
+                                            <p className="text-xs text-gray-500 mt-1">
+                                                {principiosActivos.length} principios activos disponibles
+                                            </p>
+                                        )}
+                                        {errors.principio_activo_id && <p className="text-red-600 text-sm mt-2">{errors.principio_activo_id}</p>}
                                     </div>
 
                                     {/* Formulación */}

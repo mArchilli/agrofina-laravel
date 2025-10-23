@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CultivoController;
+use App\Http\Controllers\PrincipioActivoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -107,6 +108,11 @@ Route::middleware('auth')->group(function () {
     
     // Rutas para cultivos (fuera del prefijo admin para usar nombres más simples)
     Route::resource('cultivos', CultivoController::class);
+    
+    // Rutas para principios activos
+    Route::resource('principios-activos', PrincipioActivoController::class)->parameters([
+        'principios-activos' => 'principio_activo'
+    ]);
 });
 
 require __DIR__.'/auth.php';
