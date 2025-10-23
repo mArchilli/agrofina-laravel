@@ -65,6 +65,7 @@ export default function Navbar({ variant = 'client' }) {
         { label: 'Dashboard', href: route('dashboard') },
         { label: 'Productos', href: route('admin.productos') },
         { label: 'Categorías', href: route('admin.categorias') },
+        { label: 'Cultivos', href: route('cultivos.index') },
     ];
 
     const links = variant === 'client' ? clientLinks : adminLinks;

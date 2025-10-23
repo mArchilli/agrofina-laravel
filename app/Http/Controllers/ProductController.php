@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Cultivo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -38,8 +39,13 @@ class ProductController extends Controller
             ->orderBy('nombre')
             ->get(['id', 'nombre']);
 
+        $cultivos = Cultivo::where('activo', true)
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
         return Inertia::render('Admin/CreateProduct', [
             'categorias' => $categorias,
+            'cultivos' => $cultivos,
         ]);
     }
 
@@ -60,7 +66,6 @@ class ProductController extends Controller
             'banda' => 'nullable|string|max:255',
             'mecanismo_de_accion' => 'nullable|string',
             'malezas' => 'nullable|string',
-            'cultivos' => 'nullable|string',
             'dosis' => 'nullable|string',
             'recomendaciones_de_uso' => 'nullable|string',
             'banda_toxicologica' => 'nullable|string|max:255',
@@ -69,6 +74,8 @@ class ProductController extends Controller
             'pdfs.*' => 'file|mimes:pdf|max:10240', // Max 10MB per PDF
             'precio' => 'nullable|numeric|min:0',
             'activo' => 'boolean',
+            'cultivos_ids' => 'nullable|array',
+            'cultivos_ids.*' => 'exists:cultivos,id',
         ]);
 
         // Manejar la imagen
@@ -90,7 +97,16 @@ class ProductController extends Controller
             $validated['pdfs'] = $pdfPaths;
         }
 
-        Producto::create($validated);
+        // Remover cultivos_ids del validated ya que no es un campo del modelo
+        $cultivosIds = $validated['cultivos_ids'] ?? [];
+        unset($validated['cultivos_ids']);
+
+        $producto = Producto::create($validated);
+
+        // Asociar cultivos si se seleccionaron
+        if (!empty($cultivosIds)) {
+            $producto->cultivos()->attach($cultivosIds);
+        }
 
         return redirect()->route('admin.productos')->with('success', 'Producto creado exitosamente.');
     }
@@ -114,9 +130,14 @@ class ProductController extends Controller
             ->orderBy('nombre')
             ->get(['id', 'nombre']);
 
+        $cultivos = Cultivo::where('activo', true)
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
         return Inertia::render('Admin/EditProduct', [
-            'producto' => $producto->load('categoria'),
+            'producto' => $producto->load(['categoria', 'cultivos']),
             'categorias' => $categorias,
+            'cultivos' => $cultivos,
         ]);
     }
 
@@ -137,7 +158,6 @@ class ProductController extends Controller
             'banda' => 'nullable|string|max:255',
             'mecanismo_de_accion' => 'nullable|string',
             'malezas' => 'nullable|string',
-            'cultivos' => 'nullable|string',
             'dosis' => 'nullable|string',
             'recomendaciones_de_uso' => 'nullable|string',
             'banda_toxicologica' => 'nullable|string|max:255',
@@ -146,6 +166,8 @@ class ProductController extends Controller
             'pdfs.*' => 'file|mimes:pdf|max:10240', // Max 10MB per PDF
             'precio' => 'nullable|numeric|min:0',
             'activo' => 'boolean',
+            'cultivos_ids' => 'nullable|array',
+            'cultivos_ids.*' => 'exists:cultivos,id',
         ]);
 
         // Manejar la imagen
@@ -181,7 +203,14 @@ class ProductController extends Controller
             $validated['pdfs'] = $pdfPaths;
         }
 
+        // Remover cultivos_ids del validated ya que no es un campo del modelo
+        $cultivosIds = $validated['cultivos_ids'] ?? [];
+        unset($validated['cultivos_ids']);
+
         $producto->update($validated);
+
+        // Sincronizar cultivos (esto reemplaza todas las relaciones existentes)
+        $producto->cultivos()->sync($cultivosIds);
 
         return redirect()->route('admin.productos')->with('success', 'Producto actualizado exitosamente.');
     }

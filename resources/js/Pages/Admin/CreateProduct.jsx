@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function CreateProduct({ categorias }) {
+export default function CreateProduct({ categorias, cultivos }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         nombre: '',
         imagen: null,
@@ -15,13 +15,13 @@ export default function CreateProduct({ categorias }) {
         banda: '',
         mecanismo_de_accion: '',
         malezas: '',
-        cultivos: '',
         dosis: '',
         recomendaciones_de_uso: '',
         banda_toxicologica: '',
         arbol_de_recomendacion: '',
         activo: true,
         pdfs: [],
+        cultivos_ids: [],
     });
 
     const [imagePreview, setImagePreview] = useState(null);
@@ -63,6 +63,21 @@ export default function CreateProduct({ categorias }) {
 
     const handlePdfsChange = (e) => {
         setData('pdfs', Array.from(e.target.files));
+    };
+
+    const handleCultivoChange = (cultivoId) => {
+        const currentCultivos = [...data.cultivos_ids];
+        const index = currentCultivos.indexOf(cultivoId);
+        
+        if (index > -1) {
+            // Si ya está seleccionado, lo removemos
+            currentCultivos.splice(index, 1);
+        } else {
+            // Si no está seleccionado, lo agregamos
+            currentCultivos.push(cultivoId);
+        }
+        
+        setData('cultivos_ids', currentCultivos);
     };
 
     return (
@@ -311,9 +326,9 @@ export default function CreateProduct({ categorias }) {
                                     {errors.descripcion && <p className="text-red-600 text-sm mt-2">{errors.descripcion}</p>}
                                 </div>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 gap-6">
                                     {/* Banda */}
-                                    <div>
+                                    {/* <div>
                                         <label htmlFor="banda" className="block text-sm font-medium text-gray-900 mb-2">
                                             Banda
                                         </label>
@@ -326,7 +341,8 @@ export default function CreateProduct({ categorias }) {
                                             placeholder="Ej: Verde, Azul, Roja"
                                         />
                                         {errors.banda && <p className="text-red-600 text-sm mt-2">{errors.banda}</p>}
-                                    </div>
+                                    </div>     */}
+                                    
 
                                     {/* Banda Toxicológica */}
                                     <div>
@@ -339,7 +355,7 @@ export default function CreateProduct({ categorias }) {
                                             value={data.banda_toxicologica}
                                             onChange={(e) => setData('banda_toxicologica', e.target.value)}
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                            placeholder="Ej: I, II, III, IV"
+                                            placeholder="Ej: Verde, Azul, Roja"
                                         />
                                         {errors.banda_toxicologica && <p className="text-red-600 text-sm mt-2">{errors.banda_toxicologica}</p>}
                                     </div>
@@ -411,18 +427,71 @@ export default function CreateProduct({ categorias }) {
 
                                     {/* Cultivos */}
                                     <div>
-                                        <label htmlFor="cultivos" className="block text-sm font-medium text-gray-900 mb-2">
-                                            Cultivos
+                                        <label className="block text-sm font-medium text-gray-900 mb-3">
+                                            Cultivos Aplicables
                                         </label>
-                                        <textarea
-                                            id="cultivos"
-                                            rows={3}
-                                            value={data.cultivos}
-                                            onChange={(e) => setData('cultivos', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                            placeholder="Lista los cultivos donde se aplica..."
-                                        />
-                                        {errors.cultivos && <p className="text-red-600 text-sm mt-2">{errors.cultivos}</p>}
+                                        <div className="space-y-3">
+                                            <p className="text-xs text-gray-500">
+                                                Selecciona los cultivos donde se puede aplicar este producto
+                                            </p>
+                                            
+                                            {cultivos && cultivos.length > 0 ? (
+                                                <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
+                                                    {cultivos.map((cultivo) => {
+                                                        const isSelected = data.cultivos_ids.includes(cultivo.id);
+                                                        return (
+                                                            <label
+                                                                key={cultivo.id}
+                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                    isSelected
+                                                                        ? 'bg-blue-100 text-blue-800 border-blue-300 shadow-md'
+                                                                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                                }`}
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={isSelected}
+                                                                    onChange={() => handleCultivoChange(cultivo.id)}
+                                                                    className="sr-only"
+                                                                />
+                                                                <span className="flex items-center">
+                                                                    {isSelected && (
+                                                                        <svg className="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                        </svg>
+                                                                    )}
+                                                                    {cultivo.nombre}
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    })}
+                                                </div>
+                                            ) : (
+                                                <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                                                    <svg className="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                                    </svg>
+                                                    <p className="text-sm text-gray-500">No hay cultivos disponibles</p>
+                                                    <p className="text-xs text-gray-400 mt-1">
+                                                        Primero debes crear cultivos desde el módulo correspondiente
+                                                    </p>
+                                                </div>
+                                            )}
+                                            
+                                            {data.cultivos_ids.length > 0 && (
+                                                <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                                    <div className="flex items-center text-sm text-blue-800">
+                                                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                        </svg>
+                                                        <span className="font-medium">
+                                                            {data.cultivos_ids.length} cultivo{data.cultivos_ids.length !== 1 ? 's' : ''} seleccionado{data.cultivos_ids.length !== 1 ? 's' : ''}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                        {errors.cultivos_ids && <p className="text-red-600 text-sm mt-2">{errors.cultivos_ids}</p>}
                                     </div>
                                 </div>
 

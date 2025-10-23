@@ -27,7 +27,6 @@ class Producto extends Model
         'banda',
         'mecanismo_de_accion',
         'malezas',
-        'cultivos',
         'dosis',
         'recomendaciones_de_uso',
         'banda_toxicologica',
@@ -97,5 +96,13 @@ class Producto extends Model
     public function getPdfsArrayAttribute()
     {
         return $this->pdfs ?? [];
+    }
+
+    /**
+     * Relación many-to-many con cultivos
+     */
+    public function cultivos()
+    {
+        return $this->belongsToMany(Cultivo::class, 'cultivo_producto');
     }
 }
