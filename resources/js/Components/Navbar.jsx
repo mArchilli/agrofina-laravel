@@ -294,69 +294,81 @@ export default function Navbar({ variant = 'client' }) {
                                 {/* Mobile: columnas apiladas */}
                                 <div className="md:hidden grid gap-6">
                                     {/* Columna izquierda (mobile) */}
-                                    <nav className="flex flex-col items-center justify-center gap-2 text-lg">
-                                        {links.map((item) => (
-                                            <Link
-                                                key={item.label}
-                                                href={item.href}
-                                                onClick={() => setOpen(false)}
-                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
-                                            >
-                                                {item.label}
-                                            </Link>
-                                        ))}
-                                    </nav>
+                                    <div className="flex flex-col items-center justify-center gap-2 text-lg">
+                                        <div className="text-3xl font-extrabold mb-2 tracking-wide text-white">Navegación</div>
+                                        <nav className="flex flex-col items-center justify-center gap-2 w-full">
+                                            {links.map((item) => (
+                                                <Link
+                                                    key={item.label}
+                                                    href={item.href}
+                                                    onClick={() => setOpen(false)}
+                                                    className={`block rounded-lg px-4 py-3 font-medium transition-colors text-white/70 hover:text-white hover:bg-white/10 ${isCurrent(item.href) ? 'bg-white/10 text-white' : ''}`}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
+                                        </nav>
+                                    </div>
 
                                     {/* Divisor horizontal mobile (entre contacto e institucional) */}
                                     <div className="w-full h-[2px] bg-[#5FC48D] rounded-full opacity-90" aria-hidden />
 
                                     {/* Columna derecha (mobile) */}
-                                    <nav className="flex flex-col items-center justify-center gap-2 text-lg">
-                                        {extraLinks.map((item) => (
-                                            <Link
-                                                key={item.label}
-                                                href={item.href}
-                                                onClick={() => setOpen(false)}
-                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10 hover:underline underline-offset-4'}`}
-                                            >
-                                                {item.label}
-                                            </Link>
-                                        ))}
-                                    </nav>
+                                    <div className="flex flex-col items-center justify-center gap-2 text-lg">
+                                        <div className="text-3xl font-extrabold mb-2 tracking-wide text-white">Empresa</div>
+                                        <nav className="flex flex-col items-center justify-center gap-2 w-full">
+                                            {extraLinks.map((item) => (
+                                                <Link
+                                                    key={item.label}
+                                                    href={item.href}
+                                                    onClick={() => setOpen(false)}
+                                                    className={`block rounded-lg px-4 py-3 font-medium transition-colors text-white/70 hover:text-white hover:bg-white/10 ${isCurrent(item.href) ? 'bg-white/10 text-white' : ''}`}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
+                                        </nav>
+                                    </div>
                                 </div>
 
                                 {/* Desktop: columnas lado a lado */}
                                 <div className="hidden md:grid grid-cols-[1fr_2px_1fr] gap-6 md:gap-20 items-center">
                                     {/* Columna izquierda (desktop) - contenido centrado dentro de la columna */}
-                                    <nav className="flex flex-col items-center justify-center gap-6 text-2xl w-full">
-                                        {links.map((item) => (
-                                            <Link
-                                                key={item.label}
-                                                href={item.href}
-                                                onClick={() => setOpen(false)}
-                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10'}`}
-                                            >
-                                                {item.label}
-                                            </Link>
-                                        ))}
-                                    </nav>
+                                    <div className="flex flex-col items-center justify-center gap-6 text-2xl w-full">
+                                        <div className="text-4xl font-extrabold mb-2 tracking-wide text-white">Navegación</div>
+                                        <nav className="flex flex-col items-center justify-center gap-6 w-full">
+                                            {links.map((item) => (
+                                                <Link
+                                                    key={item.label}
+                                                    href={item.href}
+                                                    onClick={() => setOpen(false)}
+                                                    className={`block rounded-lg px-4 py-3 font-medium transition-colors text-white/70 hover:text-white hover:bg-white/10 ${isCurrent(item.href) ? 'bg-white/10 text-white' : ''}`}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
+                                        </nav>
+                                    </div>
 
                                     {/* Divisor vertical (desktop) */}
                                     <div className="w-[2px] h-full bg-[#5FC48D] rounded-full opacity-90" aria-hidden />
 
                                     {/* Columna derecha (desktop) - contenido centrado dentro de la columna */}
-                                    <nav className="flex flex-col items-center justify-center gap-6 text-2xl w-full">
-                                        {extraLinks.map((item) => (
-                                            <Link
-                                                key={item.label}
-                                                href={item.href}
-                                                onClick={() => setOpen(false)}
-                                                className={`block rounded-lg px-4 py-3 font-medium transition-colors ${isCurrent(item.href) ? 'bg-white/15' : 'hover:bg-white/10'}`}
-                                            >
-                                                {item.label}
-                                            </Link>
-                                        ))}
-                                    </nav>
+                                    <div className="flex flex-col items-center justify-center gap-6 text-2xl w-full">
+                                        <div className="text-4xl font-extrabold mb-2 tracking-wide text-white">Empresa</div>
+                                        <nav className="flex flex-col items-center justify-center gap-6 w-full">
+                                            {extraLinks.map((item) => (
+                                                <Link
+                                                    key={item.label}
+                                                    href={item.href}
+                                                    onClick={() => setOpen(false)}
+                                                    className={`block rounded-lg px-4 py-3 font-medium transition-colors text-white/70 hover:text-white hover:bg-white/10 ${isCurrent(item.href) ? 'bg-white/10 text-white' : ''}`}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
+                                        </nav>
+                                    </div>
                                 </div>
                             </div>
 
