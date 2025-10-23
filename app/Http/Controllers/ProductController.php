@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Cultivo;
+use App\Models\PrincipioActivo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -43,9 +44,14 @@ class ProductController extends Controller
             ->orderBy('nombre')
             ->get(['id', 'nombre']);
 
+        $principiosActivos = PrincipioActivo::active()
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
         return Inertia::render('Admin/CreateProduct', [
             'categorias' => $categorias,
             'cultivos' => $cultivos,
+            'principiosActivos' => $principiosActivos,
         ]);
     }
 
@@ -58,6 +64,7 @@ class ProductController extends Controller
             'nombre' => 'required|string|max:255',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'categoria_id' => 'nullable|exists:categorias,id',
+            'principio_activo_id' => 'nullable|exists:principio_activos,id',
             'principio_activo' => 'nullable|string|max:255',
             'formulacion' => 'nullable|string|max:255',
             'descripcion' => 'nullable|string',
@@ -134,10 +141,15 @@ class ProductController extends Controller
             ->orderBy('nombre')
             ->get(['id', 'nombre']);
 
+        $principiosActivos = PrincipioActivo::active()
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
         return Inertia::render('Admin/EditProduct', [
-            'producto' => $producto->load(['categoria', 'cultivos']),
+            'producto' => $producto->load(['categoria', 'cultivos', 'principioActivo']),
             'categorias' => $categorias,
             'cultivos' => $cultivos,
+            'principiosActivos' => $principiosActivos,
         ]);
     }
 
@@ -150,6 +162,7 @@ class ProductController extends Controller
             'nombre' => 'required|string|max:255',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'categoria_id' => 'nullable|exists:categorias,id',
+            'principio_activo_id' => 'nullable|exists:principio_activos,id',
             'principio_activo' => 'nullable|string|max:255',
             'formulacion' => 'nullable|string|max:255',
             'descripcion' => 'nullable|string',
