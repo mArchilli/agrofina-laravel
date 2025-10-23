@@ -209,8 +209,8 @@ export default function Navbar({ variant = 'client' }) {
             data-scrolled={scrolled && !open}
             className="fixed inset-x-0 top-0 z-[999999] w-full border-b border-transparent bg-transparent text-white transition-colors duration-300 data-[scrolled=true]:bg-[#00833E] data-[scrolled=true]:border-[#00833E] data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm group"
         >
-            <div className="mx-auto max-w-6xl h-16 px-4 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-2" aria-label="Ir al inicio">
+            <div className="mx-auto max-w-6xl h-16 flex items-center justify-between">
+                <Link href="/" className="flex items-center gap-2 -ml-4" aria-label="Ir al inicio">
                                     <img
                                         src="/images/minilogo-agrofina.png"
                                         alt="Agrofina"
