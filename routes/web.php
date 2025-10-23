@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CultivoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -103,6 +104,9 @@ Route::middleware('auth')->group(function () {
         // Ruta adicional para obtener categorías activas (para selects)
         Route::get('categorias-activas', [CategoriaController::class, 'getActive'])->name('categorias.active');
     });
+    
+    // Rutas para cultivos (fuera del prefijo admin para usar nombres más simples)
+    Route::resource('cultivos', CultivoController::class);
 });
 
 require __DIR__.'/auth.php';
