@@ -43,13 +43,14 @@ function Hero() {
                 <div className="mx-auto max-w-7xl h-full px-4">
                     <div className="flex h-full items-end">
                         <div className="pb-6 md:pb-8 lg:pb-10">
-                            <p className="text-lime-300/90 font-medium tracking-wide">Innovación y tecnología propia</p>
-                            <h1 className="mt-3 text-4xl/tight md:text-5xl/tight lg:text-6xl font-semibold text-white max-w-3xl">
-                                Innovación argentina para proteger cada cultivo
-                            </h1>
-                            <p className="mt-4 text-white/85 max-w-2xl">
-                                Desarrollamos, sintetizamos y formulamos soluciones fitosanitarias de alta performance, con tecnología propia y compromiso con la sustentabilidad del agro.
-                            </p>
+                            <div className="flex items-center mt-3">
+                                <img 
+                                    src="/images/logo-agrofina-horizontal.png" 
+                                    alt="Agrofina" 
+                                    className="w-[320px] md:w-[420px] lg:w-[520px] h-auto drop-shadow-xl"
+                                    draggable="false"
+                                />
+                            </div>
                             <div className="mt-8 flex flex-wrap gap-3">
                                 <a
                                     href="#portafolio"
