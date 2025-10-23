@@ -43,13 +43,26 @@ function Hero() {
                 <div className="mx-auto max-w-7xl h-full px-4">
                     <div className="flex h-full items-end">
                         <div className="pb-6 md:pb-8 lg:pb-10">
-                            <div className="flex items-center mt-3">
+                            <div className="flex flex-col items-start mt-3">
                                 <img 
                                     src="/images/logo-agrofina-horizontal.png" 
                                     alt="Agrofina" 
-                                    className="w-[320px] md:w-[420px] lg:w-[520px] h-auto drop-shadow-xl"
+                                    className="w-[220px] sm:w-[320px] md:w-[420px] lg:w-[520px] h-auto drop-shadow-xl"
                                     draggable="false"
                                 />
+                                <div className="my-3">
+                                    <div
+                                        className="rounded-full mx-0"
+                                        style={{
+                                            width: '80px',
+                                            height: '8px',
+                                            background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)'
+                                        }}
+                                    />
+                                </div>
+                                <p className="text-white/90 text-base sm:text-lg max-w-xs sm:max-w-md">
+                                    Somos una compañía dedicada a brindar soluciones para el desarrollo de una agricultura sustentable.
+                                </p>
                             </div>
                             <div className="mt-8 flex flex-wrap gap-3">
                                 <a
@@ -79,9 +92,11 @@ function WhoWeAre() {
             <div className="pointer-events-none absolute inset-0 -z-10 " aria-hidden />
             <div className="grid gap-8 md:grid-cols-2 md:items-center">
                 <div>
-                    <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-emerald-800 text-xs font-semibold">Quiénes somos</span>
-                    <h2 className="mt-3 text-2xl md:text-3xl font-semibold tracking-tight">Conocimiento local, alcance nacional</h2>
-                    <p className="mt-3 text-gray-700 leading-relaxed">
+                    <div
+                        style={{ width: '80px', height: '8px', background: 'linear-gradient(90deg, #7ED957 0%, #00833E 100%)' }}
+                        className="rounded-full mx-auto my-4"
+                    />
+                    <p className="text-gray-700 leading-relaxed">
                         Desde hace más de 45 años, en Agrofina S.A. trabajamos para acompañar al productor argentino con soluciones innovadoras, eficientes y seguras. Nacimos en 1978 bajo el nombre Ipesa, y hoy formamos parte del Grupo Los Grobo, una de las compañías agroindustriales más importantes del país.
                     </p>
                     <p className="mt-3 text-gray-700 leading-relaxed">
