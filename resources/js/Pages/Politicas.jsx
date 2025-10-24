@@ -172,13 +172,13 @@ export default function Politicas() {
             </p>
           </div>
           <div className="w-full mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {dropdowns.map((item, idx) => {
                 const isOpen = open === idx;
                 return (
                   <div
                     key={item.title}
-                    className={`border border-emerald-200 rounded-lg bg-emerald-50 overflow-hidden transition-all duration-300 ${isOpen ? 'md:col-span-2' : ''}`}
+                    className="border border-emerald-200 rounded-lg bg-emerald-50 overflow-hidden transition-all duration-300"
                   >
                     <button
                       className="w-full flex justify-between items-center px-5 py-4 text-left font-semibold text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition"
