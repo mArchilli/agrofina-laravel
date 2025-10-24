@@ -101,13 +101,13 @@ const dropdowns = [
           <p className="mb-4">
             Agrofina cuenta con un Manual de Manejo de Materiales que reúne las prácticas seguras para la manipulación, almacenamiento y despacho de productos fitosanitarios. Este manual está a disposición de sus clientes en cada uno de los puntos de distribución a lo largo y ancho del país.
           </p>
-          <a
-            href="/pdfs/products/Agrofina-ManualManejoMateriales.pdf"
-            download
-            className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded shadow transition"
-          >
-            Descargar el manual (PDF)
-          </a>
+            <a
+              href="/pdfs/products/Agrofina-ManualManejoMateriales.pdf"
+              download
+              className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded shadow transition w-auto max-w-xs text-center"
+            >
+              Descargar el manual (PDF)
+            </a>
         </div>
       </div>
     ),
@@ -188,11 +188,14 @@ export default function Politicas() {
                       <span className="flex items-center">{item.icon}{item.title}</span>
                       <svg className={`w-5 h-5 ml-2 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     </button>
-                    {isOpen && (
-                      <div className="px-5 pb-4 text-gray-700 animate-fade-in">
+                    <div
+                      className={`overflow-hidden transition-all duration-200 ease-out ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+                      aria-hidden={!isOpen}
+                    >
+                      <div className="px-5 pt-4 pb-4 text-gray-700">
                         {item.content || <span className="italic text-emerald-700/80">Próximamente…</span>}
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}
