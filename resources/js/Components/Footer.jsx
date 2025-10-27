@@ -20,8 +20,10 @@ const rightLinks = [
 export default function Footer() {
   return (
     <>
-      <div className="w-full bg-emerald-900 text-emerald-50">
-        <div className="mx-auto max-w-6xl px-4 pt-10 pb-6 flex flex-col gap-6 md:flex-row md:gap-8 justify-between">
+      <footer className="w-full bg-emerald-900 text-emerald-50">
+  <div className="mx-auto max-w-6xl px-4 pt-4 pb-8 md:pt-12">
+    {/* Ubicaciones: integradas dentro del footer para evitar líneas divisorias en mobile */}
+  <div className="pt-4 pb-4 flex flex-col gap-6 md:flex-row md:gap-8 md:pt-10 md:justify-center md:space-x-12 md:mb-10 justify-between">
           <div className="flex-1 min-w-[220px]">
             <div className="font-medium text-emerald-50 mb-1">Administración</div>
             <div className="text-emerald-100/90 text-sm">Dr. Nicolás Repetto 3676<br/>(Complejo Olivos Building I) Olivos, BA | ARG</div>
@@ -35,13 +37,9 @@ export default function Footer() {
             <div className="text-emerald-100/90 text-sm">Camino Santa Ana S/N (B2800DDF)<br/>Zárate, Provincia de Buenos Aires | ARG</div>
           </div>
         </div>
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="border-t border-white/10 my-2" />
-        </div>
-      </div>
-      <footer className="w-full bg-emerald-900 text-emerald-50">
-    <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+  {/* Divisoria horizontal entre Ubicaciones y la grilla principal */}
+  <div className="border-t border-white/10 mt-10 mb-10" />
+  <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <div className="text-lg font-semibold">Agrofina</div>
             <p className="mt-2 text-emerald-100/80 text-sm">
