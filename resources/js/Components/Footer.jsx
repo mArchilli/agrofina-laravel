@@ -20,7 +20,6 @@ const rightLinks = [
 export default function Footer() {
   return (
     <>
-      {/* Sección de ubicaciones arriba del footer */}
       <div className="w-full bg-emerald-900 text-emerald-50">
         <div className="mx-auto max-w-6xl px-4 pt-10 pb-6 flex flex-col gap-6 md:flex-row md:gap-8 justify-between">
           <div className="flex-1 min-w-[220px]">
@@ -36,9 +35,12 @@ export default function Footer() {
             <div className="text-emerald-100/90 text-sm">Camino Santa Ana S/N (B2800DDF)<br/>Zárate, Provincia de Buenos Aires | ARG</div>
           </div>
         </div>
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="border-t border-white/10 my-2" />
+        </div>
       </div>
       <footer className="w-full bg-emerald-900 text-emerald-50">
-        <div className="mx-auto max-w-6xl px-4 py-20">
+    <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <div className="text-lg font-semibold">Agrofina</div>
@@ -91,28 +93,19 @@ export default function Footer() {
         </div>
         <div className="mt-10 border-t border-white/10 pt-6 text-xs text-emerald-100/70">
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between">
-            <div className="text-center sm:text-left">
-              © {new Date().getFullYear()} Agrofina. Todos los derechos reservados.
-            </div>
-            <div className="text-center sm:text-right">
-              Desarrollado por{' '}
-              <a
-                href="https://archillimatias.dev/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-emerald-50"
-              >
-                Archilli Matias
-              </a>
-              {' '}y{' '}
-              <a
-                href="https://comollileon.dev/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-emerald-50"
-              >
-                Comolli Leon
-              </a>
+            <div className="flex flex-col sm:flex-row items-center justify-between w-full">
+              <span className="text-center sm:text-left">© {new Date().getFullYear()} Agrofina. Todos los derechos reservados.</span>
+              <div className="flex items-center gap-6 mt-3 sm:mt-0 sm:ml-0">
+                <a href="https://www.ciafa.org.ar/" target="_blank" rel="noopener noreferrer">
+                  <img src="/images/logo-ciafa.png" alt="Logo Ciafa" className="h-12 w-auto" />
+                </a>
+                <a href="https://www.grupolosgrobo.com/ideas-para-transformar/medios/premio-fortuna-a-la-mejor-empresa-de-agroservicios-agrofina" target="_blank" rel="noopener noreferrer">
+                  <img src="/images/premio-fortuna.png" alt="Premio Fortuna" className="h-10 w-auto" />
+                </a>
+                <a href="https://www.grupolosgrobo.com/" target="_blank" rel="noopener noreferrer">
+                  <img src="/images/grupo-los-grobos.png" alt="Grupo Los Grobo" className="h-24 w-40 object-contain" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
