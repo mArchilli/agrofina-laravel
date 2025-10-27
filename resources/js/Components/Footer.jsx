@@ -19,8 +19,26 @@ const rightLinks = [
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-emerald-900 text-emerald-50">
-      <div className="mx-auto max-w-6xl px-4 py-20">
+    <>
+      {/* Sección de ubicaciones arriba del footer */}
+      <div className="w-full bg-emerald-900 text-emerald-50">
+        <div className="mx-auto max-w-6xl px-4 pt-10 pb-6 flex flex-col gap-6 md:flex-row md:gap-8 justify-between">
+          <div className="flex-1 min-w-[220px]">
+            <div className="font-medium text-emerald-50 mb-1">Administración</div>
+            <div className="text-emerald-100/90 text-sm">Dr. Nicolás Repetto 3676<br/>(Complejo Olivos Building I) Olivos, BA | ARG</div>
+          </div>
+          <div className="flex-1 min-w-[220px]">
+            <div className="font-medium text-emerald-50 mb-1">Laboratorio</div>
+            <div className="text-emerald-100/90 text-sm">Joaquín V. González 4977 (C1419AYK)<br/>Ciudad Autónoma de Buenos Aires | ARG</div>
+          </div>
+          <div className="flex-1 min-w-[220px]">
+            <div className="font-medium text-emerald-50 mb-1">Planta producción</div>
+            <div className="text-emerald-100/90 text-sm">Camino Santa Ana S/N (B2800DDF)<br/>Zárate, Provincia de Buenos Aires | ARG</div>
+          </div>
+        </div>
+      </div>
+      <footer className="w-full bg-emerald-900 text-emerald-50">
+        <div className="mx-auto max-w-6xl px-4 py-20">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <div className="text-lg font-semibold">Agrofina</div>
@@ -71,21 +89,6 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        {/* Ubicaciones físicas */}
-        <div className="w-full mt-10 flex flex-col gap-6 md:flex-row md:gap-8 justify-between">
-          <div className="flex-1 min-w-[220px]">
-            <div className="font-medium text-emerald-50 mb-1">Administración</div>
-            <div className="text-emerald-100/90 text-sm">Dr. Nicolás Repetto 3676<br/>(Complejo Olivos Building I) Olivos, BA | ARG</div>
-          </div>
-          <div className="flex-1 min-w-[220px]">
-            <div className="font-medium text-emerald-50 mb-1">Laboratorio</div>
-            <div className="text-emerald-100/90 text-sm">Joaquín V. González 4977 (C1419AYK)<br/>Ciudad Autónoma de Buenos Aires | ARG</div>
-          </div>
-          <div className="flex-1 min-w-[220px]">
-            <div className="font-medium text-emerald-50 mb-1">Planta producción</div>
-            <div className="text-emerald-100/90 text-sm">Camino Santa Ana S/N (B2800DDF)<br/>Zárate, Provincia de Buenos Aires | ARG</div>
-          </div>
-        </div>
         <div className="mt-10 border-t border-white/10 pt-6 text-xs text-emerald-100/70">
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-between">
             <div className="text-center sm:text-left">
@@ -115,5 +118,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
