@@ -21,20 +21,44 @@ export default function Footer() {
   return (
     <>
       <footer className="w-full bg-emerald-900 text-emerald-50">
-  <div className="mx-auto max-w-6xl px-4 pt-4 pb-8 md:pt-12">
+  <div className="mx-auto max-w-6xl px-4 pt-2 pb-4 md:pt-6 md:pb-6">
     {/* Ubicaciones: integradas dentro del footer para evitar líneas divisorias en mobile */}
   <div className="pt-4 pb-4 flex flex-col gap-6 md:flex-row md:gap-8 md:pt-10 md:justify-center md:space-x-12 md:mb-10 justify-between">
           <div className="flex-1 min-w-[220px]">
             <div className="font-medium text-emerald-50 mb-1">Administración</div>
-            <div className="text-emerald-100/90 text-sm">Dr. Nicolás Repetto 3676<br/>(Complejo Olivos Building I) Olivos, BA | ARG</div>
+            <div className="text-emerald-100/90 text-sm">
+              <span className="inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" width="14" height="14" style={{verticalAlign:'middle'}}>
+                  <path fill="#059669" d="M10 2a6 6 0 0 0-6 6c0 4.418 5.25 9.25 5.477 9.462a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8a6 6 0 0 0-6-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                </svg>
+                Dr. Nicolás Repetto 3676
+              </span><br/>
+              (Complejo Olivos Building I) Olivos, BA | ARG
+            </div>
           </div>
           <div className="flex-1 min-w-[220px]">
             <div className="font-medium text-emerald-50 mb-1">Laboratorio</div>
-            <div className="text-emerald-100/90 text-sm">Joaquín V. González 4977 (C1419AYK)<br/>Ciudad Autónoma de Buenos Aires | ARG</div>
+            <div className="text-emerald-100/90 text-sm">
+              <span className="inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" width="14" height="14" style={{verticalAlign:'middle'}}>
+                  <path fill="#059669" d="M10 2a6 6 0 0 0-6 6c0 4.418 5.25 9.25 5.477 9.462a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8a6 6 0 0 0-6-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                </svg>
+                Joaquín V. González 4977 (C1419AYK)
+              </span><br/>
+              Ciudad Autónoma de Buenos Aires | ARG
+            </div>
           </div>
           <div className="flex-1 min-w-[220px]">
             <div className="font-medium text-emerald-50 mb-1">Planta producción</div>
-            <div className="text-emerald-100/90 text-sm">Camino Santa Ana S/N (B2800DDF)<br/>Zárate, Provincia de Buenos Aires | ARG</div>
+            <div className="text-emerald-100/90 text-sm">
+              <span className="inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" width="14" height="14" style={{verticalAlign:'middle'}}>
+                  <path fill="#059669" d="M10 2a6 6 0 0 0-6 6c0 4.418 5.25 9.25 5.477 9.462a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8a6 6 0 0 0-6-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                </svg>
+                Camino Santa Ana S/N (B2800DDF)
+              </span><br/>
+              Zárate, Provincia de Buenos Aires | ARG
+            </div>
           </div>
         </div>
   {/* Divisoria horizontal entre Ubicaciones y la grilla principal */}
@@ -81,11 +105,11 @@ export default function Footer() {
           <div>
             <div className="font-medium">Redes</div>
             <ul className="mt-3 space-y-1 text-sm text-emerald-100/90">
-              <li><a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              <li><a href="https://www.instagram.com/agrofinaoficial/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-              <li><a href="https://www.youtube.com/watch?v=YBaXGmzZL60" target="_blank" rel="noopener noreferrer">Youtube</a></li>
-              <li><a href="https://www.facebook.com/AgrofinaArgentina" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-              <li><a href="https://x.com/Agrofinatec" target="_blank" rel="noopener noreferrer">X</a></li>
+              <li><a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-50 transition-colors">LinkedIn</a></li>
+              <li><a href="https://www.instagram.com/agrofinaoficial/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-50 transition-colors">Instagram</a></li>
+              <li><a href="https://www.youtube.com/watch?v=YBaXGmzZL60" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-50 transition-colors">Youtube</a></li>
+              <li><a href="https://www.facebook.com/AgrofinaArgentina" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-50 transition-colors">Facebook</a></li>
+              <li><a href="https://x.com/Agrofinatec" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-50 transition-colors">X</a></li>
             </ul>
           </div>
         </div>
