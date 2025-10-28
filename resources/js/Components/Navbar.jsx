@@ -377,42 +377,44 @@ export default function Navbar({ variant = 'client' }) {
                             <div className="md:hidden w-full h-[2px] bg-[#5FC48D] rounded-full opacity-90 mb-6 mt-6" aria-hidden />
 
                             {/* Footer del menú: Redes + © anclados abajo */}
-                            <div className="mt-auto px-4">
+                            <div className="mt-auto px-4 text-center md:text-left">
                                 
                                 <div className="text-white/80 text-sm mb-2">Seguinos</div>
-                                <div className="flex items-center gap-3">
-                                    <a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                                            <path d="M8.25 10.5v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                            <circle cx="8.25" cy="7.75" r="1.25" fill="currentColor" />
-                                            <path d="M12 16.5v-3.6c0-1.325 1.075-2.4 2.4-2.4h0c1.325 0 2.4 1.075 2.4 2.4v3.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                        </svg>
-                                    </a>
-                                    <a href="https://www.instagram.com/agrofinaoficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
-                                            <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
-                                            <circle cx="17" cy="7" r="1" fill="currentColor" />
-                                        </svg>
-                                    </a>
-                                    <a href="https://www.youtube.com/watch?v=YBaXGmzZL60" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="3" y="7" width="18" height="10" rx="3" stroke="currentColor" strokeWidth="1.5" />
-                                            <path d="M11 10v4l4-2-4-2z" fill="currentColor" />
-                                        </svg>
-                                    </a>
-                                    <a href="https://www.facebook.com/AgrofinaArgentina" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2L16 11h-3V9a1 1 0 0 1 1-1Z" fill="currentColor" />
-                                        </svg>
-                                    </a>
-                                    <a href="https://x.com/Agrofinatec" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
-                                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M4 4l7.5 9.2L6 20h2.6l4.2-4.9L16.8 20H20l-7.6-9.3L18 4h-2.6l-4 4.7L8 4H4z" fill="currentColor" />
-                                        </svg>
-                                    </a>
-                                    <span className="ml-auto text-white/80 text-sm whitespace-nowrap">Atención al Cliente: +54 11 4837 7800</span>
+                                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                                    <div className="flex items-center justify-center md:justify-start gap-3">
+                                        <a href="https://www.linkedin.com/company/agrofina-sa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                                                <path d="M8.25 10.5v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                                <circle cx="8.25" cy="7.75" r="1.25" fill="currentColor" />
+                                                <path d="M12 16.5v-3.6c0-1.325 1.075-2.4 2.4-2.4h0c1.325 0 2.4 1.075 2.4 2.4v3.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                            </svg>
+                                        </a>
+                                        <a href="https://www.instagram.com/agrofinaoficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
+                                                <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
+                                                <circle cx="17" cy="7" r="1" fill="currentColor" />
+                                            </svg>
+                                        </a>
+                                        <a href="https://www.youtube.com/watch?v=YBaXGmzZL60" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="7" width="18" height="10" rx="3" stroke="currentColor" strokeWidth="1.5" />
+                                                <path d="M11 10v4l4-2-4-2z" fill="currentColor" />
+                                            </svg>
+                                        </a>
+                                        <a href="https://www.facebook.com/AgrofinaArgentina" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v5h3v-5h2.2L16 11h-3V9a1 1 0 0 1 1-1Z" fill="currentColor" />
+                                            </svg>
+                                        </a>
+                                        <a href="https://x.com/Agrofinatec" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/15 text-white">
+                                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M4 4l7.5 9.2L6 20h2.6l4.2-4.9L16.8 20H20l-7.6-9.3L18 4h-2.6l-4 4.7L8 4H4z" fill="currentColor" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <span className="text-white/80 text-sm md:ml-auto whitespace-nowrap">Atención al Cliente: +54 11 4837 7800</span>
                                 </div>
                                 <div className="text-white/80 text-sm mt-6">
                                     <p>© {new Date().getFullYear()} Agrofina</p>
