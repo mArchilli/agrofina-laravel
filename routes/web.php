@@ -115,4 +115,9 @@ Route::middleware('auth')->group(function () {
     ]);
 });
 
+// Ruta 404 personalizada (debe ir al final)
+Route::fallback(function () {
+    return Inertia::render('Error404');
+});
+
 require __DIR__.'/auth.php';

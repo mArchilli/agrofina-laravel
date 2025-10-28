@@ -19,5 +19,13 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->respond(function (\Illuminate\Http\Response $response, \Throwable $e, \Illuminate\Http\Request $request) {
+            if ($response->getStatusCode() === 404 && !$request->expectsJson()) {
+                return \Inertia\Inertia::render('Error404')
+                    ->toResponse($request)
+                    ->setStatusCode(404);
+            }
+            
+            return $response;
+        });
     })->create();
