@@ -67,6 +67,7 @@ export default function Navbar({ variant = 'client' }) {
         { label: 'Categorías', href: route('admin.categorias') },
         { label: 'Cultivos', href: route('cultivos.index') },
         { label: 'Principios Activos', href: route('principios-activos.index') },
+        { label: 'AgroNews', href: route('admin.agronews.index') },
     ];
 
     const links = variant === 'client' ? clientLinks : adminLinks;
