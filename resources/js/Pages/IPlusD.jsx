@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Head, Link } from '@inertiajs/react'
 import GuestLayout from '@/Layouts/GuestLayout'
 
@@ -18,6 +18,46 @@ export default function IplusD() {
 
   // Imagen del banner desde /public/images
   const heroImg = '/images/researchDevelopment/i-d.jpg'
+
+  const [open, setOpen] = useState(null)
+
+  const dropdowns = [
+    { title: 'Centro de Desarrollo de Síntesis', icon: (
+      <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="2" />
+        <circle cx="12" cy="6" r="2" stroke="currentColor" strokeWidth="2" />
+        <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="2" />
+        <path d="M7.5 11.5L10.5 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M13.5 7.5L16.5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8.5 13.5L15.5 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ), content: (
+      <div className="mt-2 text-gray-700 text-sm">Desarrollos y síntesis de nuevos ingredientes activos y procesos relacionados con la síntesis orgánica a escala industrial.</div>
+    ) },
+    { title: 'Laboratorio de Desarrollo de Formulaciones', icon: (
+      <svg className="w-6 h-6 text-emerald-700 mr-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 2h10l-3 7v8a2 2 0 01-4 0v-8L7 2z" />
+      </svg>
+    ), content: (
+      <div className="mt-2 text-gray-700 text-sm">Formulación y pruebas de estabilidad para desarrollar productos aplicables y seguros para los mercados objetivo.</div>
+    ) },
+        { title: 'Centro de Desarrollo Analítico', icon: (
+          <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="17" width="14" height="2" rx="1" fill="currentColor" />
+            <rect x="11" y="3" width="2" height="8" rx="1" fill="currentColor" />
+            <circle cx="12" cy="15" r="3" stroke="currentColor" strokeWidth="2" fill="none" />
+          </svg>
+        ), content: (
+      <div className="mt-2 text-gray-700 text-sm">Análisis, control de calidad y desarrollo de métodos analíticos para asegurar la calidad de materias primas y formulados.</div>
+    ) },
+    { title: 'Sistema Integrado de Gestión', icon: (
+      <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3l7 4v5c0 5-3.5 9-7 9s-7-4-7-9V7l7-4z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="none" />
+      </svg>
+    ), content: (
+      <div className="mt-2 text-gray-700 text-sm">Gestión de calidad, medioambiente y seguridad, con certificaciones y procesos alineados a ISO y buenas prácticas.</div>
+    ) },
+  ]
 
   return (
     <GuestLayout container={false}>
@@ -42,35 +82,24 @@ export default function IplusD() {
             />
           </div>
             <div className="flex flex-col gap-4 mt-0 mb-8">
-            {/* Centro de Desarrollo de Sintesis */}
-            <details className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 transition-shadow hover:shadow-md cursor-pointer">
-              <summary className="font-semibold text-emerald-800 cursor-pointer">Centro de Desarrollo de Síntesis</summary>
-              <div className="mt-2 text-gray-700 text-sm">
-                Descripción del Centro de Desarrollo de Síntesis.
-              </div>
-            </details>
-            {/* Laboratorio de Desarrollo de Formulaciones */}
-            <details className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 transition-shadow hover:shadow-md cursor-pointer">
-              <summary className="font-semibold text-emerald-800 cursor-pointer">Laboratorio de Desarrollo de Formulaciones</summary>
-              <div className="mt-2 text-gray-700 text-sm">
-                Descripción del Laboratorio de Desarrollo de Formulaciones.
-              </div>
-            </details>
-            {/* Centro de Desarrollo Analitico */}
-            <details className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 transition-shadow hover:shadow-md cursor-pointer">
-              <summary className="font-semibold text-emerald-800 cursor-pointer">Centro de Desarrollo Analítico</summary>
-              <div className="mt-2 text-gray-700 text-sm">
-                Descripción del Centro de Desarrollo Analítico.
-              </div>
-            </details>
-            {/* Sistema Integrado de Gestion de Calidad, medioambiente, Salud y Seguridad en el Trabajo */}
-            <details className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 transition-shadow hover:shadow-md cursor-pointer">
-              <summary className="font-semibold text-emerald-800 cursor-pointer">Sistema Integrado de Gestión de Calidad, Medioambiente, Salud y Seguridad en el Trabajo</summary>
-              <div className="mt-2 text-gray-700 text-sm">
-                Descripción del Sistema Integrado de Gestión de Calidad, Medioambiente, Salud y Seguridad en el Trabajo.
-              </div>
-            </details>
-          </div>
+              {dropdowns.map((item, idx) => (
+                <div key={item.title} className="border border-emerald-200 rounded-lg bg-emerald-50 overflow-hidden">
+                  <button
+                    className="w-full flex justify-between items-center px-5 py-4 text-left font-semibold text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition"
+                    onClick={() => setOpen(open === `item-${idx}` ? null : `item-${idx}`)}
+                    aria-expanded={open === `item-${idx}`}
+                  >
+                    <span className="flex items-center">{item.icon}{item.title}</span>
+                    <svg className={`w-5 h-5 ml-2 transition-transform ${open === `item-${idx}` ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </button>
+                  {open === `item-${idx}` && (
+                    <div className="px-5 pb-4 text-gray-700 animate-fade-in">
+                      {item.content}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
         </section>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </div>
