@@ -1,10 +1,27 @@
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router, Link } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function AgroNewsDashboard({ auth, agroNews }) {
-    const handleDelete = (id) => {
-        if (confirm('¿Estás seguro de que quieres eliminar este archivo?')) {
-            router.delete(route('admin.agronews.destroy', id));
+    const [showModal, setShowModal] = useState(false);
+    const [selectedPdf, setSelectedPdf] = useState(null);
+
+    const openDeleteModal = (pdf) => {
+        setSelectedPdf(pdf);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedPdf(null);
+    };
+
+    const confirmDelete = () => {
+        if (selectedPdf) {
+            router.delete(route('admin.agronews.destroy', selectedPdf.id), {
+                onSuccess: closeModal
+            });
         }
     };
 
@@ -27,6 +44,54 @@ export default function AgroNewsDashboard({ auth, agroNews }) {
             }
         >
             <Head title="AgroNews Dashboard" />
+
+            {/* Modal de confirmación de eliminación */}
+            {showModal && selectedPdf && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+                    <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+                        <button
+                            className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
+                            onClick={closeModal}
+                        >
+                            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <div className="flex items-center mb-4">
+                            <svg className="h-8 w-8 text-red-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                            </svg>
+                            <h3 className="text-lg font-semibold text-gray-900">Confirmar eliminación</h3>
+                        </div>
+                        <div className="mb-4">
+                            <p className="text-sm text-gray-700 mb-2">¿Seguro que deseas eliminar el siguiente PDF?</p>
+                            <div className="bg-gray-50 rounded p-3 border border-gray-200">
+                                <div className="mb-1"><span className="font-semibold">Título:</span> {selectedPdf.title}</div>
+                                {selectedPdf.description && (
+                                    <div className="mb-1"><span className="font-semibold">Descripción:</span> {selectedPdf.description}</div>
+                                )}
+                                <div className="mb-1"><span className="font-semibold">Archivo:</span> {selectedPdf.file_name}</div>
+                                <div className="mb-1"><span className="font-semibold">Tamaño:</span> {selectedPdf.formatted_file_size}</div>
+                                <div className="mb-1"><span className="font-semibold">Fecha de subida:</span> {selectedPdf.created_at}</div>
+                            </div>
+                        </div>
+                        <div className="flex justify-end space-x-2 mt-4">
+                            <button
+                                onClick={closeModal}
+                                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition ease-in-out duration-150"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={confirmDelete}
+                                className="inline-flex items-center px-6 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-900 focus:outline-none focus:border-red-900 focus:ring ring-red-300 transition ease-in-out duration-150"
+                            >
+                                Eliminar PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -115,7 +180,7 @@ export default function AgroNewsDashboard({ auth, agroNews }) {
                                                 </a>
                                                 
                                                 <button
-                                                    onClick={() => handleDelete(item.id)}
+                                                    onClick={() => openDeleteModal(item)}
                                                     className="inline-flex items-center px-3 py-2 border border-red-300 text-xs font-medium rounded text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
                                                 >
                                                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

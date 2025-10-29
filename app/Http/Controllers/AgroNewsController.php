@@ -64,36 +64,62 @@ class AgroNewsController extends Controller
         try {
             $file = $request->file('pdf_file');
             $originalName = $file->getClientOriginalName();
-            
+
             Log::info('AgroNews Store - Archivo recibido', [
                 'original_name' => $originalName,
                 'size' => $file->getSize(),
                 'mime_type' => $file->getMimeType()
             ]);
-            
+
             // Generar un nombre único para el archivo
             $fileName = time() . '_' . Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.pdf';
-            
+
             Log::info('AgroNews Store - Nombre de archivo generado', ['file_name' => $fileName]);
 
-            // Mover el archivo a la carpeta public/PDFs/agronews
-            $file->move(public_path('PDFs/agronews'), $fileName);
-            
+            // Obtener la ruta relativa y absoluta
+            $relativePath = trim(env('AGRONEWS_PDFS_PATH', 'PDFs/agronews'), '/');
+            $uploadPath = public_path($relativePath);
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            // Mover el archivo a la carpeta configurada
+            $file->move($uploadPath, $fileName);
+
             Log::info('AgroNews Store - Archivo movido exitosamente');
-            
+
+            // Guardar la ruta relativa en la base de datos (sin barra inicial)
+            $dbFilePath = $relativePath . '/' . $fileName;
+
+            // Obtener el tamaño del archivo movido
+            $finalFilePath = $uploadPath . DIRECTORY_SEPARATOR . $fileName;
+            $fileSize = file_exists($finalFilePath) ? filesize($finalFilePath) : null;
+
             // Crear el registro en la base de datos
             $agroNews = AgroNews::create([
                 'title' => $request->title,
                 'description' => $request->description,
-                'file_path' => 'agronews/' . $fileName,
+                'file_path' => $dbFilePath,
                 'file_name' => $originalName,
-                'file_size' => $file->getSize(),
+                'file_size' => $fileSize,
             ]);
 
-            Log::info('AgroNews Store - Registro creado en BD', ['id' => $agroNews->id]);
+            if ($agroNews && $agroNews->id) {
+                Log::info('AgroNews Store - Registro creado en BD', ['id' => $agroNews->id, 'data' => $agroNews->toArray()]);
+                return redirect()->route('admin.agronews.index')->with('success', 'Archivo PDF subido exitosamente.');
+            } else {
+                Log::error('AgroNews Store - Error: El registro no se guardó en la base de datos', [
+                    'data' => [
+                        'title' => $request->title,
+                        'description' => $request->description,
+                        'file_path' => $dbFilePath,
+                        'file_name' => $originalName,
+                        'file_size' => $file->getSize(),
+                    ]
+                ]);
+                throw new \Exception('No se pudo guardar el registro en la base de datos.');
+            }
 
-            return redirect()->route('admin.agronews.index')->with('success', 'Archivo PDF subido exitosamente.');
-            
         } catch (\Exception $e) {
             Log::error('AgroNews Store - Error', [
                 'message' => $e->getMessage(),
@@ -108,13 +134,34 @@ class AgroNewsController extends Controller
      */
     public function destroy(AgroNews $agroNews)
     {
+        Log::info('AgroNews Destroy - Inicio', [
+            'id' => $agroNews->id,
+            'title' => $agroNews->title,
+            'file_path' => $agroNews->file_path
+        ]);
+
         try {
+            // Verificar si el archivo existe antes de eliminar
+            $filePath = public_path(ltrim($agroNews->file_path, '/'));
+            $fileExists = file_exists($filePath);
+            
+            Log::info('AgroNews Destroy - Estado del archivo', [
+                'file_path' => $filePath,
+                'file_exists' => $fileExists
+            ]);
+
             // El modelo se encarga de eliminar el archivo físico en el evento deleting
             $agroNews->delete();
+            
+            Log::info('AgroNews Destroy - Registro eliminado exitosamente');
             
             return back()->with('success', 'Archivo eliminado exitosamente.');
             
         } catch (\Exception $e) {
+            Log::error('AgroNews Destroy - Error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return back()->with('error', 'Error al eliminar el archivo: ' . $e->getMessage());
         }
     }
@@ -124,7 +171,7 @@ class AgroNewsController extends Controller
      */
     public function download(AgroNews $agroNews)
     {
-        $filePath = public_path('agronews/' . basename($agroNews->file_path));
+        $filePath = public_path(ltrim($agroNews->file_path, '/'));
         
         if (!file_exists($filePath)) {
             return back()->with('error', 'El archivo no existe.');

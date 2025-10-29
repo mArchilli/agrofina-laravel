@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class AgroNews extends Model
 {
@@ -30,7 +31,7 @@ class AgroNews extends Model
      */
     public function getFileUrlAttribute()
     {
-        return $this->file_path ? asset('agronews/' . basename($this->file_path)) : null;
+        return $this->file_path ? asset(ltrim($this->file_path, '/')) : null;
     }
 
     /**
@@ -58,8 +59,32 @@ class AgroNews extends Model
         parent::boot();
 
         static::deleting(function ($agroNews) {
-            if ($agroNews->file_path && file_exists(public_path('agronews/' . basename($agroNews->file_path)))) {
-                unlink(public_path('agronews/' . basename($agroNews->file_path)));
+            if ($agroNews->file_path) {
+                $filePath = public_path(ltrim($agroNews->file_path, '/'));
+                
+                Log::info('AgroNews Model - Intentando eliminar archivo', [
+                    'file_path' => $agroNews->file_path,
+                    'full_path' => $filePath,
+                    'file_exists' => file_exists($filePath)
+                ]);
+                
+                if (file_exists($filePath)) {
+                    try {
+                        unlink($filePath);
+                        Log::info('AgroNews Model - Archivo eliminado exitosamente', [
+                            'file_path' => $filePath
+                        ]);
+                    } catch (\Exception $e) {
+                        Log::error('AgroNews Model - Error al eliminar archivo', [
+                            'file_path' => $filePath,
+                            'error' => $e->getMessage()
+                        ]);
+                    }
+                } else {
+                    Log::warning('AgroNews Model - Archivo no encontrado para eliminar', [
+                        'file_path' => $filePath
+                    ]);
+                }
             }
         });
     }
