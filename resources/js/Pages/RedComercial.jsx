@@ -554,13 +554,15 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/35 to-transparent" aria-hidden />
       <div className="absolute inset-0 flex items-end">
         <div className="mx-auto max-w-7xl w-full px-4 pb-6 md:pb-10">
-          <p className="text-lime-300/90 font-medium tracking-wide">Cobertura y atención comercial</p>
           <h1 className="mt-2 text-3xl md:text-5xl font-semibold text-white drop-shadow">Red Comercial</h1>
           <p className="mt-2 max-w-2xl text-white/85 text-sm md:text-base">
             Tenemos una amplia red en todo el país para acompañarte con asesoramiento y disponibilidad.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
-            <a href="#mapa-servicio-tecnico" className="inline-flex items-center justify-center rounded-md bg-lime-500 px-4 py-2.5 font-medium text-black shadow hover:bg-lime-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-300">
+            <a href="#mapa-servicio-tecnico" className="inline-flex items-center justify-center rounded-md bg-[#00833E] px-4 py-2.5 font-medium text-white shadow hover:bg-[#00994C] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00833E] gap-2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
+                <path d="M6 9l6 6 6-6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               Ver mapa de regiones
             </a>
             <a href="#contacto-servicio-tecnico" className="inline-flex items-center justify-center rounded-md border border-white/30 bg-white/10 px-4 py-2.5 font-medium text-white backdrop-blur hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
