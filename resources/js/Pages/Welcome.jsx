@@ -7,7 +7,6 @@ export default function Welcome() {
             <Head title="Inicio" />
             <div className="w-full space-y-16 md:space-y-24">
                 <Hero />
-                <WhoWeAre />
                 <Innovation />
                 <Technology />
                 <Portfolio />
@@ -89,59 +88,7 @@ function Hero() {
     );
 }
 
-function WhoWeAre() {
-    return (
-        <section id="quienes-somos" className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
-            <div className="pointer-events-none absolute inset-0 -z-10 " aria-hidden />
-            <div className="grid gap-8 md:grid-cols-2 md:items-center">
-                <div>
-                    <div
-                        style={{ width: '80px', height: '8px', background: 'linear-gradient(90deg, #7ED957 0%, #00833E 100%)' }}
-                        className="rounded-full mx-auto my-4"
-                    />
-                    <p className="text-gray-700 leading-relaxed">
-                        Desde hace más de 45 años, en Agrofina S.A. trabajamos para acompañar al productor argentino con soluciones innovadoras, eficientes y seguras. Nacimos en 1978 bajo el nombre Ipesa, y hoy formamos parte del Grupo Los Grobo, una de las compañías agroindustriales más importantes del país.
-                    </p>
-                    <p className="mt-3 text-gray-700 leading-relaxed">
-                        Contamos con una planta productiva en Zárate (Buenos Aires) y laboratorios propios de síntesis, formulación y desarrollo, certificados bajo IRAM ISO 14001 y normas GLP de la OCDE. Nuestro equipo multidisciplinario impulsa cada día el avance de una agricultura más sustentable y competitiva.
-                    </p>
-                    <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <div className="rounded-xl border border-emerald-100 bg-white p-3 shadow-sm">
-                            <div className="text-emerald-700 text-lg font-semibold">+45</div>
-                            <div className="text-xs text-gray-600">Años de trayectoria</div>
-                        </div>
-                        <div className="rounded-xl border border-emerald-100 bg-white p-3 shadow-sm">
-                            <div className="text-emerald-700 text-lg font-semibold">Local</div>
-                            <div className="text-xs text-gray-600">Síntesis y formulación</div>
-                        </div>
-                        <div className="rounded-xl border border-emerald-100 bg-white p-3 shadow-sm">
-                            <div className="text-emerald-700 text-lg font-semibold">ISO & GLP</div>
-                            <div className="text-xs text-gray-600">Certificaciones</div>
-                        </div>
-                    </div>
-                </div>
-                <div className="relative">
-                    <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-emerald-500/20 to-lime-400/20 blur-2xl" aria-hidden />
-                    <div className="relative rounded-2xl bg-white p-3 shadow-lg ring-1 ring-emerald-100">
-                        <div className="aspect-[16/10] w-full overflow-hidden rounded-xl">
-                            <img
-                                src="/images/home/agrofina-planta.jpg"
-                                alt="Planta y laboratorios certificados de Agrofina en Zárate, Buenos Aires"
-                                className="h-full w-full object-cover object-center"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </div>
-                        <div className="mt-3 flex items-center justify-between text-sm">
-                            <p className="text-gray-600">Planta y laboratorios certificados (Zárate, Buenos Aires)</p>
-                            <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-emerald-700">ISO 14001 · GLP</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
+// WhoWeAre section removed: contenido de la foto/texto eliminado por petición del usuario.
 
 function Innovation() {
     return (
