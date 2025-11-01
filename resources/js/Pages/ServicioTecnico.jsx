@@ -57,12 +57,11 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/35 to-transparent" aria-hidden />
       <div className="absolute inset-0 flex items-end">
         <div className="mx-auto max-w-7xl w-full px-4 pb-6 md:pb-10">
-          <p className="text-lime-300/90 font-medium tracking-wide">Soporte técnico agronómico</p>
           <h1 className="mt-2 text-3xl md:text-5xl font-semibold text-white drop-shadow">
             Desarrollo y Servicio Técnico
           </h1>
           <p className="mt-2 max-w-2xl text-white/85 text-sm md:text-base">
-            Ensayos, recomendaciones y capacitaciones para acompañarte en cada campaña.
+            En Agrofina nos destacamos por dar respuesta a las necesidades de nuestros clientes, desarrollando servicios y tecnologías que contribuyan a mejorar los procesos del agro.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <a href="#mapa-servicio-tecnico" className="group inline-flex items-center justify-center rounded-md bg-[#00833E] px-4 py-2.5 font-medium text-white shadow transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00833E] gap-2">
