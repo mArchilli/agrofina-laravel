@@ -492,8 +492,8 @@ function CTAService() {
               <p className="mt-1 text-white/90">Consultá el mapa por región o escribinos para coordinar disponibilidad y condiciones.</p>
             </div>
             <div className="md:justify-self-end flex gap-3">
-              <a href="#mapa-servicio-tecnico" className="inline-flex items-center justify-center rounded-md bg-white px-5 py-3 font-medium text-emerald-700 hover:bg-white/90">Ver mapa</a>
-              <a href="#contacto-servicio-tecnico" className="inline-flex items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 py-3 font-medium text-white backdrop-blur hover:bg-white/15">Ver contactos</a>
+              <a href="#mapa-servicio-tecnico" className="inline-flex items-center justify-center rounded-md bg-white px-5 py-3 font-medium text-emerald-700 shadow transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg">Ver mapa</a>
+              <a href="#contacto-servicio-tecnico" className="inline-flex items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 py-3 font-medium text-white backdrop-blur transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg">Ver contactos</a>
             </div>
           </div>
         </div>
