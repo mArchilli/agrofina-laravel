@@ -168,7 +168,17 @@ function FeaturedProductsCarousel() {
 
     return (
         <section id="destacados" aria-label="Productos destacados" className="relative mx-auto max-w-7xl px-4">
-            <div className="mb-4">
+            {/* Gradient decorativo: pegado al borde izquierdo del viewport y justo debajo del video */}
+            <div 
+                className="absolute top-[-4rem] md:top-[-6rem] h-[520px] w-[55vw] pointer-events-none"
+                style={{
+                    left: 'calc(50% - 50vw)',
+                    background: 'radial-gradient(ellipse 620px 620px at left top, #00833E 0%, #22c55e 22%, #7ED957 42%, transparent 68%)',
+                    opacity: 0.45
+                }}
+            />
+            
+            <div className="mb-4 relative">
                 <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-emerald-900">Productos destacados</h2>
                 <div className="my-3">
                     <div
@@ -270,6 +280,23 @@ function ProductCategoriesGrid() {
 
     return (
         <section id="categorias-productos" className="relative mx-auto max-w-7xl px-4">
+            {/* Gradient circular derecho entre secciones - semicírculo invertido */}
+            <div 
+                className="absolute top-[-18rem] md:top-[-24rem] h-[720px] w-[360px] pointer-events-none overflow-hidden"
+                style={{
+                    right: 'calc(50% - 50vw)'
+                }}
+            >
+                <div 
+                    className="absolute top-1/2 -translate-y-1/2 w-[720px] h-[720px] rounded-full"
+                    style={{
+                        right: -360,
+                        background: 'radial-gradient(circle, #00833E 0%, #22c55e 22%, #7ED957 42%, transparent 68%)',
+                        opacity: 0.45
+                    }}
+                />
+            </div>
+            
             <div className="mb-4">
                 <h2 className="text-xl md:text-2xl font-semibold text-emerald-900">Explorá por categoría</h2>
                 <div className="my-2">
@@ -282,6 +309,11 @@ function ProductCategoriesGrid() {
                         }}
                     />
                 </div>
+                    <div className="mt-2">
+                        <p className="text-emerald-800/80 text-base md:text-lg font-medium">
+                            Conocé la amplitud de nuestro catálogo y encontrá el producto que más se adecúe a tu necesidad.
+                        </p>
+                    </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5">
@@ -322,6 +354,16 @@ function ProductCategoriesGrid() {
 function ContactCTA() {
     return (
         <section id="contacto" className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
+            {/* Gradient decorativo en esquina inferior izquierda */}
+            <div 
+                className="absolute bottom-0 h-[520px] w-[55vw] pointer-events-none"
+                style={{
+                    left: 'calc(50% - 50vw)',
+                    background: 'radial-gradient(ellipse 620px 620px at left bottom, #00833E 0%, #22c55e 22%, #7ED957 42%, transparent 68%)',
+                    opacity: 0.45
+                }}
+            />
+            
             <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 p-8 md:p-10 text-white shadow-lg ring-1 ring-emerald-400/30 text-center transition-all duration-300 hover:shadow-xl hover:ring-2 hover:ring-emerald-400/50">
                 {/* Overlay con transparencia sutil */}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-lime-400/10 via-transparent to-emerald-500/10 opacity-60 transition-opacity duration-300 group-hover:opacity-80" />
@@ -330,8 +372,8 @@ function ContactCTA() {
                 <div className="pointer-events-none absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-hover:animate-[shimmer_2s_ease-in-out]" />
                 
                 <div className="relative z-10">
-                    <h3 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-sm">¿Hablamos?</h3>
-                    <p className="text-white/95 text-base md:text-lg max-w-2xl mx-auto">Contactate con nuestro equipo para recibir asesoramiento personalizado.</p>
+                    <h3 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-sm">Tu producción, en buenas manos.</h3>
+                    <p className="text-white/95 text-base md:text-lg max-w-2xl mx-auto">Nuestro equipo de especialistas está listo para ayudarte en lo que necesites.</p>
                     <div className="mt-6">
                         <Link 
                             href={route('contacto')} 
