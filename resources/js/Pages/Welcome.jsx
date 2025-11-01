@@ -9,6 +9,7 @@ export default function Welcome() {
             <div className="w-full space-y-16 md:space-y-24">
                 <Hero />
                 <FeaturedProductsCarousel />
+                <ProductCategoriesGrid />
                 <ContactCTA />
             </div>
         </GuestLayout>
@@ -63,18 +64,21 @@ function Hero() {
                             <div className="mt-8 flex flex-wrap gap-3">
                                 <a
                                     href="#destacados"
-                                    className="inline-flex items-center justify-center rounded-md bg-[#00833E] px-5 py-3 font-medium text-white shadow hover:bg-[#00994C] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00833E] gap-2"
+                                    className="group inline-flex items-center justify-center rounded-md bg-[#00833E] px-5 py-3 font-medium text-white shadow transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00833E] gap-2"
                                 >
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-1">
                                         <path d="M6 9l6 6 6-6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                     Conocé nuestros productos
                                 </a>
                                 <Link
                                     href={route('servicio-tecnico')}
-                                    className="inline-flex items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 py-3 font-medium text-white backdrop-blur hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                                    className="group inline-flex items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 py-3 font-medium text-white backdrop-blur transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 gap-2"
                                 >
                                     Contactá a un asesor técnico
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-300 group-hover:translate-x-1">
+                                        <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
                                 </Link>
                             </div>
                         </div>
@@ -103,7 +107,7 @@ function FeaturedProductsCarousel() {
 
     useEffect(() => {
         if (paused) return;
-        const id = setInterval(() => setIndex((i) => (i + 1) % items.length), 4500);
+        const id = setInterval(() => setIndex((i) => (i + 1) % items.length), 3000);
         return () => clearInterval(id);
     }, [paused, items.length]);
 
@@ -134,18 +138,29 @@ function FeaturedProductsCarousel() {
 
     return (
         <section id="destacados" aria-label="Productos destacados" className="relative mx-auto max-w-7xl px-4">
-            <div className="mb-3 flex items-center gap-3">
-                <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-emerald-800 text-xs font-semibold">Destacados</span>
-                <div className="h-px flex-1 bg-gradient-to-r from-emerald-300/70 via-lime-300/60 to-transparent" />
+            <div className="mb-4">
+                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-emerald-900">Productos destacados</h2>
+                <div className="my-3">
+                    <div
+                        className="rounded-full mx-0"
+                        style={{
+                            width: '80px',
+                            height: '8px',
+                            background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)'
+                        }}
+                    />
+                </div>
+                <p className="mt-2 text-sm md:text-base text-emerald-800/80">Explorá lo mejor de nuestro catálogo y descubrí los productos que marcan la diferencia.</p>
             </div>
 
             <div
-                className="relative overflow-hidden rounded-2xl ring-1 ring-emerald-200/60 shadow-sm bg-gradient-to-br from-emerald-50 to-lime-50"
+                className="relative group"
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
                 onKeyDown={onKeyDown}
                 tabIndex={0}
             >
+                <div className="overflow-hidden rounded-2xl ring-1 ring-emerald-200/60 shadow-sm bg-gradient-to-br from-emerald-50 to-lime-50 transition-all duration-300 md:group-hover:shadow-xl md:group-hover:ring-2 md:group-hover:ring-emerald-400 md:group-hover:-translate-y-1">
                 <div
                     className="flex transition-transform duration-500 ease-out"
                     style={{ transform: `translateX(-${index * 100}%)` }}
@@ -160,21 +175,15 @@ function FeaturedProductsCarousel() {
                                         <source media="(min-width: 768px)" srcSet={item.desk} />
                                         <img
                                             src={item.mob}
-                                            alt={`Producto destacado: ${item.title}`}
-                                            className="absolute inset-0 h-full w-full object-cover"
+                                            alt={`Producto ${item.title}`}
+                                            className="absolute inset-0 h-full w-full object-cover transition-all duration-300 ease-out md:group-hover:saturate-125 md:group-hover:brightness-110 md:group-hover:contrast-110"
                                             loading="lazy"
                                             decoding="async"
                                         />
                                     </picture>
 
-                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-emerald-900/10 via-transparent to-lime-700/10 opacity-90" />
+                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-emerald-900/10 via-transparent to-lime-700/10 opacity-90 transition-opacity duration-300 md:group-hover:opacity-95" />
                                     <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 md:h-16 bg-gradient-to-t from-black/35 to-transparent" />
-
-                                    <div className="absolute left-3 top-3 md:left-4 md:top-4">
-                                        <span className="inline-flex items-center rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-emerald-700 shadow">
-                                            Producto destacado
-                                        </span>
-                                    </div>
 
                                     <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4">
                                         <div className="inline-flex items-center gap-2 rounded-md bg-white/80 px-2.5 py-1 text-emerald-800 text-xs md:text-sm backdrop-blur group-hover:bg-white">
@@ -187,24 +196,85 @@ function FeaturedProductsCarousel() {
                         </div>
                     ))}
                 </div>
+                </div>
 
-                <button aria-label="Anterior" onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-emerald-700 shadow hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                <button aria-label="Anterior" onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-emerald-700 shadow hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 z-10 md:-left-2 md:-translate-x-full">
                     <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                 </button>
-                <button aria-label="Siguiente" onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-emerald-700 shadow hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                <button aria-label="Siguiente" onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-emerald-700 shadow hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 z-10 md:-right-2 md:translate-x-full">
                     <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
                 </button>
+            </div>
+            {/* Indicadores debajo del carrusel */}
+            <div className="mt-3 flex items-center justify-center gap-2">
+                {items.map((_, i) => (
+                    <button
+                        key={i}
+                        aria-label={`Ir al slide ${i + 1}`}
+                        onClick={() => goTo(i)}
+                        className={`h-2.5 rounded-full transition-all ${i === index ? 'w-6 bg-emerald-500' : 'w-2.5 bg-emerald-300/70 hover:bg-emerald-400'}`}
+                    />
+                ))}
+            </div>
+        </section>
+    );
+}
 
-                <div className="absolute inset-x-0 bottom-2 flex items-center justify-center gap-2">
-                    {items.map((_, i) => (
-                        <button
-                            key={i}
-                            aria-label={`Ir al slide ${i + 1}`}
-                            onClick={() => goTo(i)}
-                            className={`h-2.5 rounded-full transition-all ${i === index ? 'w-6 bg-emerald-500' : 'w-2.5 bg-emerald-300/70 hover:bg-emerald-400'}`}
-                        />
-                    ))}
+function ProductCategoriesGrid() {
+    const categories = [
+        { key: 'coadyuvantes', name: 'Coadyuvantes', img: '/images/AGF_ICO_Coadyuvantes.png' },
+        { key: 'herbicidas', name: 'Herbicidas', img: '/images/AGF_ICO_Herbicidas.png' },
+        { key: 'fungicidas', name: 'Fungicidas', img: '/images/AGF_ICO_Fungicidas.png' },
+        { key: 'fitoreguladores', name: 'Fitoreguladores', img: '/images/AGF_ICO_Fitoreguladores.png' },
+        { key: 'insecticidas', name: 'Insecticidas', img: '/images/AGF_ICO_Insecticidas.png' },
+    ];
+
+    return (
+        <section id="categorias-productos" className="relative mx-auto max-w-7xl px-4">
+            <div className="mb-4">
+                <h2 className="text-xl md:text-2xl font-semibold text-emerald-900">Explorá por categoría</h2>
+                <div className="my-2">
+                    <div
+                        className="rounded-full mx-0"
+                        style={{
+                            width: '80px',
+                            height: '6px',
+                            background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)'
+                        }}
+                    />
                 </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5">
+                {categories.map((cat) => (
+                    <Link
+                        key={cat.key}
+                        href={`/productos/${cat.key}`}
+                        aria-label={`Ver ${cat.name}`}
+                        className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-50/80 via-white/60 to-lime-50/70 backdrop-blur-sm ring-1 ring-emerald-200/50 shadow-sm transition-all duration-300 hover:shadow-lg hover:ring-2 hover:ring-emerald-300/80 hover:-translate-y-1"
+                    >
+                        {/* Overlay verde sutil con transparencia */}
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-lime-400/5 opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+                        
+                        <div className="relative flex flex-col items-center justify-center gap-3 p-5 sm:p-6 md:p-7">
+                            <div className="text-emerald-800 font-bold text-sm sm:text-base tracking-tight text-center drop-shadow-sm">
+                                {cat.name}
+                            </div>
+                            <div className="relative h-20 sm:h-24 md:h-28 w-auto">
+                                <img
+                                    src={cat.img}
+                                    alt={cat.name}
+                                    className="h-full w-auto object-contain drop-shadow-md transition-all duration-300 md:group-hover:scale-110 md:group-hover:saturate-125 md:group-hover:drop-shadow-xl"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            
+                            {/* Borde interno con efecto de brillo */}
+                            <div className="pointer-events-none absolute inset-[1px] rounded-[15px] ring-1 ring-white/40 transition-opacity duration-300 group-hover:ring-white/60" />
+                        </div>
+                    </Link>
+                ))}
             </div>
         </section>
     );
@@ -213,14 +283,32 @@ function FeaturedProductsCarousel() {
 function ContactCTA() {
     return (
         <section id="contacto" className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
-            <div className="rounded-2xl bg-emerald-600 p-8 text-white shadow ring-1 ring-emerald-200/40 text-center">
-                <h3 className="text-xl font-semibold mb-3">¿Hablamos?</h3>
-                <p className="text-white/90">Contactate con nuestro equipo para recibir asesoramiento.</p>
-                <div className="mt-4">
-                    <Link href={route('contacto')} className="inline-flex items-center justify-center rounded-md bg-white px-5 py-3 font-medium text-emerald-700 hover:bg-emerald-50">
-                        Ir a Contacto
-                    </Link>
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 p-8 md:p-10 text-white shadow-lg ring-1 ring-emerald-400/30 text-center transition-all duration-300 hover:shadow-xl hover:ring-2 hover:ring-emerald-400/50">
+                {/* Overlay con transparencia sutil */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-lime-400/10 via-transparent to-emerald-500/10 opacity-60 transition-opacity duration-300 group-hover:opacity-80" />
+                
+                {/* Efecto de brillo animado en hover */}
+                <div className="pointer-events-none absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-hover:animate-[shimmer_2s_ease-in-out]" />
+                
+                <div className="relative z-10">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-3 drop-shadow-sm">¿Hablamos?</h3>
+                    <p className="text-white/95 text-base md:text-lg max-w-2xl mx-auto">Contactate con nuestro equipo para recibir asesoramiento personalizado.</p>
+                    <div className="mt-6">
+                        <Link 
+                            href={route('contacto')} 
+                            className="group/btn inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 font-semibold text-emerald-700 shadow-md transition-all duration-300 hover:bg-emerald-50 hover:shadow-lg hover:scale-105 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                        >
+                            Ir a Contacto
+                            <svg className="h-5 w-5 transition-transform duration-300 group-hover/btn:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5l7 7-7 7"/>
+                            </svg>
+                        </Link>
+                    </div>
                 </div>
+                
+                {/* Borde interno brillante */}
+                <div className="pointer-events-none absolute inset-[1px] rounded-[15px] ring-1 ring-white/20 transition-opacity duration-300 group-hover:ring-white/30" />
             </div>
         </section>
     );
