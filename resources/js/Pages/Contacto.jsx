@@ -30,58 +30,97 @@ export default function Contacto() {
             </section>
 
             {/* CONTENIDO PRINCIPAL */}
-            <section id="contacto-form" className="bg-white py-12">
-                <div className="mx-auto max-w-7xl w-full px-4">
-                    <div className="w-full text-left mb-8">
-                        <p className="text-lg text-gray-800 mb-2">
-                            Para enviarnos un correo electrónico, por favor completar el formulario abajo indicando el motivo de contacto.<br/>
-                            Muchas gracias.
-                        </p>
-                        <h2 className="text-2xl md:text-3xl font-bold text-emerald-800 mt-8 mb-4">Envíanos tu consulta</h2>
-                        <div className="my-4">
-                            <div
-                                className="rounded-full"
-                                style={{ width: '80px', height: '8px', background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)' }}
-                            />
+            <section id="contacto-form" className="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 py-16 md:py-20 relative overflow-hidden">
+                {/* Decorative gradients */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-lime-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                
+                <div className="mx-auto max-w-7xl w-full px-4 relative z-10">
+                    {/* Card gigante con glass effect */}
+                    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
+                        {/* Header de la card con gradient sutil */}
+                        <div className="bg-gradient-to-r from-emerald-100 via-emerald-50 to-lime-100 p-8 md:p-12 border-b border-emerald-200">
+                            <div className="w-full text-left">
+                                <p className="text-lg text-gray-800 mb-2">
+                                    Para enviarnos un correo electrónico, por favor completar el formulario abajo indicando el motivo de contacto.<br/>
+                                    Muchas gracias.
+                                </p>
+                                <h2 className="text-2xl md:text-3xl font-bold text-emerald-800 mt-8 mb-4">Envíanos tu consulta</h2>
+                                <div className="my-4">
+                                    <div
+                                        className="rounded-full"
+                                        style={{ width: '80px', height: '8px', background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)' }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Body de la card con el formulario */}
+                        <div className="p-8 md:p-12">
+                            <form className="space-y-6">
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-2">Nombre y apellido</label>
+                                    <input 
+                                        type="text" 
+                                        className="w-full bg-white border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 hover:border-emerald-300" 
+                                        placeholder="Tu nombre y apellido" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-2">Cargo y compañía</label>
+                                    <input 
+                                        type="text" 
+                                        className="w-full bg-white border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 hover:border-emerald-300" 
+                                        placeholder="Cargo y compañía" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-2">Email</label>
+                                    <input 
+                                        type="email" 
+                                        className="w-full bg-white border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 hover:border-emerald-300" 
+                                        placeholder="ejemplo@email.com" 
+                                    />
+                                </div>
+                                <div className="flex flex-col md:flex-row gap-4">
+                                    <div className="flex-1">
+                                        <label className="block text-gray-700 font-medium mb-2">Ciudad y Código postal</label>
+                                        <input 
+                                            type="text" 
+                                            className="w-full bg-white border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 hover:border-emerald-300" 
+                                            placeholder="Ciudad y Código postal" 
+                                        />
+                                    </div>
+                                    <div className="flex-1">
+                                        <label className="block text-gray-700 font-medium mb-2">Tipo de contacto</label>
+                                        <select className="w-full bg-white border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 hover:border-emerald-300">
+                                            <option value="">Seleccionar</option>
+                                            <option value="COMERCIAL">COMERCIAL</option>
+                                            <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
+                                            <option value="MARKETING">MARKETING</option>
+                                            <option value="CONDICIONES TARJETA">CONDICIONES TARJETA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-2">Mensaje</label>
+                                    <textarea 
+                                        className="w-full bg-white border-2 border-gray-200 rounded-xl px-5 py-3.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 hover:border-emerald-300" 
+                                        rows={5} 
+                                        placeholder="Escribe tu mensaje aquí..." 
+                                    />
+                                </div>
+                                <div className="pt-4">
+                                    <button 
+                                        type="button" 
+                                        className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg transform hover:scale-[1.02] active:scale-[0.98]"
+                                    >
+                                        Enviar
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <form className="space-y-6">
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">Nombre y apellido</label>
-                            <input type="text" className="w-full border border-emerald-500 rounded px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Tu nombre y apellido" />
-                        </div>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">Cargo y compañía</label>
-                            <input type="text" className="w-full border border-emerald-500 rounded px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Cargo y compañía" />
-                        </div>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">Email</label>
-                            <input type="email" className="w-full border border-emerald-500 rounded px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="ejemplo@email.com" />
-                        </div>
-                        <div className="flex flex-col md:flex-row gap-4">
-                            <div className="flex-1">
-                                <label className="block text-gray-700 font-medium mb-1">Ciudad y Código postal</label>
-                                <input type="text" className="w-full border border-emerald-500 rounded px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ciudad y Código postal" />
-                            </div>
-                            <div className="flex-1">
-                                <label className="block text-gray-700 font-medium mb-1">Tipo de contacto</label>
-                                <select className="w-full border border-emerald-500 rounded px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                    <option value="">Seleccionar</option>
-                                    <option value="COMERCIAL">COMERCIAL</option>
-                                    <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
-                                    <option value="MARKETING">MARKETING</option>
-                                    <option value="CONDICIONES TARJETA">CONDICIONES TARJETA</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">Mensaje</label>
-                            <textarea className="w-full border border-emerald-500 rounded px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500" rows={5} placeholder="Escribe tu mensaje aquí..." />
-                        </div>
-                        <div className="pt-2">
-                            <button type="button" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded shadow transition text-lg">Enviar</button>
-                        </div>
-                    </form>
                 </div>
             </section>
         </GuestLayout>
