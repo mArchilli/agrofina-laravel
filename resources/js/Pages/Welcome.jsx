@@ -91,14 +91,44 @@ function Hero() {
 
 function FeaturedProductsCarousel() {
     // Ajustá la extensión si tus imágenes están en .webp o .png
-    const EXT = '.jpg'; // Asumimos .jpg en public/images
+    const EXT = '.jpg';
 
     const items = [
-        { key: 'mabyn', title: 'MABYN', mob: `/images/ago-mabyn-mob${EXT}`, desk: `/images/ago-mabyn-desk${EXT}` },
-        { key: 'topground', title: 'TOPGROUND', mob: `/images/ago-topground-mob${EXT}`, desk: `/images/ago-topground-desk${EXT}` },
-        { key: 'k48', title: 'K48', mob: `/images/ago-k48-mob${EXT}`, desk: `/images/ago-k48-desk${EXT}` },
-        { key: 'mulan', title: 'MULAN', mob: `/images/ago-mulan-mob${EXT}`, desk: `/images/ago-mulan-desk${EXT}` },
-        { key: 'talis', title: 'TALIS', mob: `/images/ago-talis-mob${EXT}`, desk: `/images/ago-talis-desk${EXT}` },
+        { 
+            key: 'mabyn', 
+            title: 'MABYN', 
+            mob: `/images/ago-mabyn-mob${EXT}`, 
+            desk: `/images/ago-mabyn-desk${EXT}`,
+            description: 'MABYN® es un Herbicida sistémico y de acción hormonal, para el control de malezas de hoja ancha en barbecho. Mezcla de sales alquilamidopropildimetilamonio y dietanolamonio del ácido 2,4-D.'
+        },
+        { 
+            key: 'topground', 
+            title: 'TOPGROUND', 
+            mob: `/images/ago-topground-mob${EXT}`, 
+            desk: `/images/ago-topground-desk${EXT}`,
+            description: 'TOP GROUND® es un herbicida con acción de contacto, sistémico y residual. Estas características le permiten controlar malezas en pre-emergencia como en post-emergencia.'
+        },
+        { 
+            key: 'k48', 
+            title: 'KYLIAN', 
+            mob: `/images/ago-k48-mob${EXT}`, 
+            desk: `/images/ago-k48-desk${EXT}`,
+            description: 'KYLIAN® es un herbicida graminicida sistémico y selectivo de post emergencia desarrollado para los cultivos de SOJA, MAÍZ, GIRASOL, MANÍ, ALGODÓN Y POROTO.'
+        },
+        { 
+            key: 'mulan', 
+            title: 'MULAN', 
+            mob: `/images/ago-mulan-mob${EXT}`, 
+            desk: `/images/ago-mulan-desk${EXT}`,
+            description: 'MULAN® Es un herbicida residual y selectivo para el control de malezas de hoja ancha. Absorción foliar y radical, con rápida translocación vía xilema y floema, acumulándose en las regiones meristemáticas.'
+        },
+        { 
+            key: 'talis', 
+            title: 'TALIS', 
+            mob: `/images/ago-talis-mob${EXT}`, 
+            desk: `/images/ago-talis-desk${EXT}`,
+            description: 'TALIS® Es un herbicida residual selectivo pre y post-emergente temprano que controla un amplio espectro de malezas, especialmente las de hoja ancha. Por su acción sistémica penetra por cotiledones, hojas jóvenes, y raíces.'
+        },
     ];
 
     const [index, setIndex] = useState(0);
@@ -170,6 +200,7 @@ function FeaturedProductsCarousel() {
                     {items.map((item) => (
                         <div key={item.key} className="min-w-full">
                             <Link href="#" onClick={handlePlaceholderClick} className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/70">
+                                {/* Imagen del producto */}
                                 <div className="w-full aspect-square md:aspect-[1140/250] relative">
                                     <picture>
                                         <source media="(min-width: 768px)" srcSet={item.desk} />
@@ -184,12 +215,20 @@ function FeaturedProductsCarousel() {
 
                                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-emerald-900/10 via-transparent to-lime-700/10 opacity-90 transition-opacity duration-300 md:group-hover:opacity-95" />
                                     <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 md:h-16 bg-gradient-to-t from-black/35 to-transparent" />
-
-                                    <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4">
-                                        <div className="inline-flex items-center gap-2 rounded-md bg-white/80 px-2.5 py-1 text-emerald-800 text-xs md:text-sm backdrop-blur group-hover:bg-white">
-                                            <span className="font-semibold tracking-wide">{item.title}</span>
-                                            <svg className="h-4 w-4 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-                                        </div>
+                                </div>
+                                
+                                {/* Descripción del producto */}
+                                <div className="relative px-5 py-4 md:px-7 md:py-5 lg:px-8 lg:py-6 bg-gradient-to-br from-emerald-100/90 via-white/70 to-lime-100/90 backdrop-blur-sm border-t-2 border-emerald-300/70">
+                                    {/* Overlay decorativo más visible */}
+                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/12 via-emerald-400/6 to-lime-400/12 opacity-90" />
+                                    
+                                    <div className="relative">
+                                        <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-emerald-800 mb-2 md:mb-3">
+                                            {item.title}®
+                                        </h3>
+                                        <p className="text-xs md:text-sm lg:text-base text-gray-700 leading-relaxed">
+                                            {item.description}
+                                        </p>
                                     </div>
                                 </div>
                             </Link>
@@ -251,10 +290,10 @@ function ProductCategoriesGrid() {
                         key={cat.key}
                         href={`/productos/${cat.key}`}
                         aria-label={`Ver ${cat.name}`}
-                        className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-50/80 via-white/60 to-lime-50/70 backdrop-blur-sm ring-1 ring-emerald-200/50 shadow-sm transition-all duration-300 hover:shadow-lg hover:ring-2 hover:ring-emerald-300/80 hover:-translate-y-1"
+                        className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-100/90 via-white/70 to-lime-100/90 backdrop-blur-sm ring-1 ring-emerald-300/60 shadow-sm transition-all duration-300 hover:shadow-lg hover:ring-2 hover:ring-emerald-400/90 hover:-translate-y-1"
                     >
                         {/* Overlay verde sutil con transparencia */}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-lime-400/5 opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-emerald-400/5 to-lime-400/10 opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
                         
                         <div className="relative flex flex-col items-center justify-center gap-3 p-5 sm:p-6 md:p-7">
                             <div className="text-emerald-800 font-bold text-sm sm:text-base tracking-tight text-center drop-shadow-sm">
