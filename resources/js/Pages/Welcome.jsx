@@ -374,13 +374,15 @@ function ProductCategoriesGrid() {
                     </Link>
                 ))}
             </div>
+            
+            
         </section>
     );
 }
 
 function ContactCTA() {
     return (
-        <section id="contacto" className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
+    <section id="contacto" className="relative mx-auto max-w-7xl px-4 pt-0 pb-6 -mt-24 md:mt-0 md:py-16">
             {/* Gradient decorativo en esquina inferior izquierda */}
             {/* Mobile version */}
             <div 
