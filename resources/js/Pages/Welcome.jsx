@@ -169,8 +169,18 @@ function FeaturedProductsCarousel() {
     return (
         <section id="destacados" aria-label="Productos destacados" className="relative mx-auto max-w-7xl px-4">
             {/* Gradient decorativo: pegado al borde izquierdo del viewport y justo debajo del video */}
+            {/* Mobile version - desde el final del hero hacia abajo */}
             <div 
-                className="absolute top-[-4rem] md:top-[-6rem] h-[520px] w-[55vw] pointer-events-none"
+                className="absolute -top-16 h-[450px] w-full pointer-events-none md:hidden"
+                style={{
+                    left: 0,
+                    background: 'linear-gradient(to bottom, #00833E 0%, #22c55e 15%, #7ED957 30%, transparent 60%)',
+                    opacity: 0.22
+                }}
+            />
+            {/* Desktop version */}
+            <div 
+                className="hidden md:block absolute top-[-4rem] md:top-[-6rem] h-[520px] w-[55vw] pointer-events-none"
                 style={{
                     left: 'calc(50% - 50vw)',
                     background: 'radial-gradient(ellipse 620px 620px at left top, #00833E 0%, #22c55e 22%, #7ED957 42%, transparent 68%)',
@@ -281,8 +291,25 @@ function ProductCategoriesGrid() {
     return (
         <section id="categorias-productos" className="relative mx-auto max-w-7xl px-4">
             {/* Gradient circular derecho entre secciones - semicírculo invertido */}
+            {/* Mobile version - más pequeño */}
             <div 
-                className="absolute top-[-18rem] md:top-[-24rem] h-[720px] w-[360px] pointer-events-none overflow-hidden"
+                className="absolute top-[-12rem] h-[400px] w-[200px] pointer-events-none overflow-hidden md:hidden"
+                style={{
+                    right: 'calc(50% - 50vw)'
+                }}
+            >
+                <div 
+                    className="absolute top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full"
+                    style={{
+                        right: -200,
+                        background: 'radial-gradient(circle, #00833E 0%, #22c55e 22%, #7ED957 42%, transparent 68%)',
+                        opacity: 0.45
+                    }}
+                />
+            </div>
+            {/* Desktop version - tamaño original */}
+            <div 
+                className="hidden md:block absolute top-[-18rem] md:top-[-24rem] h-[720px] w-[360px] pointer-events-none overflow-hidden"
                 style={{
                     right: 'calc(50% - 50vw)'
                 }}
@@ -316,8 +343,8 @@ function ProductCategoriesGrid() {
                     </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5">
-                {categories.map((cat) => (
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5 [&>*:last-child]:col-span-2 [&>*:last-child]:w-[calc(50%-0.5rem)] [&>*:last-child]:sm:w-[calc(50%-0.625rem)] [&>*:last-child]:justify-self-center [&>*:last-child]:md:col-span-1 [&>*:last-child]:md:w-auto [&>*:last-child]:md:justify-self-auto">
+                {categories.map((cat, index) => (
                     <Link
                         key={cat.key}
                         href={`/productos/${cat.key}`}
@@ -355,8 +382,18 @@ function ContactCTA() {
     return (
         <section id="contacto" className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
             {/* Gradient decorativo en esquina inferior izquierda */}
+            {/* Mobile version */}
             <div 
-                className="absolute bottom-0 h-[520px] w-[55vw] pointer-events-none"
+                className="absolute bottom-0 h-[300px] w-[70vw] pointer-events-none md:hidden"
+                style={{
+                    left: 'calc(50% - 50vw)',
+                    background: 'radial-gradient(ellipse 350px 350px at left bottom, #00833E 0%, #22c55e 22%, #7ED957 42%, transparent 68%)',
+                    opacity: 0.45
+                }}
+            />
+            {/* Desktop version */}
+            <div 
+                className="hidden md:block absolute bottom-0 h-[520px] w-[55vw] pointer-events-none"
                 style={{
                     left: 'calc(50% - 50vw)',
                     background: 'radial-gradient(ellipse 620px 620px at left bottom, #00833E 0%, #22c55e 22%, #7ED957 42%, transparent 68%)',

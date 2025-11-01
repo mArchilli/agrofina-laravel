@@ -3,7 +3,7 @@ import Footer from '@/Components/Footer';
 
 export default function GuestLayout({ children, container = true }) {
     return (
-        <div className="flex min-h-screen flex-col bg-gray-50">
+        <div className="flex min-h-screen flex-col bg-gray-50 overflow-x-hidden">
             <Navbar variant="client" />
             <main className="flex-1">
                 {container ? (
