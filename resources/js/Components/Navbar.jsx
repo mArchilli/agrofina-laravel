@@ -79,7 +79,7 @@ export default function Navbar({ variant = 'client' }) {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center">
-                            <Link href={route('dashboard')} className="flex items-center gap-3">
+                            <Link href={route('dashboard')} className="flex items-center gap-3 transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
                                 <img
                                     src="/images/logo-agrofina.png"
                                     alt="Agrofina Admin"
@@ -211,7 +211,7 @@ export default function Navbar({ variant = 'client' }) {
             className="fixed inset-x-0 top-0 z-[999999] w-full border-b border-transparent bg-transparent text-white transition-colors duration-300 data-[scrolled=true]:bg-[#00833E] data-[scrolled=true]:border-[#00833E] data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm group"
         >
             <div className="mx-auto max-w-6xl h-16 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-2 pl-3 md:pl-0" aria-label="Ir al inicio">
+                <Link href="/" className="flex items-center gap-2 pl-3 md:pl-0 transition-all duration-300 hover:scale-105 hover:-translate-y-0.5" aria-label="Ir al inicio">
                     <img
                         src="/images/minilogo-agrofina.png"
                         alt="Agrofina"
@@ -226,7 +226,7 @@ export default function Navbar({ variant = 'client' }) {
                     <Link
                         href={route('eng')}
                         aria-label="Cambiar idioma a inglés"
-                        className="inline-flex h-14 w-14 items-center justify-center text-white/90 hover:text-white"
+                        className="inline-flex h-14 w-14 items-center justify-center text-white/90 hover:text-white transition-all duration-300 hover:scale-110"
                     >
                         <svg viewBox="0 0 180 100" className="h-[27px] w-[48px]" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                             <text x="90" y="68" textAnchor="middle" fill="currentColor" fontSize="80" fontFamily="sans-serif" fontWeight="bold">ENG</text>
@@ -240,13 +240,13 @@ export default function Navbar({ variant = 'client' }) {
                         aria-controls="menu"
                         aria-expanded={open}
                         onClick={() => setOpen((v) => !v)}
-                        className="inline-flex h-14 w-14 items-center justify-center text-white/90 hover:text-white"
+                        className="inline-flex h-14 w-14 items-center justify-center text-white/90 hover:text-white transition-all duration-300 hover:scale-110"
                     >
                         <span className="sr-only">Toggle menu</span>
                         <span className="relative block h-[27px] w-8" aria-hidden>
-                            <span className={`absolute left-0 top-0 h-[3px] w-[25px] bg-current transition-transform ${open ? 'translate-y-[9px] rotate-45' : ''}`} />
-                            <span className={`absolute left-0 top-[9px] h-[3px] w-[25px] bg-current transition-opacity ${open ? 'opacity-0' : 'opacity-100'}`} />
-                            <span className={`absolute left-0 top-[18px] h-[3px] w-[25px] bg-current transition-transform ${open ? '-translate-y-[9px] -rotate-45' : ''}`} />
+                            <span className={`absolute left-0 top-0 h-[3px] w-[25px] bg-current transition-all duration-300 ${open ? 'translate-y-[9px] rotate-45' : ''}`} />
+                            <span className={`absolute left-0 top-[9px] h-[3px] w-[25px] bg-current transition-all duration-300 ${open ? 'opacity-0' : 'opacity-100'}`} />
+                            <span className={`absolute left-0 top-[18px] h-[3px] w-[25px] bg-current transition-all duration-300 ${open ? '-translate-y-[9px] -rotate-45' : ''}`} />
                         </span>
                     </button>
                 </div>
@@ -270,7 +270,7 @@ export default function Navbar({ variant = 'client' }) {
                     >
                         <div className="mx-auto max-w-6xl px-4 pt-6 pb-10 min-h-screen flex flex-col">
                             <div className="flex items-center justify-between">
-                                <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
+                                <Link href="/" className="flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:-translate-y-0.5" onClick={() => setOpen(false)}>
                                         <img
                                             src="/images/minilogo-agrofina.png"
                                             alt="Agrofina"
@@ -282,12 +282,12 @@ export default function Navbar({ variant = 'client' }) {
                                     type="button"
                                     aria-label="Cerrar menú"
                                     onClick={() => setOpen(false)}
-                                    className="inline-flex h-14 w-14 items-center justify-center"
+                                    className="inline-flex h-14 w-14 items-center justify-center transition-all duration-300 hover:scale-110 hover:rotate-90"
                                 >
                                     <span className="sr-only">Cerrar menú</span>
                                     <span className="relative block h-[27px] w-8" aria-hidden>
-                                        <span className="absolute left-0 top-0 block h-[3px] w-[25px] bg-white rotate-45" />
-                                        <span className="absolute left-0 top-0 block h-[3px] w-[25px] bg-white -rotate-45" />
+                                        <span className="absolute left-0 top-0 block h-[3px] w-[25px] bg-white rotate-45 transition-all duration-300" />
+                                        <span className="absolute left-0 top-0 block h-[3px] w-[25px] bg-white -rotate-45 transition-all duration-300" />
                                     </span>
                                 </button>
                             </div>
