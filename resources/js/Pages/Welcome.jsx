@@ -1,5 +1,6 @@
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link } from '@inertiajs/react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Welcome() {
     return (
@@ -7,11 +8,7 @@ export default function Welcome() {
             <Head title="Inicio" />
             <div className="w-full space-y-16 md:space-y-24">
                 <Hero />
-                {/* Innovation section removed per user request */}
-                {/* Technology section removed per user request */}
-                <Portfolio />
-                {/* Certifications section removed per user request */}
-                <GroupLosGrobo />
+                <FeaturedProductsCarousel />
                 <ContactCTA />
             </div>
         </GuestLayout>
@@ -65,7 +62,7 @@ function Hero() {
                             </div>
                             <div className="mt-8 flex flex-wrap gap-3">
                                 <a
-                                    href="#portafolio"
+                                    href="#destacados"
                                     className="inline-flex items-center justify-center rounded-md bg-[#00833E] px-5 py-3 font-medium text-white shadow hover:bg-[#00994C] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00833E] gap-2"
                                 >
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
@@ -88,265 +85,125 @@ function Hero() {
     );
 }
 
-// WhoWeAre section removed: contenido de la foto/texto eliminado por petición del usuario.
+function FeaturedProductsCarousel() {
+    // Ajustá la extensión si tus imágenes están en .webp o .png
+    const EXT = '.jpg'; // Asumimos .jpg en public/images
 
-// Innovation section removed per user request (contenidos eliminados)
-
-// Technology section removed per user request (contenidos eliminados)
-
-function Portfolio() {
-    const categories = [
-        { title: 'Herbicidas', desc: 'Control selectivo y eficiente de malezas con formulaciones de última generación y tecnología de liberación controlada.', Icon: LeafIcon, products: ['Glifosato 48%', 'FLOSIL 50', '2,4-D Amina', 'Atrazina 90%'], applications: ['Soja', 'Maíz', 'Trigo', 'Girasol'], tech: 'Formulación SC concentrada' },
-        { title: 'Insecticidas', desc: 'Amplio espectro de acción con alta persistencia, selectividad mejorada y mínimo impacto en fauna benéfica.', Icon: BugIcon, products: ['Clorpirifós 48%', 'Lambda 2.5%', 'Imidacloprid 35%', 'Spinosad 12%'], applications: ['Lepidópteros', 'Coleópteros', 'Hemípteros', 'Trips'], tech: 'Microencapsulado avanzado' },
-        { title: 'Fungicidas', desc: 'Prevención y control sistémico de enfermedades foliares y del suelo con acción preventiva y curativa.', Icon: ShieldIcon, products: ['Tebuconazol 25%', 'Carbendazim 50%', 'Mancozeb 80%', 'Azoxistrobin 20%'], applications: ['Roya', 'Oidio', 'Mancha foliar', 'Antracnosis'], tech: 'Penetración sistémica' },
-        { title: 'Curasemillas', desc: 'Protección integral desde la siembra con tratamientos que optimizan germinación y desarrollo radicular.', Icon: LabIcon, products: ['Thiram 40%', 'Carboxin 20%', 'Metalaxil 35%', 'Fludioxonil 2.5%'], applications: ['Damping off', 'Rhizoctonia', 'Fusarium', 'Pythium'], tech: 'Recubrimiento uniforme' },
-        { title: 'Coadyuvantes', desc: 'Máxima eficiencia en aplicación con mejora de penetración, adherencia y resistencia al lavado.', Icon: GlobeIcon, products: ['Surfactantes no iónicos', 'Aceites minerales', 'Siliconas agrícolas', 'Antiespumantes'], applications: ['Tensión superficial', 'Mojabilidad', 'Deriva', 'pH buffer'], tech: 'Formulación especializada' },
+    const items = [
+        { key: 'mabyn', title: 'MABYN', mob: `/images/ago-mabyn-mob${EXT}`, desk: `/images/ago-mabyn-desk${EXT}` },
+        { key: 'topground', title: 'TOPGROUND', mob: `/images/ago-topground-mob${EXT}`, desk: `/images/ago-topground-desk${EXT}` },
+        { key: 'k48', title: 'K48', mob: `/images/ago-k48-mob${EXT}`, desk: `/images/ago-k48-desk${EXT}` },
+        { key: 'mulan', title: 'MULAN', mob: `/images/ago-mulan-mob${EXT}`, desk: `/images/ago-mulan-desk${EXT}` },
+        { key: 'talis', title: 'TALIS', mob: `/images/ago-talis-mob${EXT}`, desk: `/images/ago-talis-desk${EXT}` },
     ];
 
-    const stats = [
-        { value: '80+', label: 'Productos registrados', desc: 'Portafolio completo certificado por SENASA' },
-        { value: '15M', label: 'Hectáreas tratadas', desc: 'Alcance anual en territorio argentino' },
-        { value: '99.8%', label: 'Pureza promedio', desc: 'Control de calidad en ingredientes activos' },
-        { value: '24/7', label: 'Soporte técnico', desc: 'Asesoramiento agronómico especializado' },
-    ];
+    const [index, setIndex] = useState(0);
+    const [paused, setPaused] = useState(false);
+    const startX = useRef(null);
 
-    const certifications = [
-        'Productos registrados SENASA',
-        'Formulaciones propias certificadas',
-        'Análisis de residuos completos',
-        'Estudios de eficacia agronómica',
-        'Certificación de calidad ISO',
-        'Trazabilidad total del lote',
-    ];
+    useEffect(() => {
+        if (paused) return;
+        const id = setInterval(() => setIndex((i) => (i + 1) % items.length), 4500);
+        return () => clearInterval(id);
+    }, [paused, items.length]);
+
+    const goTo = (i) => setIndex((i + items.length) % items.length);
+    const next = () => goTo(index + 1);
+    const prev = () => goTo(index - 1);
+
+    const onTouchStart = (e) => {
+        startX.current = e.touches?.[0]?.clientX ?? null;
+    };
+    const onTouchMove = (e) => {
+        if (startX.current == null) return;
+        const dx = e.touches[0].clientX - startX.current;
+        if (Math.abs(dx) > 40) {
+            dx < 0 ? next() : prev();
+            startX.current = null;
+        }
+    };
+
+    const onKeyDown = (e) => {
+        if (e.key === 'ArrowLeft') prev();
+        if (e.key === 'ArrowRight') next();
+    };
+
+    const handlePlaceholderClick = (e) => {
+        e.preventDefault();
+    };
 
     return (
-        <section id="portafolio" className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_50%_at_70%_20%,rgba(34,197,94,0.06),transparent_50%)]" aria-hidden />
-
-            <div className="text-center mb-12">
-                <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-emerald-800 text-xs font-semibold">Portafolio</span>
-                <h2 className="mt-3 text-2xl md:text-3xl font-semibold tracking-tight">Soluciones integrales para cada etapa del cultivo</h2>
-                <p className="mt-2 text-gray-600 max-w-4xl mx-auto">
-                    Desarrollamos, formulamos y producimos más de 80 productos fitosanitarios con tecnología propia,
-                    respaldados por rigurosos estudios de eficacia y registros SENASA vigentes.
-                </p>
+        <section id="destacados" aria-label="Productos destacados" className="relative mx-auto max-w-7xl px-4">
+            <div className="mb-3 flex items-center gap-3">
+                <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-emerald-800 text-xs font-semibold">Destacados</span>
+                <div className="h-px flex-1 bg-gradient-to-r from-emerald-300/70 via-lime-300/60 to-transparent" />
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                {stats.map((stat) => (
-                    <div key={stat.label} className="text-center p-6 rounded-2xl bg-white shadow ring-1 ring-emerald-100 hover:shadow-lg transition-shadow">
-                        <div className="text-2xl md:text-3xl font-bold text-emerald-700 mb-1">{stat.value}</div>
-                        <div className="font-semibold text-gray-900 text-sm mb-2">{stat.label}</div>
-                        <div className="text-xs text-gray-600 leading-relaxed">{stat.desc}</div>
-                    </div>
-                ))}
-            </div>
+            <div
+                className="relative overflow-hidden rounded-2xl ring-1 ring-emerald-200/60 shadow-sm bg-gradient-to-br from-emerald-50 to-lime-50"
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+                onKeyDown={onKeyDown}
+                tabIndex={0}
+            >
+                <div
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{ transform: `translateX(-${index * 100}%)` }}
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                >
+                    {items.map((item) => (
+                        <div key={item.key} className="min-w-full">
+                            <Link href="#" onClick={handlePlaceholderClick} className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/70">
+                                <div className="w-full aspect-square md:aspect-[1140/250] relative">
+                                    <picture>
+                                        <source media="(min-width: 768px)" srcSet={item.desk} />
+                                        <img
+                                            src={item.mob}
+                                            alt={`Producto destacado: ${item.title}`}
+                                            className="absolute inset-0 h-full w-full object-cover"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                    </picture>
 
-            <div className="grid gap-8 lg:grid-cols-4">
-                <div className="lg:col-span-3 grid gap-6 md:grid-cols-2">
-                    {categories.map((category) => (
-                        <article
-                            key={category.title}
-                            className="group rounded-2xl bg-white p-6 shadow ring-1 ring-emerald-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                        >
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="flex items-center gap-3">
-                                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-lime-500/15 text-lime-700 group-hover:bg-lime-500/20 transition-colors">
-                                        <category.Icon className="h-6 w-6" />
-                                    </span>
-                                    <div>
-                                        <h3 className="font-semibold text-lg tracking-tight text-gray-900">{category.title}</h3>
-                                        <span className="inline-flex items-center rounded-full bg-emerald-100 px-2 py-1 text-emerald-700 text-xs font-medium">
-                                            {category.tech}
+                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-emerald-900/10 via-transparent to-lime-700/10 opacity-90" />
+                                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 md:h-16 bg-gradient-to-t from-black/35 to-transparent" />
+
+                                    <div className="absolute left-3 top-3 md:left-4 md:top-4">
+                                        <span className="inline-flex items-center rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-emerald-700 shadow">
+                                            Producto destacado
                                         </span>
                                     </div>
-                                </div>
-                            </div>
 
-                            <p className="text-gray-700 leading-relaxed mb-4">{category.desc}</p>
-
-                            <div className="mb-4">
-                                <div className="text-sm font-medium text-gray-900 mb-2">Productos destacados:</div>
-                                <div className="flex flex-wrap gap-1">
-                                    {category.products.map((product) => (
-                                        <span key={product} className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700">
-                                            {product}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="mb-4">
-                                <div className="text-sm font-medium text-gray-900 mb-2">Aplicaciones:</div>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {category.applications.map((app) => (
-                                        <div key={app} className="flex items-center gap-2 text-sm">
-                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                            <span className="text-gray-600">{app}</span>
+                                    <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4">
+                                        <div className="inline-flex items-center gap-2 rounded-md bg-white/80 px-2.5 py-1 text-emerald-800 text-xs md:text-sm backdrop-blur group-hover:bg-white">
+                                            <span className="font-semibold tracking-wide">{item.title}</span>
+                                            <svg className="h-4 w-4 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
                                         </div>
-                                    ))}
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                                <span className="text-xs text-gray-500">Registro SENASA vigente</span>
-                                <span className="inline-flex items-center text-emerald-600 text-sm font-medium group-hover:text-emerald-700">
-                                    <ShieldIcon className="h-4 w-4 mr-1" />
-                                    Certificado
-                                </span>
-                            </div>
-                        </article>
+                            </Link>
+                        </div>
                     ))}
                 </div>
 
-                <div className="space-y-6">
-                    <div className="rounded-2xl bg-gradient-to-br from-emerald-600 to-lime-600 p-6 text-white shadow ring-1 ring-emerald-200/40">
-                        <h3 className="font-semibold text-xl mb-4">Garantía de calidad</h3>
-                        <div className="space-y-3">
-                            {certifications.map((cert) => (
-                                <div key={cert} className="flex items-start gap-3">
-                                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-lime-300 flex-shrink-0" />
-                                    <span className="text-white/95 text-sm">{cert}</span>
-                                </div>
-                            ))}
-                        </div>
+                <button aria-label="Anterior" onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-emerald-700 shadow hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button aria-label="Siguiente" onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-emerald-700 shadow hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
 
-                        <div className="mt-6 p-4 bg-white/10 rounded-lg backdrop-blur">
-                            <div className="text-sm font-medium mb-2">Próxima auditoría de calidad</div>
-                            <div className="text-xs text-white/80">Control de productos - Enero 2025</div>
-                        </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-gradient-to-br from-lime-50 to-emerald-50 p-6 border border-emerald-100">
-                        <h3 className="font-semibold text-emerald-800 mb-3">Innovación destacada</h3>
-                        <div className="space-y-3 text-sm text-gray-700">
-                            <div className="flex items-start gap-2">
-                                <SparklesIcon className="h-4 w-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                                <span>Formulaciones SC de alta concentración</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                                <LabIcon className="h-4 w-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                                <span>Tecnología de microencapsulado</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                                <ShieldIcon className="h-4 w-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                                <span>Sistemas de liberación controlada</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                                <GlobeIcon className="h-4 w-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                                <span>Reducción de impacto ambiental</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-white p-6 shadow ring-1 ring-emerald-100">
-                        <h3 className="font-semibold text-emerald-800 mb-3">Soporte técnico</h3>
-                        <div className="space-y-3 text-sm">
-                            <div className="flex items-center gap-2">
-                                <HeadsetIcon className="h-4 w-4 text-emerald-600" />
-                                <span className="text-gray-700">Asesoramiento agronómico</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <BadgeIcon className="h-4 w-4 text-emerald-600" />
-                                <span className="text-gray-700">Capacitación técnica</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <MapPinIcon className="h-4 w-4 text-emerald-600" />
-                                <span className="text-gray-700">Red nacional de distribuidores</span>
-                            </div>
-                        </div>
-
-                        <div className="mt-4 p-3 bg-emerald-50 rounded-lg">
-                            <div className="text-xs text-emerald-700 font-medium mb-1">Contacto directo:</div>
-                            <div className="text-sm text-emerald-800">0800-AGROFINA (247-6346)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="mt-12 text-center">
-                <div className="max-w-4xl mx-auto p-8 rounded-2xl bg-gradient-to-r from-emerald-50 to-lime-50 border border-emerald-100">
-                    <h3 className="text-xl font-semibold text-emerald-800 mb-3">¿Necesitás asesoramiento técnico personalizado?</h3>
-                    <p className="text-gray-700 mb-6 leading-relaxed">
-                        Nuestro equipo de ingenieros agrónomos está disponible para ayudarte a seleccionar
-                        la solución más adecuada para tu cultivo y condiciones específicas.
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-4">
-                        <a
-                            href="#contacto"
-                            className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-6 py-3 font-medium text-white shadow hover:bg-emerald-700 transition-colors"
-                        >
-                            Consultar disponibilidad
-                        </a>
-                        <a
-                            href="/catalogo-tecnico.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-md border border-emerald-300 bg-white px-6 py-3 font-medium text-emerald-700 hover:bg-emerald-50 transition-colors"
-                        >
-                            Descargar catálogo técnico
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
-
-// Certifications section removed per user request (contenidos eliminados)
-
-function GroupLosGrobo() {
-    const highlights = [
-        'Integración agroindustrial',
-        'Red nacional de distribución',
-        'Innovación y desarrollo local',
-        'Compromiso con la sustentabilidad',
-    ];
-
-    return (
-        <section className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
-            <div className="grid gap-8 md:grid-cols-2 md:items-center">
-                <div>
-                    <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-emerald-800 text-xs font-semibold">Grupo Los Grobo</span>
-                    <h3 className="mt-3 text-2xl md:text-3xl font-semibold tracking-tight">Solidez y respaldo para crecer</h3>
-                    <p className="mt-3 text-gray-700 leading-relaxed">
-                        Formamos parte del Grupo Los Grobo, referente del sector agroindustrial argentino. Esta integración potencia nuestra capacidad de innovación, logística y servicio, asegurando cercanía con el productor en todo el país.
-                    </p>
-                    <ul className="mt-4 grid gap-2 sm:grid-cols-2 text-sm text-gray-700">
-                        {highlights.map((h) => (
-                            <li key={h} className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-emerald-500" aria-hidden /> {h}</li>
-                        ))}
-                    </ul>
-
-                    <div className="mt-6 flex flex-wrap gap-3">
-                        <a href="https://www.grupolosgrobo.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700">
-                            Conocer más
-                        </a>
-                        <Link href={route('red-comercial')} className="inline-flex items-center justify-center rounded-md border border-emerald-300 bg-white px-5 py-2.5 text-sm font-medium text-emerald-700 hover:bg-emerald-50">
-                            Ver red comercial
-                        </Link>
-                    </div>
-                </div>
-
-                <div className="rounded-2xl bg-gradient-to-br from-emerald-600 to-lime-600 p-6 text-white shadow ring-1 ring-emerald-200/40">
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur">
-                            <div className="text-2xl font-semibold">+45</div>
-                            <div className="text-xs text-white/85">Años en el agro</div>
-                        </div>
-                        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur">
-                            <div className="text-2xl font-semibold">AR</div>
-                            <div className="text-xs text-white/85">Presencia nacional</div>
-                        </div>
-                        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur">
-                            <div className="text-2xl font-semibold">I+D</div>
-                            <div className="text-xs text-white/85">Innovación propia</div>
-                        </div>
-                        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur">
-                            <div className="text-2xl font-semibold">24/7</div>
-                            <div className="text-xs text-white/85">Soporte técnico</div>
-                        </div>
-                    </div>
+                <div className="absolute inset-x-0 bottom-2 flex items-center justify-center gap-2">
+                    {items.map((_, i) => (
+                        <button
+                            key={i}
+                            aria-label={`Ir al slide ${i + 1}`}
+                            onClick={() => goTo(i)}
+                            className={`h-2.5 rounded-full transition-all ${i === index ? 'w-6 bg-emerald-500' : 'w-2.5 bg-emerald-300/70 hover:bg-emerald-400'}`}
+                        />
+                    ))}
                 </div>
             </div>
         </section>
