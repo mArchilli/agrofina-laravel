@@ -99,35 +99,35 @@ function FeaturedProductsCarousel() {
             title: 'MABYN', 
             mob: `/images/ago-mabyn-mob${EXT}`, 
             desk: `/images/ago-mabyn-desk${EXT}`,
-            description: 'MABYN® es un Herbicida sistémico y de acción hormonal, para el control de malezas de hoja ancha en barbecho. Mezcla de sales alquilamidopropildimetilamonio y dietanolamonio del ácido 2,4-D.'
+            description: 'Herbicida sistémico y de acción hormonal, para control de malezas de hoja ancha en barbecho. Mezcla de sales alquilamidopropildimetilamonio y dietanolamonio del ácido 2,4-D.'
         },
         { 
             key: 'topground', 
             title: 'TOPGROUND', 
             mob: `/images/ago-topground-mob${EXT}`, 
             desk: `/images/ago-topground-desk${EXT}`,
-            description: 'TOP GROUND® es un herbicida con acción de contacto, sistémico y residual. Estas características le permiten controlar malezas en pre-emergencia como en post-emergencia.'
+            description: 'Herbicida con acción de contacto, sistémico y residual. Estas características le permiten controlar malezas en pre-emergencia como en post-emergencia garantizando un período de control prolongado y sin competencia.'
         },
         { 
             key: 'k48', 
             title: 'KYLIAN', 
             mob: `/images/ago-k48-mob${EXT}`, 
             desk: `/images/ago-k48-desk${EXT}`,
-            description: 'KYLIAN® es un herbicida graminicida sistémico y selectivo de post emergencia desarrollado para los cultivos de SOJA, MAÍZ, GIRASOL, MANÍ, ALGODÓN Y POROTO.'
+            description: 'herbicida graminicida sistémico y selectivo de post emergencia desarrollado para los cultivos de SOJA, MAÍZ, GIRASOL, MANÍ, ALGODÓN Y POROTO. Kylian 48 inhibe la enzima acetil coenzima A carboxilasa.'
         },
         { 
             key: 'mulan', 
             title: 'MULAN', 
             mob: `/images/ago-mulan-mob${EXT}`, 
             desk: `/images/ago-mulan-desk${EXT}`,
-            description: 'MULAN® Es un herbicida residual y selectivo para el control de malezas de hoja ancha. Absorción foliar y radical, con rápida translocación vía xilema y floema, acumulándose en las regiones meristemáticas.'
+            description: 'Herbicida residual y selectivo para el control de malezas de hoja ancha. Absorción foliar y radical, con rápida translocación vía xilema y floema, acumulándose en las regiones meristemáticas.'
         },
         { 
             key: 'talis', 
             title: 'TALIS', 
             mob: `/images/ago-talis-mob${EXT}`, 
             desk: `/images/ago-talis-desk${EXT}`,
-            description: 'TALIS® Es un herbicida residual selectivo pre y post-emergente temprano que controla un amplio espectro de malezas, especialmente las de hoja ancha. Por su acción sistémica penetra por cotiledones, hojas jóvenes, y raíces.'
+            description: 'Herbicida residual selectivo pre y post-emergente temprano que controla un amplio espectro de malezas, especialmente las de hoja ancha. Por su acción sistémica penetra por cotiledones, hojas jóvenes, y raíces.'
         },
     ];
 
@@ -180,7 +180,7 @@ function FeaturedProductsCarousel() {
                         }}
                     />
                 </div>
-                <p className="mt-2 text-sm md:text-base text-emerald-800/80">Explorá lo mejor de nuestro catálogo y descubrí los productos que marcan la diferencia.</p>
+                <p className="mt-2 text-sm md:text-base text-emerald-800/80">Lo mejor de nuestro catálogo. Descubrí los productos que marcan la diferencia.</p>
             </div>
 
             <div
@@ -226,7 +226,7 @@ function FeaturedProductsCarousel() {
                                         <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-emerald-800 mb-2 md:mb-3">
                                             {item.title}®
                                         </h3>
-                                        <p className="text-xs md:text-sm lg:text-base text-gray-700 leading-relaxed">
+                                        <p className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
                                             {item.description}
                                         </p>
                                     </div>
