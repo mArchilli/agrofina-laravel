@@ -16,7 +16,7 @@ export default function ShowCultivo({ cultivo }) {
                     </div>
                     <div className="flex gap-2">
                         <Link
-                            href={route('cultivos.edit', cultivo.id)}
+                            href={route('admin.cultivos.edit', cultivo.id)}
                             className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
                         >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -25,7 +25,7 @@ export default function ShowCultivo({ cultivo }) {
                             Editar
                         </Link>
                         <Link
-                            href={route('cultivos.index')}
+                            href={route('admin.cultivos')}
                             className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-lg transition-colors duration-200"
                         >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

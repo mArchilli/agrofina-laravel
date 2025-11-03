@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CultivoController;
 use App\Http\Controllers\PrincipioActivoController;
+use App\Http\Controllers\ArbolRecomendacionController;
 use App\Http\Controllers\AgroNewsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,43 @@ Route::middleware('auth')->group(function () {
             'update' => 'categorias.update',
             'destroy' => 'categorias.destroy',
         ]);
+
+        // Rutas admin para cultivos
+        Route::resource('cultivos', CultivoController::class)->names([
+            'index' => 'cultivos',
+            'create' => 'cultivos.create',
+            'store' => 'cultivos.store',
+            'show' => 'cultivos.show',
+            'edit' => 'cultivos.edit',
+            'update' => 'cultivos.update',
+            'destroy' => 'cultivos.destroy',
+        ]);
+
+        // Rutas admin para principios activos
+        Route::resource('principios-activos', PrincipioActivoController::class)->parameters([
+            'principios-activos' => 'principio_activo'
+        ])->names([
+            'index' => 'principios-activos',
+            'create' => 'principios-activos.create',
+            'store' => 'principios-activos.store',
+            'show' => 'principios-activos.show',
+            'edit' => 'principios-activos.edit',
+            'update' => 'principios-activos.update',
+            'destroy' => 'principios-activos.destroy',
+        ]);
+        
+        // Rutas admin para árboles de recomendación
+        Route::resource('arboles-recomendacion', ArbolRecomendacionController::class)->parameters([
+            'arboles-recomendacion' => 'arboles_recomendacion'
+        ])->names([
+            'index' => 'arboles-recomendacion',
+            'create' => 'arboles-recomendacion.create',
+            'store' => 'arboles-recomendacion.store',
+            'show' => 'arboles-recomendacion.show',
+            'edit' => 'arboles-recomendacion.edit',
+            'update' => 'arboles-recomendacion.update',
+            'destroy' => 'arboles-recomendacion.destroy',
+        ]);
         
         // Ruta adicional para obtener categorías activas (para selects)
         Route::get('categorias-activas', [CategoriaController::class, 'getActive'])->name('categorias.active');
@@ -114,13 +152,6 @@ Route::middleware('auth')->group(function () {
         Route::get('agronews/{agroNews}/download', [AgroNewsController::class, 'download'])->name('agronews.download');
     });
     
-    // Rutas para cultivos (fuera del prefijo admin para usar nombres más simples)
-    Route::resource('cultivos', CultivoController::class);
-    
-    // Rutas para principios activos
-    Route::resource('principios-activos', PrincipioActivoController::class)->parameters([
-        'principios-activos' => 'principio_activo'
-    ]);
 });
 
 // Ruta 404 personalizada (debe ir al final)

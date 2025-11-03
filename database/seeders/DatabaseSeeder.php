@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             CultivoSeeder::class,
             PrincipioActivoSeeder::class,
+            ArbolRecomendacionSeeder::class,
         ]);
     }
 }

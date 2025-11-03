@@ -11,7 +11,7 @@ export default function EditPrincipioActivo({ principioActivo }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        put(route('principios-activos.update', { principio_activo: principioActivo.id }));
+    put(route('admin.principios-activos.update', { principio_activo: principioActivo.id }));
     };
 
     return (
@@ -28,7 +28,7 @@ export default function EditPrincipioActivo({ principioActivo }) {
                     </div>
                     <div className="flex space-x-3">
                         <Link
-                            href={route('principios-activos.show', { principio_activo: principioActivo.id })}
+                            href={route('admin.principios-activos.show', { principio_activo: principioActivo.id })}
                             className="inline-flex items-center px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm font-medium rounded-lg transition-colors duration-200"
                         >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@ export default function EditPrincipioActivo({ principioActivo }) {
                             Ver Detalle
                         </Link>
                         <Link
-                            href={route('principios-activos.index')}
+                            href={route('admin.principios-activos')}
                             className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-lg transition-colors duration-200"
                         >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,7 +228,7 @@ export default function EditPrincipioActivo({ principioActivo }) {
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div className="flex flex-col sm:flex-row gap-4 justify-end">
                                 <Link
-                                    href={route('principios-activos.index')}
+                                    href={route('admin.principios-activos')}
                                     className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
                                 >
                                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

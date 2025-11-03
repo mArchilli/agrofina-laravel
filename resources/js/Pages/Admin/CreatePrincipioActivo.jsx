@@ -11,7 +11,7 @@ export default function CreatePrincipioActivo() {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        post(route('principios-activos.store'), {
+        post(route('admin.principios-activos.store'), {
             onSuccess: () => {
                 reset();
             },
@@ -31,7 +31,7 @@ export default function CreatePrincipioActivo() {
                         </p>
                     </div>
                     <Link
-                        href={route('principios-activos.index')}
+                        href={route('admin.principios-activos')}
                         className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-lg transition-colors duration-200"
                     >
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +220,7 @@ export default function CreatePrincipioActivo() {
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div className="flex flex-col sm:flex-row gap-4 justify-end">
                                 <Link
-                                    href={route('principios-activos.index')}
+                                    href={route('admin.principios-activos')}
                                     className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
                                 >
                                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

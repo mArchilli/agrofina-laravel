@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Cultivo;
 use App\Models\PrincipioActivo;
+use App\Models\ArbolRecomendacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -48,10 +49,15 @@ class ProductController extends Controller
             ->orderBy('nombre')
             ->get(['id', 'nombre']);
 
+        $arbolesRecomendacion = ArbolRecomendacion::active()
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
         return Inertia::render('Admin/CreateProduct', [
             'categorias' => $categorias,
             'cultivos' => $cultivos,
             'principiosActivos' => $principiosActivos,
+            'arbolesRecomendacion' => $arbolesRecomendacion,
         ]);
     }
 
@@ -76,13 +82,14 @@ class ProductController extends Controller
             'dosis' => 'nullable|string',
             'recomendaciones_de_uso' => 'nullable|string',
             'banda_toxicologica' => 'nullable|string|max:255',
-            'arbol_de_recomendacion' => 'nullable|string',
             'pdfs' => 'nullable|array',
             'pdfs.*' => 'file|mimes:pdf|max:10240', // Max 10MB per PDF
             'precio' => 'nullable|numeric|min:0',
             'activo' => 'boolean',
             'cultivos_ids' => 'nullable|array',
             'cultivos_ids.*' => 'exists:cultivos,id',
+            'arboles_ids' => 'nullable|array',
+            'arboles_ids.*' => 'exists:arbol_recomendaciones,id',
         ]);
 
         // Manejar la imagen
@@ -105,15 +112,16 @@ class ProductController extends Controller
         }
 
         // Remover cultivos_ids del validated ya que no es un campo del modelo
-        $cultivosIds = $validated['cultivos_ids'] ?? [];
+    $cultivosIds = $validated['cultivos_ids'] ?? [];
+    $arbolesIds = $validated['arboles_ids'] ?? [];
         unset($validated['cultivos_ids']);
+    unset($validated['arboles_ids']);
 
         $producto = Producto::create($validated);
 
         // Asociar cultivos si se seleccionaron
-        if (!empty($cultivosIds)) {
-            $producto->cultivos()->attach($cultivosIds);
-        }
+        if (!empty($cultivosIds)) $producto->cultivos()->attach($cultivosIds);
+        if (!empty($arbolesIds)) $producto->arbolesRecomendacion()->attach($arbolesIds);
 
         return redirect()->route('admin.productos')->with('success', 'Producto creado exitosamente.');
     }
@@ -145,11 +153,16 @@ class ProductController extends Controller
             ->orderBy('nombre')
             ->get(['id', 'nombre']);
 
+        $arbolesRecomendacion = ArbolRecomendacion::active()
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
         return Inertia::render('Admin/EditProduct', [
-            'producto' => $producto->load(['categoria', 'cultivos', 'principioActivo']),
+            'producto' => $producto->load(['categoria', 'cultivos', 'principioActivo', 'arbolesRecomendacion']),
             'categorias' => $categorias,
             'cultivos' => $cultivos,
             'principiosActivos' => $principiosActivos,
+            'arbolesRecomendacion' => $arbolesRecomendacion,
         ]);
     }
 
@@ -174,13 +187,14 @@ class ProductController extends Controller
             'dosis' => 'nullable|string',
             'recomendaciones_de_uso' => 'nullable|string',
             'banda_toxicologica' => 'nullable|string|max:255',
-            'arbol_de_recomendacion' => 'nullable|string',
             'pdfs' => 'nullable|array',
             'pdfs.*' => 'file|mimes:pdf|max:10240', // Max 10MB per PDF
             'precio' => 'nullable|numeric|min:0',
             'activo' => 'boolean',
             'cultivos_ids' => 'nullable|array',
             'cultivos_ids.*' => 'exists:cultivos,id',
+            'arboles_ids' => 'nullable|array',
+            'arboles_ids.*' => 'exists:arbol_recomendaciones,id',
         ]);
 
         // Manejar la imagen
@@ -217,13 +231,16 @@ class ProductController extends Controller
         }
 
         // Remover cultivos_ids del validated ya que no es un campo del modelo
-        $cultivosIds = $validated['cultivos_ids'] ?? [];
+    $cultivosIds = $validated['cultivos_ids'] ?? [];
+    $arbolesIds = $validated['arboles_ids'] ?? [];
         unset($validated['cultivos_ids']);
+    unset($validated['arboles_ids']);
 
         $producto->update($validated);
 
         // Sincronizar cultivos (esto reemplaza todas las relaciones existentes)
-        $producto->cultivos()->sync($cultivosIds);
+    $producto->cultivos()->sync($cultivosIds);
+    $producto->arbolesRecomendacion()->sync($arbolesIds);
 
         return redirect()->route('admin.productos')->with('success', 'Producto actualizado exitosamente.');
     }

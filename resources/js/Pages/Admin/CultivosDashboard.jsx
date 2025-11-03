@@ -13,7 +13,7 @@ export default function CultivosDashboard({ cultivos }) {
 
     const confirmDelete = () => {
         if (cultivoToDelete) {
-            router.delete(route('cultivos.destroy', cultivoToDelete.id), {
+            router.delete(route('admin.cultivos.destroy', cultivoToDelete.id), {
                 onSuccess: () => {
                     setShowDeleteModal(false);
                     setCultivoToDelete(null);
@@ -30,7 +30,7 @@ export default function CultivosDashboard({ cultivos }) {
                         Gestión de Cultivos
                     </h2>
                     <Link
-                        href={route('cultivos.create')}
+                        href={route('admin.cultivos.create')}
                         className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Nuevo Cultivo
@@ -102,7 +102,7 @@ export default function CultivosDashboard({ cultivos }) {
                                                     <td className="px-6 py-4 whitespace-nowrap text-center">
                                                         <div className="flex justify-center gap-2">
                                                             <Link
-                                                                href={route('cultivos.show', cultivo.id)}
+                                                                href={route('admin.cultivos.show', cultivo.id)}
                                                                 className="inline-flex items-center p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-full transition-colors duration-200"
                                                                 title="Ver cultivo"
                                                             >
@@ -112,7 +112,7 @@ export default function CultivosDashboard({ cultivos }) {
                                                                 </svg>
                                                             </Link>
                                                             <Link
-                                                                href={route('cultivos.edit', cultivo.id)}
+                                                                href={route('admin.cultivos.edit', cultivo.id)}
                                                                 className="inline-flex items-center p-2 text-indigo-600 hover:text-indigo-900 hover:bg-indigo-50 rounded-full transition-colors duration-200"
                                                                 title="Editar cultivo"
                                                             >
@@ -164,7 +164,7 @@ export default function CultivosDashboard({ cultivos }) {
                                     </p>
                                     <div className="mt-6">
                                         <Link
-                                            href={route('cultivos.create')}
+                                            href={route('admin.cultivos.create')}
                                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         >
                                             Crear Cultivo

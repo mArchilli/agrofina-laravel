@@ -114,4 +114,12 @@ class Producto extends Model
     {
         return $this->belongsToMany(Cultivo::class, 'cultivo_producto');
     }
+
+    /**
+     * Relación many-to-many con Árboles de Recomendación
+     */
+    public function arbolesRecomendacion()
+    {
+        return $this->belongsToMany(ArbolRecomendacion::class, 'arbol_recomendacion_producto');
+    }
 }

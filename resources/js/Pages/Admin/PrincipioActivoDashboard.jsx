@@ -13,7 +13,7 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
 
     const confirmDelete = () => {
         if (principioActivoToDelete) {
-            router.delete(route('principios-activos.destroy', { principio_activo: principioActivoToDelete.id }), {
+            router.delete(route('admin.principios-activos.destroy', { principio_activo: principioActivoToDelete.id }), {
                 onSuccess: () => {
                     setShowDeleteModal(false);
                     setPrincipioActivoToDelete(null);
@@ -30,7 +30,7 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                         Gestión de Principios Activos
                     </h2>
                     <Link
-                        href={route('principios-activos.create')}
+                        href={route('admin.principios-activos.create')}
                         className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Nuevo Principio Activo
@@ -102,7 +102,7 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                                                     <td className="px-6 py-4 whitespace-nowrap text-center">
                                                         <div className="flex justify-center gap-2">
                                                             <Link
-                                                                href={route('principios-activos.show', { principio_activo: principioActivo.id })}
+                                                                href={route('admin.principios-activos.show', { principio_activo: principioActivo.id })}
                                                                 className="inline-flex items-center p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-full transition-colors duration-200"
                                                                 title="Ver principio activo"
                                                             >
@@ -112,7 +112,7 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                                                                 </svg>
                                                             </Link>
                                                             <Link
-                                                                href={route('principios-activos.edit', { principio_activo: principioActivo.id })}
+                                                                href={route('admin.principios-activos.edit', { principio_activo: principioActivo.id })}
                                                                 className="inline-flex items-center p-2 text-indigo-600 hover:text-indigo-900 hover:bg-indigo-50 rounded-full transition-colors duration-200"
                                                                 title="Editar principio activo"
                                                             >
@@ -158,7 +158,7 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                                     </p>
                                     <div className="mt-6">
                                         <Link
-                                            href={route('principios-activos.create')}
+                                            href={route('admin.principios-activos.create')}
                                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         >
                                             Crear Principio Activo

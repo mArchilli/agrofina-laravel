@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function CreateProduct({ categorias, cultivos, principiosActivos }) {
+export default function CreateProduct({ categorias, cultivos, principiosActivos, arbolesRecomendacion }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         nombre: '',
         imagen: null,
@@ -19,10 +19,10 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos 
         dosis: '',
         recomendaciones_de_uso: '',
         banda_toxicologica: '',
-        arbol_de_recomendacion: '',
         activo: true,
         pdfs: [],
         cultivos_ids: [],
+        arboles_ids: [],
     });
 
     const [imagePreview, setImagePreview] = useState(null);
@@ -79,6 +79,17 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos 
         }
         
         setData('cultivos_ids', currentCultivos);
+    };
+
+    const handleArbolChange = (arbolId) => {
+        const current = [...data.arboles_ids];
+        const index = current.indexOf(arbolId);
+        if (index > -1) {
+            current.splice(index, 1);
+        } else {
+            current.push(arbolId);
+        }
+        setData('arboles_ids', current);
     };
 
     return (
@@ -538,20 +549,57 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos 
                                     {errors.recomendaciones_de_uso && <p className="text-red-600 text-sm mt-2">{errors.recomendaciones_de_uso}</p>}
                                 </div>
 
-                                {/* Árbol de Recomendación */}
+                                {/* Árboles de Recomendación */}
                                 <div>
-                                    <label htmlFor="arbol_de_recomendacion" className="block text-sm font-medium text-gray-900 mb-2">
-                                        Árbol de Recomendación
+                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                        Árboles de Recomendación
                                     </label>
-                                    <textarea
-                                        id="arbol_de_recomendacion"
-                                        rows={3}
-                                        value={data.arbol_de_recomendacion}
-                                        onChange={(e) => setData('arbol_de_recomendacion', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                        placeholder="Estructura de recomendaciones de aplicación..."
-                                    />
-                                    {errors.arbol_de_recomendacion && <p className="text-red-600 text-sm mt-2">{errors.arbol_de_recomendacion}</p>}
+                                    <div className="space-y-3">
+                                        <p className="text-xs text-gray-500">Selecciona uno o varios árboles de recomendación</p>
+                                        {arbolesRecomendacion && arbolesRecomendacion.length > 0 ? (
+                                            <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
+                                                {arbolesRecomendacion.map((arbol) => {
+                                                    const isSelected = data.arboles_ids.includes(arbol.id);
+                                                    return (
+                                                        <label
+                                                            key={arbol.id}
+                                                            className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                isSelected
+                                                                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300 shadow-md'
+                                                                    : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                            }`}
+                                                        >
+                                                            <input type="checkbox" checked={isSelected} onChange={() => handleArbolChange(arbol.id)} className="sr-only" />
+                                                            <span className="flex items-center">
+                                                                {isSelected && (
+                                                                    <svg className="w-4 h-4 mr-2 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                    </svg>
+                                                                )}
+                                                                {arbol.nombre}
+                                                            </span>
+                                                        </label>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                                                <p className="text-sm text-gray-500">No hay árboles de recomendación disponibles</p>
+                                                <p className="text-xs text-gray-400 mt-1">Primero crea árboles desde su módulo</p>
+                                            </div>
+                                        )}
+                                        {data.arboles_ids.length > 0 && (
+                                            <div className="mt-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                                                <div className="flex items-center text-sm text-emerald-800">
+                                                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span className="font-medium">{data.arboles_ids.length} árbol(es) seleccionado(s)</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {errors.arboles_ids && <p className="text-red-600 text-sm mt-2">{errors.arboles_ids}</p>}
                                 </div>
                             </div>
                         </div>
