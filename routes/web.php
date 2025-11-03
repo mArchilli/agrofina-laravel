@@ -52,9 +52,8 @@ Route::get('/politicas', function () {
     return Inertia::render('Politicas');
 })->name('politicas');
 
-Route::get('/novedades', function () {
-    return Inertia::render('Novedades');
-})->name('novedades');
+Route::get('/novedades', [NovedadController::class, 'showPublic'])->name('novedades');
+Route::get('/novedades/{novedad}', [NovedadController::class, 'show'])->name('novedades.show');
 
 Route::get('/agro-news', function () {
     return Inertia::render('AgroNews');
