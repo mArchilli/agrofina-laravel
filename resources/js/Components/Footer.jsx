@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 
 const leftLinks = [
   { label: 'Inicio', href: '/' },
+  { label: 'Productos', href: route('productos') },
   { label: 'Servicio Técnico', href: route('servicio-tecnico') },
   { label: 'Red Comercial', href: route('red-comercial') },
   { label: 'I+D', href: route('i-d') },

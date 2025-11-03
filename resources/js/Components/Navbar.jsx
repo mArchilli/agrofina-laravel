@@ -44,6 +44,7 @@ export default function Navbar({ variant = 'client' }) {
 
     const clientLinks = [
         { label: 'Inicio', href: '/' },
+        { label: 'Productos', href: route('productos') },
         { label: 'Servicio Técnico', href: route('servicio-tecnico') },
         { label: 'Red Comercial', href: route('red-comercial') },
         { label: 'I+D', href: route('i-d') },
@@ -414,8 +415,14 @@ export default function Navbar({ variant = 'client' }) {
                                     </div>
                                     <span className="text-white/80 text-sm md:ml-auto whitespace-nowrap">Atención al Cliente: +54 11 4837 7800</span>
                                 </div>
-                                <div className="text-white/80 text-sm mt-6">
+                                <div className="text-white/80 text-sm mt-6 flex items-center gap-4">
                                     <p>© {new Date().getFullYear()} Agrofina</p>
+                                    <Link 
+                                        href={isAdmin ? route('admin.productos') : route('login')} 
+                                        className="text-white/60 hover:text-white/80 transition-colors text-xs"
+                                    >
+                                        {isAdmin ? 'Panel' : 'Ingresar'}
+                                    </Link>
                                 </div>
                             </div>
                         </div>
