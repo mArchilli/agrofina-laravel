@@ -8,7 +8,6 @@ export default function EditProduct({ producto, categorias, cultivos, principios
         imagen: null,
         categoria_id: producto.categoria_id || '',
         principio_activo_id: producto.principio_activo_id || '',
-        principio_activo: producto.principio_activo || '',
         formulacion: producto.formulacion || '',
         descripcion: producto.descripcion || '',
         presentacion: producto.presentacion || '',
@@ -26,6 +25,9 @@ export default function EditProduct({ producto, categorias, cultivos, principios
     });
 
     const [imagePreview, setImagePreview] = useState(null);
+    const [searchPrincipioActivo, setSearchPrincipioActivo] = useState('');
+    const [searchCultivo, setSearchCultivo] = useState('');
+    const [searchArbol, setSearchArbol] = useState('');
 
     // Configurar la imagen existente al cargar el componente
     useEffect(() => {
@@ -61,6 +63,13 @@ export default function EditProduct({ producto, categorias, cultivos, principios
         if (data.cultivos_ids && data.cultivos_ids.length > 0) {
             data.cultivos_ids.forEach((cultivoId, index) => {
                 formData.append(`cultivos_ids[${index}]`, cultivoId);
+            });
+        }
+        
+        // Agregar árboles de recomendación (ids)
+        if (data.arboles_ids && data.arboles_ids.length > 0) {
+            data.arboles_ids.forEach((arbolId, index) => {
+                formData.append(`arboles_ids[${index}]`, arbolId);
             });
         }
         
@@ -144,12 +153,15 @@ export default function EditProduct({ producto, categorias, cultivos, principios
         }
         setData('arboles_ids', current);
     };
-        // Árboles de recomendación (ids)
-        if (data.arboles_ids && data.arboles_ids.length > 0) {
-            data.arboles_ids.forEach((arbolId, index) => {
-                formData.append(`arboles_ids[${index}]`, arbolId);
-            });
+
+    const handlePrincipioActivoChange = (principioId) => {
+        // Solo permitir seleccionar uno, así que si es el mismo, lo deseleccionamos
+        if (data.principio_activo_id === principioId) {
+            setData('principio_activo_id', '');
+        } else {
+            setData('principio_activo_id', principioId);
         }
+    };
 
     return (
         <AuthenticatedLayout
@@ -308,32 +320,95 @@ export default function EditProduct({ producto, categorias, cultivos, principios
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                    {/* Principio Activo */}
-                                    <div>
-                                        <label htmlFor="principio_activo_id" className="block text-sm font-medium text-gray-900 mb-2">
-                                            Principio Activo
-                                        </label>
-                                        <select
-                                            id="principio_activo_id"
-                                            value={data.principio_activo_id}
-                                            onChange={(e) => setData('principio_activo_id', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                        >
-                                            <option value="">Seleccionar principio activo</option>
-                                            {principiosActivos && principiosActivos.map((principio) => (
-                                                <option key={principio.id} value={principio.id}>
-                                                    {principio.nombre}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {principiosActivos && principiosActivos.length > 0 && (
-                                            <p className="text-xs text-gray-500 mt-1">
-                                                {principiosActivos.length} principios activos disponibles
-                                            </p>
+                                {/* Principio Activo - Ahora como pastillas */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                        Principio Activo
+                                    </label>
+                                    <div className="space-y-3">
+                                        <p className="text-xs text-gray-500">
+                                            Selecciona el principio activo del producto
+                                        </p>
+                                        
+                                        {/* Buscador */}
+                                        <input
+                                            type="text"
+                                            placeholder="Buscar principio activo..."
+                                            value={searchPrincipioActivo}
+                                            onChange={(e) => setSearchPrincipioActivo(e.target.value)}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-sm"
+                                        />
+                                        
+                                        {principiosActivos && principiosActivos.length > 0 ? (
+                                            <div className="flex flex-wrap gap-2 max-h-64 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
+                                                {principiosActivos
+                                                    .filter(principio => 
+                                                        principio.nombre.toLowerCase().includes(searchPrincipioActivo.toLowerCase())
+                                                    )
+                                                    .map((principio) => {
+                                                        const isSelected = data.principio_activo_id === principio.id;
+                                                        return (
+                                                            <label
+                                                                key={principio.id}
+                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                    isSelected
+                                                                        ? 'bg-purple-100 text-purple-800 border-purple-300 shadow-md'
+                                                                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                                }`}
+                                                            >
+                                                                <input
+                                                                    type="radio"
+                                                                    name="principio_activo"
+                                                                    checked={isSelected}
+                                                                    onChange={() => handlePrincipioActivoChange(principio.id)}
+                                                                    className="sr-only"
+                                                                />
+                                                                <span className="flex items-center">
+                                                                    {isSelected && (
+                                                                        <svg className="w-4 h-4 mr-2 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                        </svg>
+                                                                    )}
+                                                                    {principio.nombre}
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    })}
+                                                {principiosActivos.filter(p => p.nombre.toLowerCase().includes(searchPrincipioActivo.toLowerCase())).length === 0 && (
+                                                    <p className="text-sm text-gray-500 py-4 w-full text-center">
+                                                        No se encontraron principios activos con "{searchPrincipioActivo}"
+                                                    </p>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                                                <svg className="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                                </svg>
+                                                <p className="text-sm text-gray-500">No hay principios activos disponibles</p>
+                                                <p className="text-xs text-gray-400 mt-1">
+                                                    Primero debes crear principios activos desde el módulo correspondiente
+                                                </p>
+                                            </div>
                                         )}
-                                        {errors.principio_activo_id && <p className="text-red-600 text-sm mt-2">{errors.principio_activo_id}</p>}
+                                        
+                                        {data.principio_activo_id && (
+                                            <div className="mt-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                                                <div className="flex items-center text-sm text-purple-800">
+                                                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span className="font-medium">
+                                                        Principio activo seleccionado: {principiosActivos.find(p => p.id === data.principio_activo_id)?.nombre}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
+                                    {errors.principio_activo_id && <p className="text-red-600 text-sm mt-2">{errors.principio_activo_id}</p>}
+                                </div>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                                     {/* Formulación */}
                                     <div>
@@ -521,36 +596,54 @@ export default function EditProduct({ producto, categorias, cultivos, principios
                                                 Selecciona los cultivos donde se puede aplicar este producto
                                             </p>
                                             
+                                            {/* Buscador de cultivos */}
+                                            <input
+                                                type="text"
+                                                placeholder="Buscar cultivos..."
+                                                value={searchCultivo}
+                                                onChange={(e) => setSearchCultivo(e.target.value)}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-sm"
+                                            />
+                                            
                                             {cultivos && cultivos.length > 0 ? (
                                                 <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
-                                                    {cultivos.map((cultivo) => {
-                                                        const isSelected = data.cultivos_ids.includes(cultivo.id);
-                                                        return (
-                                                            <label
-                                                                key={cultivo.id}
-                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
-                                                                    isSelected
-                                                                        ? 'bg-blue-100 text-blue-800 border-blue-300 shadow-md'
-                                                                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
-                                                                }`}
-                                                            >
-                                                                <input
-                                                                    type="checkbox"
-                                                                    checked={isSelected}
-                                                                    onChange={() => handleCultivoChange(cultivo.id)}
-                                                                    className="sr-only"
-                                                                />
-                                                                <span className="flex items-center">
-                                                                    {isSelected && (
-                                                                        <svg className="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                        </svg>
-                                                                    )}
-                                                                    {cultivo.nombre}
-                                                                </span>
-                                                            </label>
-                                                        );
-                                                    })}
+                                                    {cultivos
+                                                        .filter(cultivo => 
+                                                            cultivo.nombre.toLowerCase().includes(searchCultivo.toLowerCase())
+                                                        )
+                                                        .map((cultivo) => {
+                                                            const isSelected = data.cultivos_ids.includes(cultivo.id);
+                                                            return (
+                                                                <label
+                                                                    key={cultivo.id}
+                                                                    className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                        isSelected
+                                                                            ? 'bg-blue-100 text-blue-800 border-blue-300 shadow-md'
+                                                                            : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                                    }`}
+                                                                >
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        checked={isSelected}
+                                                                        onChange={() => handleCultivoChange(cultivo.id)}
+                                                                        className="sr-only"
+                                                                    />
+                                                                    <span className="flex items-center">
+                                                                        {isSelected && (
+                                                                            <svg className="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                            </svg>
+                                                                        )}
+                                                                        {cultivo.nombre}
+                                                                    </span>
+                                                                </label>
+                                                            );
+                                                        })}
+                                                    {cultivos.filter(c => c.nombre.toLowerCase().includes(searchCultivo.toLowerCase())).length === 0 && (
+                                                        <p className="text-sm text-gray-500 py-4 w-full text-center">
+                                                            No se encontraron cultivos con "{searchCultivo}"
+                                                        </p>
+                                                    )}
                                                 </div>
                                             ) : (
                                                 <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
@@ -626,31 +719,50 @@ export default function EditProduct({ producto, categorias, cultivos, principios
                                     <label className="block text-sm font-medium text-gray-900 mb-3">Árboles de Recomendación</label>
                                     <div className="space-y-3">
                                         <p className="text-xs text-gray-500">Selecciona uno o varios árboles de recomendación</p>
+                                        
+                                        {/* Buscador de árboles */}
+                                        <input
+                                            type="text"
+                                            placeholder="Buscar árboles de recomendación..."
+                                            value={searchArbol}
+                                            onChange={(e) => setSearchArbol(e.target.value)}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-sm"
+                                        />
+                                        
                                         {arbolesRecomendacion && arbolesRecomendacion.length > 0 ? (
                                             <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
-                                                {arbolesRecomendacion.map((arbol) => {
-                                                    const isSelected = data.arboles_ids.includes(arbol.id);
-                                                    return (
-                                                        <label
-                                                            key={arbol.id}
-                                                            className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
-                                                                isSelected
-                                                                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300 shadow-md'
-                                                                    : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
-                                                            }`}
-                                                        >
-                                                            <input type="checkbox" checked={isSelected} onChange={() => handleArbolChange(arbol.id)} className="sr-only" />
-                                                            <span className="flex items-center">
-                                                                {isSelected && (
-                                                                    <svg className="w-4 h-4 mr-2 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                    </svg>
-                                                                )}
-                                                                {arbol.nombre}
-                                                            </span>
-                                                        </label>
-                                                    );
-                                                })}
+                                                {arbolesRecomendacion
+                                                    .filter(arbol => 
+                                                        arbol.nombre.toLowerCase().includes(searchArbol.toLowerCase())
+                                                    )
+                                                    .map((arbol) => {
+                                                        const isSelected = data.arboles_ids.includes(arbol.id);
+                                                        return (
+                                                            <label
+                                                                key={arbol.id}
+                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                    isSelected
+                                                                        ? 'bg-emerald-100 text-emerald-800 border-emerald-300 shadow-md'
+                                                                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                                }`}
+                                                            >
+                                                                <input type="checkbox" checked={isSelected} onChange={() => handleArbolChange(arbol.id)} className="sr-only" />
+                                                                <span className="flex items-center">
+                                                                    {isSelected && (
+                                                                        <svg className="w-4 h-4 mr-2 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                        </svg>
+                                                                    )}
+                                                                    {arbol.nombre}
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    })}
+                                                {arbolesRecomendacion.filter(a => a.nombre.toLowerCase().includes(searchArbol.toLowerCase())).length === 0 && (
+                                                    <p className="text-sm text-gray-500 py-4 w-full text-center">
+                                                        No se encontraron árboles con "{searchArbol}"
+                                                    </p>
+                                                )}
                                             </div>
                                         ) : (
                                             <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
