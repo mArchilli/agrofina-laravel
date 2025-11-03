@@ -7,6 +7,7 @@ use App\Http\Controllers\CultivoController;
 use App\Http\Controllers\PrincipioActivoController;
 use App\Http\Controllers\ArbolRecomendacionController;
 use App\Http\Controllers\AgroNewsController;
+use App\Http\Controllers\NovedadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -154,6 +155,19 @@ Route::middleware('auth')->group(function () {
         Route::post('agronews', [AgroNewsController::class, 'store'])->name('agronews.store');
         Route::delete('agronews/{agroNews}', [AgroNewsController::class, 'destroy'])->name('agronews.destroy');
         Route::get('agronews/{agroNews}/download', [AgroNewsController::class, 'download'])->name('agronews.download');
+        
+        // Rutas para Novedades Dashboard
+        Route::resource('novedades', NovedadController::class)->except(['show'])->parameters([
+            'novedades' => 'novedad'
+        ])->names([
+            'index' => 'novedades.index',
+            'create' => 'novedades.create',
+            'store' => 'novedades.store',
+            'edit' => 'novedades.edit',
+            'update' => 'novedades.update',
+            'destroy' => 'novedades.destroy',
+        ]);
+        Route::patch('novedades/{novedad}/toggle', [NovedadController::class, 'toggle'])->name('novedades.toggle');
     });
     
 });
