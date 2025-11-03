@@ -14,6 +14,94 @@ use Inertia\Inertia;
 class ProductController extends Controller
 {
     /**
+     * Display public listing of products with filters.
+     */
+    public function showPublic(Request $request)
+    {
+        $query = Producto::with([
+            'categoria',
+            'cultivos',
+            'principioActivo',
+            'arbolesRecomendacion'
+        ])->where('activo', true);
+
+        // Filtro por categoría
+        if ($request->filled('categoria')) {
+            $query->where('categoria_id', $request->categoria);
+        }
+
+        // Filtro por cultivo
+        if ($request->filled('cultivo')) {
+            $query->whereHas('cultivos', function ($q) use ($request) {
+                $q->where('cultivos.id', $request->cultivo);
+            });
+        }
+
+        // Filtro por principio activo
+        if ($request->filled('principio_activo')) {
+            $query->where('principio_activo_id', $request->principio_activo);
+        }
+
+        // Filtro por árbol de recomendación
+        if ($request->filled('arbol_recomendacion')) {
+            $query->whereHas('arbolesRecomendacion', function ($q) use ($request) {
+                $q->where('arbol_recomendaciones.id', $request->arbol_recomendacion);
+            });
+        }
+
+        $productos = $query->latest()->get();
+
+        // Obtener datos para los filtros
+        $categorias = Categoria::where('activo', true)
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
+        $cultivos = Cultivo::where('activo', true)
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
+        $principiosActivos = PrincipioActivo::where('activo', true)
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
+        $arbolesRecomendacion = ArbolRecomendacion::where('activo', true)
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
+        return Inertia::render('Productos', [
+            'productos' => $productos,
+            'categorias' => $categorias,
+            'cultivos' => $cultivos,
+            'principiosActivos' => $principiosActivos,
+            'arbolesRecomendacion' => $arbolesRecomendacion,
+            'filtros' => [
+                'categoria' => $request->categoria,
+                'cultivo' => $request->cultivo,
+                'principio_activo' => $request->principio_activo,
+                'arbol_recomendacion' => $request->arbol_recomendacion,
+            ],
+        ]);
+    }
+
+    /**
+     * Display detailed product information for public view.
+     */
+    public function showProductDetail(Producto $producto)
+    {
+        // Cargar todas las relaciones del producto
+        $producto->load([
+            'categoria',
+            'cultivos',
+            'principioActivo',
+            'arbolesRecomendacion'
+        ]);
+
+        return Inertia::render('ShowProduct', [
+            'producto' => $producto,
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()

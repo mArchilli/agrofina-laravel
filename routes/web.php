@@ -63,6 +63,10 @@ Route::get('/trabaja-con-nosotros', function () {
     return Inertia::render('TrabajaConNosotros');
 })->name('trabaja');
 
+// Ruta pública de productos (cliente)
+Route::get('/productos', [ProductController::class, 'showPublic'])->name('productos');
+Route::get('/productos/{producto}', [ProductController::class, 'showProductDetail'])->name('productos.show');
+
 Route::get('/proveedores', function () {
     return Inertia::render('Proveedores');
 })->name('proveedores');
