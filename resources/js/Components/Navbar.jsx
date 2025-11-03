@@ -62,12 +62,8 @@ export default function Navbar({ variant = 'client' }) {
     ];
 
     const adminLinks = [
-        { label: 'Dashboard', href: route('dashboard') },
         { label: 'Productos', href: route('admin.productos') },
-        { label: 'Categorías', href: route('admin.categorias') },
-        { label: 'Cultivos', href: route('admin.cultivos') },
-        { label: 'Principios Activos', href: route('admin.principios-activos') },
-        { label: 'Árboles Recomendación', href: route('admin.arboles-recomendacion') },
+        { label: 'Novedades', href: route('admin.novedades.index') },
         { label: 'AgroNews', href: route('admin.agronews.index') },
     ];
 
