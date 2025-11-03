@@ -12,6 +12,28 @@ use Inertia\Inertia;
 class AgroNewsController extends Controller
 {
     /**
+     * Mostrar la vista pública de AgroNews
+     */
+    public function showPublic()
+    {
+        $agroNews = AgroNews::orderBy('created_at', 'desc')->get();
+        
+        return Inertia::render('AgroNews', [
+            'agroNews' => $agroNews->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'title' => $item->title,
+                    'description' => $item->description,
+                    'file_name' => $item->file_name,
+                    'file_url' => $item->file_url,
+                    'formatted_file_size' => $item->formatted_file_size,
+                    'created_at' => $item->created_at->format('d/m/Y'),
+                ];
+            })
+        ]);
+    }
+
+    /**
      * Mostrar la lista de AgroNews en el dashboard de admin
      */
     public function index()

@@ -9,7 +9,36 @@ use Inertia\Inertia;
 class NovedadController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource for public view.
+     */
+    public function showPublic()
+    {
+        $novedades = Novedad::where('activo', true)
+            ->orderBy('fecha_carga', 'desc')
+            ->get();
+        
+        return Inertia::render('Novedades', [
+            'novedades' => $novedades
+        ]);
+    }
+
+    /**
+     * Display the specified resource for public view.
+     */
+    public function show(Novedad $novedad)
+    {
+        // Solo mostrar si está activa
+        if (!$novedad->activo) {
+            abort(404);
+        }
+
+        return Inertia::render('ShowNovedad', [
+            'novedad' => $novedad
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource (Admin Dashboard).
      */
     public function index()
     {

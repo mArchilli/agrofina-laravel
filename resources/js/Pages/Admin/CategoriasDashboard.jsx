@@ -5,6 +5,12 @@ import { useState } from 'react';
 export default function CategoriasDashboard({ categorias }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [categoriaToDelete, setCategoriaToDelete] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredCategorias = categorias.data.filter(categoria =>
+        categoria.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (categoria.descripcion && categoria.descripcion.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
 
     const handleDelete = (categoria) => {
         setCategoriaToDelete(categoria);
@@ -26,9 +32,20 @@ export default function CategoriasDashboard({ categorias }) {
         <AuthenticatedLayout
             header={
                 <div className="flex justify-between items-center">
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                        Gestión de Categorías
-                    </h2>
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href={route('admin.productos')}
+                            className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+                            title="Volver a Productos"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                        </Link>
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                            Gestión de Categorías
+                        </h2>
+                    </div>
                     <Link
                         href={route('admin.categorias.create')}
                         className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
@@ -42,147 +59,106 @@ export default function CategoriasDashboard({ categorias }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    {/* Buscador */}
+                    <div className="mb-6">
+                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Buscar categorías por nombre o descripción..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                />
+                            </div>
+                            {searchTerm && (
+                                <p className="mt-2 text-sm text-gray-500">
+                                    Mostrando {filteredCategorias.length} de {categorias.data.length} categorías
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Cards Grid */}
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            {categorias.data.length > 0 ? (
-                                <div className="overflow-x-auto">
-                                    <table className="min-w-full divide-y divide-gray-200">
-                                        <thead className="bg-gray-50">
-                                            <tr>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Nombre
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Productos
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Estado
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Fecha
-                                                </th>
-                                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Acciones
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="bg-white divide-y divide-gray-200">
-                                            {categorias.data.map((categoria) => (
-                                                <tr key={categoria.id} className="hover:bg-gray-50">
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm font-medium text-gray-900">
+                            {filteredCategorias.length > 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {filteredCategorias.map((categoria) => (
+                                        <div key={categoria.id} className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                                            <div className="p-6">
+                                                <div className="flex items-start justify-between mb-4">
+                                                    <div className="flex-1">
+                                                        <h3 className="text-lg font-semibold text-gray-900 mb-1">
                                                             {categoria.nombre}
-                                                        </div>
+                                                        </h3>
                                                         {categoria.descripcion && (
-                                                            <div className="text-sm text-gray-500 truncate max-w-xs">
+                                                            <p className="text-sm text-gray-500 line-clamp-2">
                                                                 {categoria.descripcion}
-                                                            </div>
+                                                            </p>
                                                         )}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">
-                                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                                {categoria.productos_count} productos
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <span
-                                                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                                                categoria.activo
-                                                                    ? 'bg-green-100 text-green-800'
-                                                                    : 'bg-red-100 text-red-800'
-                                                            }`}
-                                                        >
-                                                            {categoria.activo ? 'Activa' : 'Inactiva'}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {new Date(categoria.created_at).toLocaleDateString()}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-center">
-                                                        <div className="flex justify-center gap-2">
-                                                            <Link
-                                                                href={route('admin.categorias.edit', categoria.id)}
-                                                                className="inline-flex items-center p-2 text-indigo-600 hover:text-indigo-900 hover:bg-indigo-50 rounded-full transition-colors duration-200"
-                                                                title="Editar categoría"
-                                                            >
-                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                                </svg>
-                                                            </Link>
-                                                            <button
-                                                                onClick={() => handleDelete(categoria)}
-                                                                className={`inline-flex items-center p-2 rounded-full transition-colors duration-200 ${
-                                                                    categoria.productos_count > 0 
-                                                                        ? 'text-gray-400 cursor-not-allowed' 
-                                                                        : 'text-red-600 hover:text-red-900 hover:bg-red-50'
-                                                                }`}
-                                                                disabled={categoria.productos_count > 0}
-                                                                title={categoria.productos_count > 0 ? 'No se puede eliminar porque tiene productos asociados' : 'Eliminar categoría'}
-                                                            >
-                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-
-                                    {/* Paginación */}
-                                    {categorias.links && categorias.links.length > 3 && (
-                                        <div className="flex items-center justify-between px-4 py-3 sm:px-6">
-                                            <div className="flex-1 flex justify-between sm:hidden">
-                                                {categorias.prev_page_url && (
-                                                    <Link
-                                                        href={categorias.prev_page_url}
-                                                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                                                    </div>
+                                                    <span
+                                                        className={`flex-shrink-0 inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                                            categoria.activo
+                                                                ? 'bg-green-100 text-green-800'
+                                                                : 'bg-red-100 text-red-800'
+                                                        }`}
                                                     >
-                                                        Anterior
-                                                    </Link>
-                                                )}
-                                                {categorias.next_page_url && (
-                                                    <Link
-                                                        href={categorias.next_page_url}
-                                                        className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                                                    >
-                                                        Siguiente
-                                                    </Link>
-                                                )}
-                                            </div>
-                                            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                                                <div>
-                                                    <p className="text-sm text-gray-700">
-                                                        Mostrando{' '}
-                                                        <span className="font-medium">{categorias.from}</span> a{' '}
-                                                        <span className="font-medium">{categorias.to}</span> de{' '}
-                                                        <span className="font-medium">{categorias.total}</span> resultados
-                                                    </p>
+                                                        {categoria.activo ? 'Activa' : 'Inactiva'}
+                                                    </span>
                                                 </div>
-                                                <div>
-                                                    <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-                                                        {categorias.links.map((link, index) => (
-                                                            <Link
-                                                                key={index}
-                                                                href={link.url || '#'}
-                                                                className={`relative inline-flex items-center px-2 py-2 border text-sm font-medium ${
-                                                                    link.active
-                                                                        ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
-                                                                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                                                                } ${index === 0 ? 'rounded-l-md' : ''} ${
-                                                                    index === categorias.links.length - 1 ? 'rounded-r-md' : ''
-                                                                }`}
-                                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                                            />
-                                                        ))}
-                                                    </nav>
+
+                                                <div className="space-y-2 mb-4">
+                                                    <div className="flex items-center text-sm text-gray-600">
+                                                        <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                                        </svg>
+                                                        <span className="font-medium">{categoria.productos_count}</span>
+                                                        <span className="ml-1">{categoria.productos_count === 1 ? 'producto' : 'productos'}</span>
+                                                    </div>
+                                                    <div className="flex items-center text-sm text-gray-600">
+                                                        <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
+                                                        {new Date(categoria.created_at).toLocaleDateString()}
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex gap-2 pt-4 border-t border-gray-200">
+                                                    <Link
+                                                        href={route('admin.categorias.edit', categoria.id)}
+                                                        className="flex-1 inline-flex items-center justify-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                    >
+                                                        <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                        </svg>
+                                                        Editar
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => handleDelete(categoria)}
+                                                        disabled={categoria.productos_count > 0}
+                                                        className={`flex-1 inline-flex items-center justify-center px-3 py-2 border shadow-sm text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                                                            categoria.productos_count > 0
+                                                                ? 'border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed'
+                                                                : 'border-red-300 text-red-700 bg-white hover:bg-red-50 focus:ring-red-500'
+                                                        }`}
+                                                        title={categoria.productos_count > 0 ? 'No se puede eliminar porque tiene productos asociados' : 'Eliminar categoría'}
+                                                    >
+                                                        <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                        Eliminar
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    )}
+                                    ))}
                                 </div>
                             ) : (
                                 <div className="text-center py-12">
@@ -197,21 +173,27 @@ export default function CategoriasDashboard({ categorias }) {
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
                                             strokeWidth={2}
-                                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
                                         />
                                     </svg>
-                                    <h3 className="mt-2 text-sm font-medium text-gray-900">No hay categorías</h3>
+                                    <h3 className="mt-2 text-sm font-medium text-gray-900">
+                                        {searchTerm ? 'No se encontraron categorías' : 'No hay categorías'}
+                                    </h3>
                                     <p className="mt-1 text-sm text-gray-500">
-                                        Comienza creando una nueva categoría para organizar tus productos.
+                                        {searchTerm
+                                            ? 'Intenta con otro término de búsqueda'
+                                            : 'Comienza creando una nueva categoría para organizar tus productos.'}
                                     </p>
-                                    <div className="mt-6">
-                                        <Link
-                                            href={route('admin.categorias.create')}
-                                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                        >
-                                            Crear Categoría
-                                        </Link>
-                                    </div>
+                                    {!searchTerm && (
+                                        <div className="mt-6">
+                                            <Link
+                                                href={route('admin.categorias.create')}
+                                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                            >
+                                                Crear Categoría
+                                            </Link>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
