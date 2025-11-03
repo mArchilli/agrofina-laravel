@@ -415,7 +415,7 @@ export default function Navbar({ variant = 'client' }) {
                                     </div>
                                     <span className="text-white/80 text-sm md:ml-auto whitespace-nowrap">Atención al Cliente: +54 11 4837 7800</span>
                                 </div>
-                                <div className="text-white/80 text-sm mt-6 flex items-center gap-4">
+                                <div className="text-white/80 text-sm mt-6 flex items-center justify-center md:justify-start gap-4">
                                     <p>© {new Date().getFullYear()} Agrofina</p>
                                     <Link 
                                         href={isAdmin ? route('admin.productos') : route('login')} 
