@@ -19,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->respond(function (\Illuminate\Http\Response $response, \Throwable $e, \Illuminate\Http\Request $request) {
+        // Aceptar cualquier tipo de respuesta HTTP (incluye RedirectResponse)
+        $exceptions->respond(function (\Symfony\Component\HttpFoundation\Response $response, \Throwable $e, \Illuminate\Http\Request $request) {
             if ($response->getStatusCode() === 404 && !$request->expectsJson()) {
                 return \Inertia\Inertia::render('Error404')
                     ->toResponse($request)
