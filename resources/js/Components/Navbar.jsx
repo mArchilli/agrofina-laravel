@@ -418,7 +418,7 @@ export default function Navbar({ variant = 'client' }) {
                                 <div className="text-white/80 text-sm mt-6 flex items-center justify-center md:justify-start gap-4">
                                     <p>© {new Date().getFullYear()} Agrofina</p>
                                     <Link 
-                                        href={isAdmin ? route('admin.productos') : route('login')} 
+                                        href={isAdmin ? route('dashboard') : route('login')} 
                                         className="text-white/60 hover:text-white/80 transition-colors text-xs"
                                     >
                                         {isAdmin ? 'Panel' : 'Ingresar'}
