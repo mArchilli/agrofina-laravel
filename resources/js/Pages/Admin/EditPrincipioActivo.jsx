@@ -1,7 +1,11 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, router } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function EditPrincipioActivo({ principioActivo }) {
+    const { auth } = usePage().props;
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     const { data, setData, put, processing, errors, isDirty } = useForm({
         nombre: principioActivo.nombre || '',
         descripcion: principioActivo.descripcion || '',
@@ -10,228 +14,378 @@ export default function EditPrincipioActivo({ principioActivo }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-    put(route('admin.principios-activos.update', { principio_activo: principioActivo.id }));
+        put(route('admin.principios-activos.update', { principio_activo: principioActivo.id }));
+    };
+
+    const handleLogout = () => {
+        router.post(route('logout'));
     };
 
     return (
-        <AuthenticatedLayout
-            header={
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-                            Editar Principio Activo
-                        </h2>
-                        <p className="text-sm text-gray-600 mt-1">
-                            Modifica la información del principio activo: <span className="font-medium">{principioActivo.nombre}</span>
-                        </p>
-                    </div>
-                    <div className="flex space-x-3">
-                        <Link
-                            href={route('admin.principios-activos.show', { principio_activo: principioActivo.id })}
-                            className="inline-flex items-center px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 text-sm font-medium rounded-lg transition-colors duration-200"
-                        >
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                            Ver Detalle
-                        </Link>
-                        <Link
-                            href={route('admin.principios-activos')}
-                            className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-lg transition-colors duration-200"
-                        >
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                            Volver al Listado
-                        </Link>
-                    </div>
-                </div>
-            }
-        >
+        <>
             <Head title={`Editar ${principioActivo.nombre}`} />
 
-            <div className="py-8">
-                <div className="max-w-4xl mx-auto sm:px-6 lg:px-8">
-                    {/* Indicador de cambios */}
-                    {isDirty && (
-                        <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
-                            <div className="flex">
-                                <svg className="w-5 h-5 text-amber-400 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            {/* Background con círculos de gradiente */}
+            <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-lime-50 to-yellow-50 relative overflow-hidden">
+                {/* Círculos decorativos de fondo */}
+                <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-emerald-200/30 via-lime-200/30 to-yellow-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-lime-200/30 via-emerald-200/30 to-cyan-200/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                <div className="fixed top-1/2 left-1/2 w-[700px] h-[700px] bg-gradient-to-br from-yellow-200/20 via-emerald-200/20 to-lime-200/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+                {/* Header */}
+                <header className="relative z-50 backdrop-blur-xl bg-white/80 border-b-2 border-emerald-200/50 shadow-2xl shadow-emerald-500/10">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between items-center h-20">
+                            {/* Logo */}
+                            <Link href={route('dashboard')} className="flex items-center group">
+                                <img 
+                                    src="/images/logo-login.png" 
+                                    alt="Logo" 
+                                    className="h-12 transition-transform duration-300 group-hover:scale-105" 
+                                />
+                            </Link>
+
+                            {/* Desktop Navigation */}
+                            <nav className="hidden md:flex items-center space-x-2">
+                                <Link
+                                    href={route('admin.productos')}
+                                    className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                >
+                                    📦 Productos
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                >
+                                    📰 Novedades
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                >
+                                    🌾 AgroNews
+                                </Link>
+                            </nav>
+
+                            {/* User Info */}
+                            <div className="hidden md:flex items-center space-x-4">
+                                <div className="backdrop-blur-xl bg-emerald-50/80 rounded-2xl px-4 py-2 border-2 border-emerald-200/50 shadow-lg shadow-emerald-500/10">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-lime-500 flex items-center justify-center text-white font-bold shadow-lg shadow-emerald-500/30">
+                                            {auth.user.name.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-gray-900">{auth.user.name}</p>
+                                            <p className="text-xs text-emerald-600 font-medium">Administrador</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <Link
+                                    href={route('dashboard')}
+                                    className="px-4 py-2 rounded-xl border-2 border-emerald-300 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 transition-all duration-300"
+                                >
+                                    🏠 Volver al sitio
+                                </Link>
+
+                                <button
+                                    onClick={handleLogout}
+                                    className="group relative px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 overflow-hidden"
+                                >
+                                    <span className="relative z-10">Cerrar Sesión</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                </button>
+                            </div>
+
+                            {/* Mobile menu button */}
+                            <button
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-emerald-50"
+                            >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    {mobileMenuOpen ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                    )}
                                 </svg>
-                                <div>
-                                    <h3 className="text-sm font-medium text-amber-800">Tienes cambios sin guardar</h3>
-                                    <p className="text-sm text-amber-700 mt-1">
-                                        Recuerda guardar los cambios antes de salir de esta página.
-                                    </p>
-                                </div>
-                            </div>
+                            </button>
                         </div>
-                    )}
 
-                    {/* Estado del principio activo */}
-                    <div className="mb-8">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className={`w-3 h-3 rounded-full ${principioActivo.activo ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                                    <span className={`text-sm font-medium ${principioActivo.activo ? 'text-green-800' : 'text-red-800'}`}>
-                                        {principioActivo.activo ? 'Principio Activo Activo' : 'Principio Activo Inactivo'}
-                                    </span>
-                                </div>
-                                <div className="text-xs text-gray-500">
-                                    ID: {principioActivo.id}
+                        {/* Mobile menu */}
+                        {mobileMenuOpen && (
+                            <div className="md:hidden py-4 border-t border-emerald-200/50 animate-fadeIn">
+                                <div className="flex flex-col space-y-2">
+                                    <Link
+                                        href={route('admin.productos')}
+                                        className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    >
+                                        📦 Productos
+                                    </Link>
+                                    <Link
+                                        href="#"
+                                        className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    >
+                                        📰 Novedades
+                                    </Link>
+                                    <Link
+                                        href="#"
+                                        className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    >
+                                        🌾 AgroNews
+                                    </Link>
+                                    <div className="pt-2 border-t border-emerald-200/50">
+                                        <div className="px-4 py-2">
+                                            <p className="text-sm font-bold text-gray-900">{auth.user.name}</p>
+                                            <p className="text-xs text-emerald-600">Administrador</p>
+                                        </div>
+                                        <Link
+                                            href={route('dashboard')}
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50/80 rounded-xl"
+                                        >
+                                            🏠 Volver al sitio
+                                        </Link>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-xl"
+                                        >
+                                            Cerrar Sesión
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
+                </header>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                        {/* Información Principal */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="px-6 py-4 bg-gradient-to-r from-green-50 to-emerald-50 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                    Editar Datos del Principio Activo
-                                </h3>
-                                <p className="text-sm text-gray-600 mt-1">Modifica la información básica del principio activo</p>
-                            </div>
-                            
-                            <div className="p-6 space-y-6">
-                                {/* Nombre del principio activo */}
-                                <div>
-                                    <label htmlFor="nombre" className="block text-sm font-medium text-gray-900 mb-2">
-                                        Nombre del Principio Activo <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="nombre"
-                                        value={data.nombre}
-                                        onChange={(e) => setData('nombre', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
-                                        placeholder="Ej: Glifosato, 2,4-D, Atrazina..."
-                                        required
-                                    />
-                                    {errors.nombre && (
-                                        <p className="text-red-600 text-sm mt-2 flex items-center">
-                                            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                            </svg>
-                                            {errors.nombre}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Descripción */}
-                                <div>
-                                    <label htmlFor="descripcion" className="block text-sm font-medium text-gray-900 mb-2">
-                                        Descripción
-                                    </label>
-                                    <textarea
-                                        id="descripcion"
-                                        rows={4}
-                                        value={data.descripcion}
-                                        onChange={(e) => setData('descripcion', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 resize-none"
-                                        placeholder="Describe las características del principio activo, su modo de acción, grupo químico, etc..."
-                                    />
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Información técnica sobre el principio activo que ayude a identificarlo y utilizarlo
-                                    </p>
-                                    {errors.descripcion && (
-                                        <p className="text-red-600 text-sm mt-2 flex items-center">
-                                            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                            </svg>
-                                            {errors.descripcion}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Estado activo */}
-                                <div className="flex items-start space-x-3 p-4 bg-green-50 rounded-lg border border-green-200">
-                                    <input
-                                        type="checkbox"
-                                        id="activo"
-                                        checked={data.activo}
-                                        onChange={(e) => setData('activo', e.target.checked)}
-                                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded mt-0.5"
-                                    />
-                                    <div className="flex-1">
-                                        <label htmlFor="activo" className="text-sm font-medium text-gray-900 block">
-                                            Principio activo activo
-                                        </label>
-                                        <p className="text-xs text-gray-600 mt-1">
-                                            Los principios activos marcados como activos estarán disponibles para usar en productos
+                <main className="relative z-10 py-8">
+                    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                        {/* Título y acciones */}
+                        <div className="mb-8">
+                            <div className="backdrop-blur-2xl bg-white/60 rounded-2xl p-6 border-2 border-emerald-200/40 shadow-xl">
+                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                    <div>
+                                        <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-lime-600 bg-clip-text text-transparent mb-2">
+                                            Editar Principio Activo
+                                        </h1>
+                                        <p className="text-gray-700">
+                                            Modificando: <span className="font-bold text-emerald-700">{principioActivo.nombre}</span>
                                         </p>
                                     </div>
+                                    <div className="flex flex-wrap gap-3">
+                                        <Link
+                                            href={route('admin.principios-activos.show', { principio_activo: principioActivo.id })}
+                                            className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-xl bg-blue-50/80 border-2 border-blue-300 text-sm font-semibold text-blue-700 hover:bg-blue-100 transition-all duration-300 shadow-lg shadow-blue-500/20"
+                                        >
+                                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                            Ver Detalle
+                                        </Link>
+                                        <Link
+                                            href={route('admin.principios-activos')}
+                                            className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-xl bg-white/80 border-2 border-gray-300 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-300"
+                                        >
+                                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                            </svg>
+                                            Volver al Listado
+                                        </Link>
+                                    </div>
                                 </div>
-                                {errors.activo && (
-                                    <p className="text-red-600 text-sm mt-2 flex items-center">
-                                        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </div>
+                        </div>
+
+                        {/* Indicador de cambios */}
+                        {isDirty && (
+                            <div className="mb-6 backdrop-blur-xl bg-amber-50/90 border-2 border-amber-300/50 rounded-2xl p-4 shadow-xl shadow-amber-500/20 animate-fadeIn">
+                                <div className="flex">
+                                    <div className="flex-shrink-0">
+                                        <svg className="w-6 h-6 text-amber-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                                         </svg>
-                                        {errors.activo}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Historial de modificaciones */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Información del Registro
-                                </h3>
-                                <p className="text-sm text-gray-600 mt-1">Detalles sobre las fechas del principio activo</p>
-                            </div>
-                            
-                            <div className="p-6">
-                                <div className="grid md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium text-gray-900">Fecha de creación</h4>
-                                        <p className="text-sm text-gray-600">
-                                            {principioActivo.created_at ? new Date(principioActivo.created_at).toLocaleDateString('es-ES', {
-                                                year: 'numeric',
-                                                month: 'long',
-                                                day: 'numeric',
-                                                hour: '2-digit',
-                                                minute: '2-digit'
-                                            }) : 'No disponible'}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-sm font-bold text-amber-900">⚠️ Tienes cambios sin guardar</h3>
+                                        <p className="text-sm text-amber-800 mt-1">
+                                            Recuerda guardar los cambios antes de salir de esta página.
                                         </p>
                                     </div>
-                                    
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium text-gray-900">Última modificación</h4>
-                                        <p className="text-sm text-gray-600">
-                                            {principioActivo.updated_at ? new Date(principioActivo.updated_at).toLocaleDateString('es-ES', {
-                                                year: 'numeric',
-                                                month: 'long',
-                                                day: 'numeric',
-                                                hour: '2-digit',
-                                                minute: '2-digit'
-                                            }) : 'No disponible'}
-                                        </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Estado del principio activo */}
+                        <div className="mb-8">
+                            <div className="backdrop-blur-xl bg-white/80 rounded-2xl shadow-xl border-2 border-emerald-200/40 p-5">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center space-x-3">
+                                        <div className={`w-4 h-4 rounded-full ${principioActivo.activo ? 'bg-gradient-to-r from-emerald-500 to-lime-500 shadow-lg shadow-emerald-500/50' : 'bg-gradient-to-r from-red-500 to-orange-500 shadow-lg shadow-red-500/50'}`}></div>
+                                        <span className={`text-sm font-bold ${principioActivo.activo ? 'text-emerald-700' : 'text-red-700'}`}>
+                                            {principioActivo.activo ? '✅ Principio Activo Activo' : '❌ Principio Activo Inactivo'}
+                                        </span>
+                                    </div>
+                                    <div className="text-xs font-semibold text-gray-500 backdrop-blur-xl bg-gray-100/80 px-3 py-1 rounded-lg">
+                                        ID: {principioActivo.id}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Botones de Acción */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <form onSubmit={handleSubmit} className="space-y-8">
+                            {/* Información Principal */}
+                            <div className="backdrop-blur-2xl bg-white/60 border-2 border-emerald-200/40 rounded-2xl shadow-xl overflow-hidden">
+                                <div className="px-6 py-4 bg-gradient-to-r from-emerald-50/80 to-lime-50/80 border-b-2 border-emerald-200/40">
+                                    <h3 className="text-lg font-bold text-gray-900 flex items-center">
+                                        <svg className="w-6 h-6 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        Editar Datos del Principio Activo
+                                    </h3>
+                                    <p className="text-sm text-gray-600 mt-1">Modifica la información básica del principio activo</p>
+                                </div>
+                                
+                                <div className="p-6 space-y-6">
+                                    {/* Nombre del principio activo */}
+                                    <div>
+                                        <label htmlFor="nombre" className="block text-sm font-bold text-gray-900 mb-2">
+                                            Nombre del Principio Activo <span className="text-red-500">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="nombre"
+                                            value={data.nombre}
+                                            onChange={(e) => setData('nombre', e.target.value)}
+                                            className="w-full px-4 py-3 backdrop-blur-xl bg-white/80 border-2 border-emerald-200/60 rounded-xl focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300"
+                                            placeholder="Ej: Glifosato, 2,4-D, Atrazina..."
+                                            required
+                                        />
+                                        {errors.nombre && (
+                                            <p className="text-red-600 text-sm mt-2 flex items-center font-semibold">
+                                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                                </svg>
+                                                {errors.nombre}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Descripción */}
+                                    <div>
+                                        <label htmlFor="descripcion" className="block text-sm font-bold text-gray-900 mb-2">
+                                            Descripción
+                                        </label>
+                                        <textarea
+                                            id="descripcion"
+                                            rows={4}
+                                            value={data.descripcion}
+                                            onChange={(e) => setData('descripcion', e.target.value)}
+                                            className="w-full px-4 py-3 backdrop-blur-xl bg-white/80 border-2 border-emerald-200/60 rounded-xl focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300 resize-none"
+                                            placeholder="Describe las características del principio activo, su modo de acción, grupo químico, etc..."
+                                        />
+                                        <p className="text-xs text-gray-600 mt-2 font-medium">
+                                            💡 Información técnica sobre el principio activo que ayude a identificarlo y utilizarlo
+                                        </p>
+                                        {errors.descripcion && (
+                                            <p className="text-red-600 text-sm mt-2 flex items-center font-semibold">
+                                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                                </svg>
+                                                {errors.descripcion}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Estado activo */}
+                                    <div className="flex items-start space-x-3 p-4 backdrop-blur-xl bg-emerald-50/80 rounded-xl border-2 border-emerald-300/60">
+                                        <input
+                                            type="checkbox"
+                                            id="activo"
+                                            checked={data.activo}
+                                            onChange={(e) => setData('activo', e.target.checked)}
+                                            className="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-emerald-300 rounded mt-0.5"
+                                        />
+                                        <div className="flex-1">
+                                            <label htmlFor="activo" className="text-sm font-bold text-gray-900 block">
+                                                ✅ Principio activo activo
+                                            </label>
+                                            <p className="text-xs text-gray-700 mt-1">
+                                                Los principios activos marcados como activos estarán disponibles para usar en productos
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {errors.activo && (
+                                        <p className="text-red-600 text-sm mt-2 flex items-center font-semibold">
+                                            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                            </svg>
+                                            {errors.activo}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Historial de modificaciones */}
+                            <div className="backdrop-blur-2xl bg-white/60 border-2 border-blue-200/40 rounded-2xl shadow-xl overflow-hidden">
+                                <div className="px-6 py-4 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 border-b-2 border-blue-200/40">
+                                    <h3 className="text-lg font-bold text-gray-900 flex items-center">
+                                        <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Información del Registro
+                                    </h3>
+                                    <p className="text-sm text-gray-600 mt-1">Detalles sobre las fechas del principio activo</p>
+                                </div>
+                                
+                                <div className="p-6">
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="backdrop-blur-xl bg-white/80 rounded-xl p-4 border-2 border-emerald-200/40">
+                                            <h4 className="font-bold text-gray-900 mb-2 flex items-center">
+                                                <svg className="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                                Fecha de creación
+                                            </h4>
+                                            <p className="text-sm text-gray-700 font-medium">
+                                                {principioActivo.created_at ? new Date(principioActivo.created_at).toLocaleDateString('es-ES', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                }) : 'No disponible'}
+                                            </p>
+                                        </div>
+                                        
+                                        <div className="backdrop-blur-xl bg-white/80 rounded-xl p-4 border-2 border-blue-200/40">
+                                            <h4 className="font-bold text-gray-900 mb-2 flex items-center">
+                                                <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                                </svg>
+                                                Última modificación
+                                            </h4>
+                                            <p className="text-sm text-gray-700 font-medium">
+                                                {principioActivo.updated_at ? new Date(principioActivo.updated_at).toLocaleDateString('es-ES', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                }) : 'No disponible'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Botones de Acción */}
                             <div className="flex flex-col sm:flex-row gap-4 justify-end">
                                 <Link
                                     href={route('admin.principios-activos')}
-                                    className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                                    className="inline-flex items-center justify-center px-6 py-3 rounded-xl backdrop-blur-xl bg-white/80 border-2 border-gray-300 text-base font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
                                 >
-                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                     Cancelar
@@ -239,30 +393,53 @@ export default function EditPrincipioActivo({ principioActivo }) {
                                 <button
                                     type="submit"
                                     disabled={processing || !isDirty}
-                                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                                    className="group relative inline-flex items-center justify-center px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white text-base font-semibold shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden hover:scale-105"
                                 >
-                                    {processing ? (
-                                        <>
-                                            <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                <path className="opacity-75" fill="currentColor" d="m100 50c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10s-10 4.477-10 10zm-9-3h12l-4-4m0 8l4-4"></path>
-                                            </svg>
-                                            Guardando cambios...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                            </svg>
-                                            {isDirty ? 'Guardar Cambios' : 'Sin Cambios'}
-                                        </>
+                                    <span className="relative z-10 flex items-center">
+                                        {processing ? (
+                                            <>
+                                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                Guardando cambios...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                {isDirty ? 'Guardar Cambios' : 'Sin Cambios'}
+                                            </>
+                                        )}
+                                    </span>
+                                    {!processing && isDirty && (
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                                     )}
                                 </button>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                </main>
             </div>
-        </AuthenticatedLayout>
+
+            <style dangerouslySetInnerHTML={{__html: `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes shimmer {
+                    0%, 100% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                }
+                .animate-shimmer {
+                    background-size: 200% 200%;
+                    animation: shimmer 3s ease-in-out infinite;
+                }
+                .animate-fadeIn {
+                    animation: fadeIn 0.3s ease-out;
+                }
+            `}} />
+        </>
     );
 }
