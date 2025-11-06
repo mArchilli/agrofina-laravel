@@ -179,10 +179,10 @@ function MainContent() {
 
 function Downloads() {
   const items = [
-    { label: 'Certificado IRAM 14001 (pdf)', file: '/pdfs/id/IRAM-14001.pdf' },
-    { label: 'Certificado IQNET 14001 (pdf)', file: '/pdfs/id/IQNET-14001.pdf' },
-    { label: 'Certificado IRAM 45001 (pdf)', file: '/pdfs/id/IRAM-45001.pdf' },
-    { label: 'Certificado IQNET 45001 (pdf)', file: '/pdfs/id/IQNET-45001.pdf' },
+    { label: 'Certificado IRAM 14001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIRAM-14001-2023.pdf' },
+    { label: 'Certificado IQNET 14001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIQNET-14001-2023.pdf' },
+    { label: 'Certificado IRAM 45001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIRAM-45001-2023.pdf' },
+    { label: 'Certificado IQNET 45001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIQNET-45001-2023.pdf' },
   ]
 
   return (
