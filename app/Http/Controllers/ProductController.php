@@ -51,6 +51,29 @@ class ProductController extends Controller
 
         $productos = $query->latest()->get();
 
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_PRODUCT_IMAGES_PATH', '/images/products/');
+        $frontendPdfsPath = env('VITE_PRODUCT_PDFS_PATH', '/PDFs/products/');
+
+        // Transformar las rutas de productos para el frontend
+        $productosTransformados = $productos->map(function ($producto) use ($frontendImagesPath, $frontendPdfsPath) {
+            $productoArray = $producto->toArray();
+            
+            // Transformar ruta de imagen
+            if ($producto->imagen) {
+                $productoArray['imagen'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
+            }
+            
+            // Transformar rutas de PDFs
+            if ($producto->pdfs && is_array($producto->pdfs)) {
+                $productoArray['pdfs'] = collect($producto->pdfs)->map(function ($pdf) use ($frontendPdfsPath) {
+                    return asset(trim($frontendPdfsPath, '/') . '/' . basename($pdf));
+                })->toArray();
+            }
+            
+            return $productoArray;
+        });
+
         // Obtener datos para los filtros
         $categorias = Categoria::where('activo', true)
             ->orderBy('nombre')
@@ -69,7 +92,7 @@ class ProductController extends Controller
             ->get(['id', 'nombre']);
 
         return Inertia::render('Productos', [
-            'productos' => $productos,
+            'productos' => $productosTransformados,
             'categorias' => $categorias,
             'cultivos' => $cultivos,
             'principiosActivos' => $principiosActivos,
@@ -96,8 +119,27 @@ class ProductController extends Controller
             'arbolesRecomendacion'
         ]);
 
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_PRODUCT_IMAGES_PATH', '/images/products/');
+        $frontendPdfsPath = env('VITE_PRODUCT_PDFS_PATH', '/PDFs/products/');
+
+        // Transformar el producto
+        $productoArray = $producto->toArray();
+        
+        // Transformar ruta de imagen
+        if ($producto->imagen) {
+            $productoArray['imagen'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
+        }
+        
+        // Transformar rutas de PDFs
+        if ($producto->pdfs && is_array($producto->pdfs)) {
+            $productoArray['pdfs'] = collect($producto->pdfs)->map(function ($pdf) use ($frontendPdfsPath) {
+                return asset(trim($frontendPdfsPath, '/') . '/' . basename($pdf));
+            })->toArray();
+        }
+
         return Inertia::render('ShowProduct', [
-            'producto' => $producto,
+            'producto' => $productoArray,
         ]);
     }
 

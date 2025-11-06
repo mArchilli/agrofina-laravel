@@ -145,33 +145,30 @@ function NovedadContent({ novedad }) {
                                 Archivos adjuntos
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {novedad.archivos.map((archivo, index) => {
-                                    const fileName = archivo.split('/').pop();
-                                    return (
-                                        <a
-                                            key={index}
-                                            href={archivo}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="group flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-[#00833E] hover:bg-gray-50 transition-all"
-                                        >
-                                            <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                                                <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
-                                                </svg>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-medium text-gray-900 truncate">
-                                                    {fileName}
-                                                </p>
-                                                <p className="text-xs text-gray-500">PDF</p>
-                                            </div>
-                                            <svg className="w-5 h-5 text-gray-400 group-hover:text-[#00833E] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                {novedad.archivos.map((archivo, index) => (
+                                    <a
+                                        key={index}
+                                        href={archivo.path}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-[#00833E] hover:bg-gray-50 transition-all"
+                                    >
+                                        <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                            <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
                                             </svg>
-                                        </a>
-                                    );
-                                })}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-medium text-gray-900 truncate">
+                                                {archivo.nombre}
+                                            </p>
+                                            <p className="text-xs text-gray-500">PDF</p>
+                                        </div>
+                                        <svg className="w-5 h-5 text-gray-400 group-hover:text-[#00833E] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                    </a>
+                                ))}
                             </div>
                         </div>
                     )}
