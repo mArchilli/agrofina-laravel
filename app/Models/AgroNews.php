@@ -31,7 +31,13 @@ class AgroNews extends Model
      */
     public function getFileUrlAttribute()
     {
-        return $this->file_path ? asset(ltrim($this->file_path, '/')) : null;
+        if (!$this->file_path) return null;
+        
+        // Usar la ruta del frontend (sin public_html)
+        $frontendPath = env('VITE_AGRONEWS_PDFS_PATH', '/PDFs/agronews/');
+        $fileName = basename($this->file_path);
+        
+        return asset(trim($frontendPath, '/') . '/' . $fileName);
     }
 
     /**

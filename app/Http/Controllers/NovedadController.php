@@ -17,8 +17,32 @@ class NovedadController extends Controller
             ->orderBy('fecha_carga', 'desc')
             ->get();
         
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_NOVEDADES_IMAGES_PATH', '/images/novedades/');
+        $frontendPdfsPath = env('VITE_NOVEDADES_PDFS_PATH', '/PDFs/novedades/');
+        
         return Inertia::render('Novedades', [
-            'novedades' => $novedades
+            'novedades' => $novedades->map(function ($novedad) use ($frontendImagesPath, $frontendPdfsPath) {
+                return [
+                    'id' => $novedad->id,
+                    'titulo' => $novedad->titulo,
+                    'texto' => $novedad->texto,
+                    'fecha_carga' => $novedad->fecha_carga,
+                    'activo' => $novedad->activo,
+                    'imagenes' => $novedad->imagenes ? collect($novedad->imagenes)->map(function ($imagen) use ($frontendImagesPath) {
+                        return [
+                            'nombre' => $imagen['nombre'],
+                            'path' => asset(trim($frontendImagesPath, '/') . '/' . basename($imagen['path']))
+                        ];
+                    })->toArray() : [],
+                    'archivos' => $novedad->archivos ? collect($novedad->archivos)->map(function ($archivo) use ($frontendPdfsPath) {
+                        return [
+                            'nombre' => $archivo['nombre'],
+                            'path' => asset(trim($frontendPdfsPath, '/') . '/' . basename($archivo['path']))
+                        ];
+                    })->toArray() : [],
+                ];
+            })
         ]);
     }
 
@@ -32,8 +56,30 @@ class NovedadController extends Controller
             abort(404);
         }
 
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_NOVEDADES_IMAGES_PATH', '/images/novedades/');
+        $frontendPdfsPath = env('VITE_NOVEDADES_PDFS_PATH', '/PDFs/novedades/');
+
         return Inertia::render('ShowNovedad', [
-            'novedad' => $novedad
+            'novedad' => [
+                'id' => $novedad->id,
+                'titulo' => $novedad->titulo,
+                'texto' => $novedad->texto,
+                'fecha_carga' => $novedad->fecha_carga,
+                'activo' => $novedad->activo,
+                'imagenes' => $novedad->imagenes ? collect($novedad->imagenes)->map(function ($imagen) use ($frontendImagesPath) {
+                    return [
+                        'nombre' => $imagen['nombre'],
+                        'path' => asset(trim($frontendImagesPath, '/') . '/' . basename($imagen['path']))
+                    ];
+                })->toArray() : [],
+                'archivos' => $novedad->archivos ? collect($novedad->archivos)->map(function ($archivo) use ($frontendPdfsPath) {
+                    return [
+                        'nombre' => $archivo['nombre'],
+                        'path' => asset(trim($frontendPdfsPath, '/') . '/' . basename($archivo['path']))
+                    ];
+                })->toArray() : [],
+            ]
         ]);
     }
 
