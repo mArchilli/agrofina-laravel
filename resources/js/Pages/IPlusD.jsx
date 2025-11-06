@@ -22,41 +22,113 @@ export default function IplusD() {
   const [open, setOpen] = useState(null)
 
   const dropdowns = [
-    { title: 'Centro de Desarrollo de Síntesis', icon: (
-      <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="2" />
-        <circle cx="12" cy="6" r="2" stroke="currentColor" strokeWidth="2" />
-        <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="2" />
-        <path d="M7.5 11.5L10.5 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M13.5 7.5L16.5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M8.5 13.5L15.5 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ), content: (
-      <div className="mt-2 text-gray-700 text-sm">Desarrollos y síntesis de nuevos ingredientes activos y procesos relacionados con la síntesis orgánica a escala industrial.</div>
-    ) },
-    { title: 'Laboratorio de Desarrollo de Formulaciones', icon: (
-      <svg className="w-6 h-6 text-emerald-700 mr-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7 2h10l-3 7v8a2 2 0 01-4 0v-8L7 2z" />
-      </svg>
-    ), content: (
-      <div className="mt-2 text-gray-700 text-sm">Formulación y pruebas de estabilidad para desarrollar productos aplicables y seguros para los mercados objetivo.</div>
-    ) },
-        { title: 'Centro de Desarrollo Analítico', icon: (
-          <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="17" width="14" height="2" rx="1" fill="currentColor" />
-            <rect x="11" y="3" width="2" height="8" rx="1" fill="currentColor" />
-            <circle cx="12" cy="15" r="3" stroke="currentColor" strokeWidth="2" fill="none" />
-          </svg>
-        ), content: (
-      <div className="mt-2 text-gray-700 text-sm">Análisis, control de calidad y desarrollo de métodos analíticos para asegurar la calidad de materias primas y formulados.</div>
-    ) },
-    { title: 'Sistema Integrado de Gestión', icon: (
-      <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 3l7 4v5c0 5-3.5 9-7 9s-7-4-7-9V7l7-4z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="none" />
-      </svg>
-    ), content: (
-      <div className="mt-2 text-gray-700 text-sm">Gestión de calidad, medioambiente y seguridad, con certificaciones y procesos alineados a ISO y buenas prácticas.</div>
-    ) },
+    { 
+      title: 'Centro de Desarrollo de Síntesis', 
+      image: '/images/centrodesarrollosintesis-1024x576.jpg',
+      icon: (
+        <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="2" />
+          <circle cx="12" cy="6" r="2" stroke="currentColor" strokeWidth="2" />
+          <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="2" />
+          <path d="M7.5 11.5L10.5 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M13.5 7.5L16.5 11.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M8.5 13.5L15.5 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ), 
+      content: (
+        <div className="flex flex-col md:flex-row gap-6 mt-4">
+          <div className="md:w-1/3 flex-shrink-0">
+            <img src="/images/centrodesarrollosintesis-1024x576.jpg" alt="Centro de Desarrollo de Síntesis" className="w-full h-auto rounded-lg shadow-md object-cover" />
+          </div>
+          <div className="md:w-2/3 text-gray-700 text-sm md:text-base space-y-3">
+            <p>El equipo de desarrollo de síntesis está constituido por profesionales en química y personal técnico con alta formación científica y vasta experiencia en síntesis orgánica.</p>
+            <p>En este laboratorio se desarrollan los procesos productivos para sintetizar in house los principios activos a escala industrial, los que luego se formulan y comercializan. Los procesos diseñados aquí cumplen estrictos requisitos medioambientales, de seguridad y calidad, acordes con la política de sostenibilidad de la empresa. Además, se genera la información técnica que permite registrar los principios activos en el ente regulador nacional y se brinda el soporte técnico a la planta de síntesis.</p>
+            <p>El laboratorio dispone tanto del instrumental necesario para seguimiento de reacciones, elucidación de estructuras químicas y purificaciones automáticas como el conocimiento técnico para conducir desarrollos con métodos clásicos o modernos basados en estadística como el diseño de experimentos (DoE).</p>
+          </div>
+        </div>
+      ) 
+    },
+    { 
+      title: 'Laboratorio de Desarrollo de Formulaciones', 
+      image: '/images/centroid-1024x576.jpg',
+      icon: (
+        <svg className="w-6 h-6 text-emerald-700 mr-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M7 2h10l-3 7v8a2 2 0 01-4 0v-8L7 2z" />
+        </svg>
+      ), 
+      content: (
+        <div className="flex flex-col md:flex-row gap-6 mt-4">
+          <div className="md:w-1/3 flex-shrink-0">
+            <img src="/images/centroid-1024x576.jpg" alt="Laboratorio de Desarrollo de Formulaciones" className="w-full h-auto rounded-lg shadow-md object-cover" />
+          </div>
+          <div className="md:w-2/3 text-gray-700 text-sm md:text-base space-y-3">
+            <p>Contamos con un Equipo con gran experiencia en el desarrollo y registro de productos para protección de cultivos en Argentina, Latinoamérica y varios países fuera de la Región.</p>
+            <p>La tecnología de punta y la capacitación constante nos permite mantener una amplia cartera de productos en desarrollo, que nos asegura un flujo constante de nuevas soluciones para el mercado local.</p>
+            <p>Nuestro haber cuenta con más de 180 desarrollos de formulaciones de diversos tipos, tales como Concentrados Emulsionables (EC), Concentrados Solubles (SL), Concentrados en Suspensión (SC), Microemulsiones (ME), Suspensiones Oleosas (OD), Polvos Mojables (WP) y Polvos Solubles (SP).</p>
+            <p>Trabajamos en conjunto con el Departamento de Desarrollo Técnico en los diseños y ejecución de los ensayos de campo y de ensayos comerciales, estudiando la eficiencia de los productos desarrollados con los ensayistas referentes de cada región del país, así como también con Universidades y centros de investigación del INTA. También trabajamos en conjunto con el Área de Marketing dando charlas y talleres en las distintas jornadas técnicas de presentaciones de productos.</p>
+          </div>
+        </div>
+      ) 
+    },
+    { 
+      title: 'Centro de Desarrollo Analítico', 
+      image: '/images/centroda-1024x576.jpg',
+      icon: (
+        <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="17" width="14" height="2" rx="1" fill="currentColor" />
+          <rect x="11" y="3" width="2" height="8" rx="1" fill="currentColor" />
+          <circle cx="12" cy="15" r="3" stroke="currentColor" strokeWidth="2" fill="none" />
+        </svg>
+      ), 
+      content: (
+        <div className="flex flex-col md:flex-row gap-6 mt-4">
+          <div className="md:w-1/3 flex-shrink-0">
+            <img src="/images/centroda-1024x576.jpg" alt="Centro de Desarrollo Analítico" className="w-full h-auto rounded-lg shadow-md object-cover" />
+          </div>
+          <div className="md:w-2/3 text-gray-700 text-sm md:text-base space-y-3">
+            <p>Tenemos un Centro de Desarrollo Analítico donde generamos y validamos métodos analíticos para el control de calidad de materias primas, como así también de intermediarios y productos finales.</p>
+            <p>Asimismo, efectuamos el control de los procesos, la determinación del contenido del ingrediente activo y las impurezas en productos grado técnico y sus formulaciones.</p>
+            <p>El mismo posee equipos analíticos y una alta solvencia técnica a partir de los cuales podemos efectuar estudios de caracterización fisicoquímica y de estabilidad en el almacenamiento (a alta y baja temperatura) de productos en grado técnico y formulado.</p>
+            <p>Además, para garantizar la calidad de nuestro trabajo desde el año 2000 participamos regularmente en ensayos de aptitud y comparaciones inter laboratorio organizadas por entidades nacionales e internacionales relacionadas con la investigación, desarrollo y regulación de productos fitosanitarios (CIPAC, AAPCO, SENASA, COFILAB, NLA, AgroCare Latam, etc.).</p>
+          </div>
+        </div>
+      ) 
+    },
+    { 
+      title: 'Sistema Integrado de Gestión', 
+      image: '/images/gestiondecalidad-1024x576.jpg',
+      icon: (
+        <svg className="w-6 h-6 text-emerald-700 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3l7 4v5c0 5-3.5 9-7 9s-7-4-7-9V7l7-4z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="none" />
+        </svg>
+      ), 
+      content: (
+        <div className="flex flex-col md:flex-row gap-6 mt-4">
+          <div className="md:w-1/3 flex-shrink-0">
+            <img src="/images/gestiondecalidad-1024x576.jpg" alt="Sistema Integrado de Gestión" className="w-full h-auto rounded-lg shadow-md object-cover" />
+          </div>
+          <div className="md:w-2/3 text-gray-700 text-sm md:text-base space-y-3">
+            <p>En nuestro Laboratorio de Desarrollo Analítico operamos bajo un estricto Sistema de Gestión de la Calidad (SGC).</p>
+            <p>El Laboratorio ha sido declarado en conformidad con los Principios de las Buenas Prácticas de Laboratorio de la OCDE por el Organismo Argentino de Acreditación con el Registro de Conformidad Nº 03.</p>
+            <div className="flex flex-col gap-3 my-4">
+              <a href="/pdfs/products/Agrofina-CertificadoBPL-2022-ESP.pdf" download className="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 mr-2">
+                  <path fillRule="evenodd" d="M3 14.25A2.25 2.25 0 0 0 5.25 16.5h9.5A2.25 2.25 0 0 0 17 14.25v-1.5a.75.75 0 0 1 1.5 0v1.5A3.75 3.75 0 0 1 14.75 18H5.25A3.75 3.75 0 0 1 1.5 14.25v-1.5A.75.75 0 0 1 3 12.75v1.5Zm3.22-6.03a.75.75 0 0 1 1.06 0L9.25 10.16V2.75a.75.75 0 0 1 1.5 0v7.41l1.97-1.94a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L6.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                </svg>
+                Descargue el certificado de conformidad
+              </a>
+              <a href="/pdfs/products/Agrofina-CertificadoBPL-2022-ENG.pdf" download className="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 mr-2">
+                  <path fillRule="evenodd" d="M3 14.25A2.25 2.25 0 0 0 5.25 16.5h9.5A2.25 2.25 0 0 0 17 14.25v-1.5a.75.75 0 0 1 1.5 0v1.5A3.75 3.75 0 0 1 14.75 18H5.25A3.75 3.75 0 0 1 1.5 14.25v-1.5A.75.75 0 0 1 3 12.75v1.5Zm3.22-6.03a.75.75 0 0 1 1.06 0L9.25 10.16V2.75a.75.75 0 0 1 1.5 0v7.41l1.97-1.94a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L6.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                </svg>
+                Download the Certificate of Compliance
+              </a>
+            </div>
+            <p>Así, esta certificación garantiza que nuestro laboratorio cuenta con la más alta solvencia técnica y capacidad para producir resultados de ensayo válidos, que garantizan la confiabilidad de los mismos por parte de las Autoridades de Registro.</p>
+          </div>
+        </div>
+      ) 
+    },
   ]
 
   return (
