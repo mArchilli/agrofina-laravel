@@ -146,7 +146,7 @@ export default function CategoriasDashboard({ categorias }) {
                                         href={route('admin.novedades.index')}
                                         className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
                                     >
-                                        � Novedades
+                                        📢 Novedades
                                     </Link>
                                     <Link
                                         href={route('admin.agronews.index')}
@@ -191,10 +191,10 @@ export default function CategoriasDashboard({ categorias }) {
                                 Organiza y administra las categorías de productos
                             </p>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                             <Link
                                 href={route('admin.productos')}
-                                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -203,7 +203,7 @@ export default function CategoriasDashboard({ categorias }) {
                             </Link>
                             <Link
                                 href={route('admin.categorias.create')}
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold hover:from-emerald-700 hover:to-lime-700 transition-all duration-300 hover:scale-105 shadow-lg animate-shimmer"
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold hover:from-emerald-700 hover:to-lime-700 transition-all duration-300 hover:scale-105 shadow-lg animate-shimmer"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

@@ -137,7 +137,7 @@ export default function CreateCategory() {
                                         href={route('admin.novedades.index')}
                                         className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
                                     >
-                                        � Novedades
+                                        📢 Novedades
                                     </Link>
                                     <Link
                                         href={route('admin.agronews.index')}
