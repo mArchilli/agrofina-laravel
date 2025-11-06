@@ -1,8 +1,9 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { ArrowLeft, Package, Upload, FileText, X, Check, Search, Menu } from 'lucide-react';
 
 export default function CreateProduct({ categorias, cultivos, principiosActivos, arbolesRecomendacion }) {
+    const { auth } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         nombre: '',
         imagen: null,
@@ -28,6 +29,11 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
     const [searchPrincipioActivo, setSearchPrincipioActivo] = useState('');
     const [searchCultivo, setSearchCultivo] = useState('');
     const [searchArbol, setSearchArbol] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const handleLogout = () => {
+        router.post(route('logout'));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -104,64 +110,190 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
     };
 
     return (
-        <AuthenticatedLayout
-            header={
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-                            Crear Nuevo Producto
-                        </h2>
-                        <p className="text-sm text-gray-600 mt-1">
-                            Completa la información del producto para agregarlo al catálogo
-                        </p>
-                    </div>
-                    <Link
-                        href={route('admin.productos')}
-                        className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-lg transition-colors duration-200"
-                    >
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Volver a Productos
-                    </Link>
-                </div>
-            }
-        >
-            <Head title="Crear Producto" />
+        <>
+            <Head title="Crear Nuevo Producto" />
 
-            <div className="py-8">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    {/* Progreso/Pasos */}
-                    <div className="mb-8">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                            <div className="flex items-center space-x-4">
-                                <div className="flex items-center">
-                                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
-                                        1
+            {/* Fondo blanco con gradientes verdes-amarillos */}
+            <div className="min-h-screen relative overflow-hidden bg-white">
+                {/* Efectos de luz ambiental estáticos */}
+                <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-emerald-400/35 via-lime-400/25 to-yellow-400/20 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-lime-400/35 via-green-400/25 to-emerald-400/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-r from-green-300/20 via-lime-300/15 to-yellow-300/20 rounded-full blur-3xl"></div>
+
+                {/* Header Superior */}
+                <header className="relative z-50 backdrop-blur-xl bg-white/80 border-b border-emerald-200/50 shadow-2xl shadow-emerald-500/10">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-20">
+                            {/* Logo */}
+                            <Link href={route('dashboard')}>
+                                <img src="/images/logo-login.png" alt="Agrofina" className="h-12 w-auto transition-transform duration-300 hover:scale-105" />
+                            </Link>
+
+                            {/* Navegación entre secciones - Desktop */}
+                            <nav className="hidden md:flex items-center gap-2">
+                                <Link
+                                    href={route('admin.productos')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
+                                >
+                                    Productos
+                                </Link>
+                                <Link
+                                    href={route('admin.novedades.index')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                >
+                                    Novedades
+                                </Link>
+                                <Link
+                                    href={route('admin.agronews.index')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                >
+                                    AgroNews
+                                </Link>
+                            </nav>
+
+                            {/* User Info & Actions - Desktop */}
+                            <div className="hidden md:flex items-center gap-4">
+                                {/* Usuario */}
+                                <div className="flex items-center gap-3 px-4 py-2.5 backdrop-blur-xl bg-emerald-50/80 rounded-2xl border border-emerald-200/50">
+                                    <div>
+                                        <p className="text-sm font-semibold text-gray-800">{auth.user.name}</p>
+                                        <p className="text-xs text-emerald-600">Administrador</p>
                                     </div>
-                                    <span className="ml-2 text-sm font-medium text-gray-900">Información del Producto</span>
                                 </div>
+
+                                {/* Volver al sitio */}
+                                <Link
+                                    href="/"
+                                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                    </svg>
+                                    Volver al sitio
+                                </Link>
+
+                                {/* Cerrar Sesión */}
+                                <button
+                                    onClick={handleLogout}
+                                    className="relative overflow-hidden px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                                >
+                                    <span className="relative z-10 text-sm">Cerrar Sesión</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full animate-shimmer"></div>
+                                </button>
                             </div>
+
+                            {/* Botón Menú Hamburguesa - Mobile */}
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="md:hidden p-2 rounded-xl bg-emerald-50/80 border border-emerald-200/50 text-emerald-700 hover:bg-emerald-100 transition-all"
+                            >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    {isMobileMenuOpen ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                    )}
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
+                    {/* Menú Mobile - Dropdown */}
+                    {isMobileMenuOpen && (
+                        <div className="md:hidden absolute top-full left-0 right-0 backdrop-blur-xl bg-white/95 border-b border-emerald-200/50 shadow-2xl shadow-emerald-500/20 animate-fadeIn">
+                            <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
+                                {/* Usuario Info */}
+                                <div className="flex items-center gap-3 px-4 py-3 backdrop-blur-xl bg-emerald-50/80 rounded-2xl border border-emerald-200/50">
+                                    <div>
+                                        <p className="text-sm font-semibold text-gray-800">{auth.user.name}</p>
+                                        <p className="text-xs text-emerald-600">Administrador</p>
+                                    </div>
+                                </div>
+
+                                {/* Navegación */}
+                                <nav className="space-y-2">
+                                    <Link
+                                        href={route('admin.productos')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
+                                    >
+                                        📦 Productos
+                                    </Link>
+                                    <Link
+                                        href={route('admin.novedades.index')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    >
+                                        📢 Novedades
+                                    </Link>
+                                    <Link
+                                        href={route('admin.agronews.index')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    >
+                                        📰 AgroNews
+                                    </Link>
+                                </nav>
+
+                                {/* Acciones */}
+                                <div className="space-y-2 pt-4 border-t border-emerald-200/30">
+                                    <Link
+                                        href="/"
+                                        className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-all duration-300 font-semibold"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                        </svg>
+                                        Volver al sitio
+                                    </Link>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                                    >
+                                        Cerrar Sesión
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </header>
+
+                {/* Contenido principal */}
+                <div className="relative py-4 sm:py-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Título */}
+                    <div className="mb-6">
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+                            Creación del Producto
+                        </h1>
+                        <p className="text-sm sm:text-base text-gray-600">
+                            Completa todos los campos para agregar un nuevo producto al catálogo
+                        </p>
+                    </div>
+
+                    {/* Botón de navegación */}
+                    <div className="mb-6">
+                        <Link
+                            href={route('admin.productos')}
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/80 backdrop-blur-sm border-2 border-emerald-300 text-emerald-700 font-semibold shadow-lg shadow-emerald-500/20 hover:shadow-xl hover:shadow-emerald-500/30 hover:scale-105 transition-all duration-300"
+                        >
+                            <ArrowLeft className="w-5 h-5" />
+                            <span>Gestión de Productos</span>
+                        </Link>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Información Básica */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                        <div className="bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl shadow-emerald-500/10 border-2 border-white/50 overflow-hidden">
+                            <div className="px-4 sm:px-6 py-4 bg-gradient-to-r from-emerald-500/10 to-lime-500/10 border-b-2 border-emerald-200/50">
+                                <h3 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center">
+                                    <Package className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-emerald-600" />
                                     Información Básica
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-1">Datos principales del producto</p>
+                                <p className="text-xs sm:text-sm text-gray-600 mt-1">Datos principales del producto</p>
                             </div>
                             
-                            <div className="p-6 space-y-6">
+                            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                                 {/* Nombre del Producto */}
                                 <div>
-                                    <label htmlFor="nombre" className="block text-sm font-medium text-gray-900 mb-2">
+                                    <label htmlFor="nombre" className="block text-sm font-semibold text-gray-900 mb-2">
                                         Nombre del Producto <span className="text-red-500">*</span>
                                     </label>
                                     <input
@@ -169,23 +301,23 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                         id="nombre"
                                         value={data.nombre}
                                         onChange={(e) => setData('nombre', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 transition-all duration-200 text-gray-900 placeholder-gray-400"
                                         placeholder="Ingresa el nombre del producto..."
                                         required
                                     />
-                                    {errors.nombre && <p className="text-red-600 text-sm mt-2">{errors.nombre}</p>}
+                                    {errors.nombre && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.nombre}</p>}
                                 </div>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                                     {/* Imagen del Producto */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-900 mb-2">
+                                        <label className="block text-sm font-semibold text-gray-900 mb-2">
                                             Imagen del Producto
                                         </label>
-                                        <div className="space-y-4">
+                                        <div className="space-y-3">
                                             {imagePreview ? (
                                                 <div className="relative">
-                                                    <div className="w-full h-48 rounded-lg border-2 border-dashed border-gray-200 overflow-hidden">
+                                                    <div className="w-full h-48 rounded-xl border-2 border-dashed border-emerald-200 bg-white/50 overflow-hidden flex items-center justify-center p-4">
                                                         <img
                                                             src={imagePreview}
                                                             alt="Preview"
@@ -195,20 +327,17 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                                     <button
                                                         type="button"
                                                         onClick={removeImage}
-                                                        className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition-colors duration-200"
+                                                        className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
                                                     >
-                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                        </svg>
+                                                        <X className="w-4 h-4" />
                                                     </button>
                                                 </div>
                                             ) : (
-                                                <div className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center hover:border-blue-400 transition-colors duration-200">
-                                                    <div className="text-center">
-                                                        <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <p className="mt-2 text-sm text-gray-600">Selecciona una imagen</p>
+                                                <div className="w-full h-48 border-2 border-dashed border-emerald-300 rounded-xl flex items-center justify-center hover:border-emerald-400 hover:bg-emerald-50/30 transition-all duration-200 bg-white/30 backdrop-blur-sm">
+                                                    <div className="text-center p-4">
+                                                        <Upload className="mx-auto h-10 w-10 text-emerald-400 mb-3" />
+                                                        <p className="text-sm text-gray-600 font-medium">Selecciona una imagen</p>
+                                                        <p className="text-xs text-gray-500 mt-1">JPG, PNG, GIF, SVG</p>
                                                     </div>
                                                 </div>
                                             )}
@@ -218,25 +347,25 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                                 id="imagen"
                                                 accept="image/*"
                                                 onChange={handleImageChange}
-                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 transition-all duration-200 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
                                             />
                                             <p className="text-xs text-gray-500">
                                                 Formatos: JPG, PNG, GIF, SVG (máx. 2MB)
                                             </p>
                                         </div>
-                                        {errors.imagen && <p className="text-red-600 text-sm mt-2">{errors.imagen}</p>}
+                                        {errors.imagen && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.imagen}</p>}
                                     </div>
 
                                     {/* Categoría */}
                                     <div>
-                                        <label htmlFor="categoria_id" className="block text-sm font-medium text-gray-900 mb-2">
+                                        <label htmlFor="categoria_id" className="block text-sm font-semibold text-gray-900 mb-2">
                                             Categoría
                                         </label>
                                         <select
                                             id="categoria_id"
                                             value={data.categoria_id}
                                             onChange={(e) => setData('categoria_id', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                            className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 transition-all duration-200 text-gray-900"
                                         >
                                             <option value="">Seleccionar categoría</option>
                                             {categorias && categorias.map((categoria) => (
@@ -246,35 +375,38 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                             ))}
                                         </select>
                                         {categorias && categorias.length > 0 && (
-                                            <p className="text-xs text-gray-500 mt-1">
-                                                {categorias.length} categorías disponibles: {categorias.map(cat => cat.nombre).join(', ')}
+                                            <p className="text-xs text-gray-600 mt-2 bg-emerald-50/50 rounded-lg p-2">
+                                                <span className="font-semibold">{categorias.length}</span> categorías disponibles
                                             </p>
                                         )}
-                                        {errors.categoria_id && <p className="text-red-600 text-sm mt-2">{errors.categoria_id}</p>}
+                                        {errors.categoria_id && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.categoria_id}</p>}
                                     </div>
                                 </div>
 
                                 {/* Principio Activo - Ahora como pastillas */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-sm font-semibold text-gray-900 mb-3">
                                         Principio Activo
                                     </label>
                                     <div className="space-y-3">
-                                        <p className="text-xs text-gray-500">
+                                        <p className="text-xs text-gray-600 bg-purple-50/50 rounded-lg p-2">
                                             Selecciona el principio activo del producto
                                         </p>
                                         
                                         {/* Buscador */}
-                                        <input
-                                            type="text"
-                                            placeholder="Buscar principio activo..."
-                                            value={searchPrincipioActivo}
-                                            onChange={(e) => setSearchPrincipioActivo(e.target.value)}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-sm"
-                                        />
+                                        <div className="relative">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                            <input
+                                                type="text"
+                                                placeholder="Buscar principio activo..."
+                                                value={searchPrincipioActivo}
+                                                onChange={(e) => setSearchPrincipioActivo(e.target.value)}
+                                                className="w-full pl-10 pr-4 py-2.5 bg-white/80 backdrop-blur-sm border-2 border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-400 transition-all duration-200 text-sm"
+                                            />
+                                        </div>
                                         
                                         {principiosActivos && principiosActivos.length > 0 ? (
-                                            <div className="flex flex-wrap gap-2 max-h-64 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
+                                            <div className="flex flex-wrap gap-2 max-h-64 overflow-y-auto p-3 sm:p-4 bg-purple-50/30 backdrop-blur-sm rounded-xl border-2 border-purple-200">
                                                 {principiosActivos
                                                     .filter(principio => 
                                                         principio.nombre.toLowerCase().includes(searchPrincipioActivo.toLowerCase())
@@ -284,10 +416,10 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                                         return (
                                                             <label
                                                                 key={principio.id}
-                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-xs sm:text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
                                                                     isSelected
-                                                                        ? 'bg-purple-100 text-purple-800 border-purple-300 shadow-md'
-                                                                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                                        ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white border-purple-400 shadow-lg shadow-purple-500/30 scale-105'
+                                                                        : 'bg-white/80 text-gray-700 border-purple-200 hover:bg-purple-50 hover:border-purple-300 hover:scale-105'
                                                                 }`}
                                                             >
                                                                 <input
@@ -297,12 +429,8 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                                                     onChange={() => handlePrincipioActivoChange(principio.id)}
                                                                     className="sr-only"
                                                                 />
-                                                                <span className="flex items-center">
-                                                                    {isSelected && (
-                                                                        <svg className="w-4 h-4 mr-2 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                        </svg>
-                                                                    )}
+                                                                <span className="flex items-center gap-1.5">
+                                                                    {isSelected && <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                                                                     {principio.nombre}
                                                                 </span>
                                                             </label>
@@ -310,30 +438,26 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                                     })}
                                                 {principiosActivos.filter(p => p.nombre.toLowerCase().includes(searchPrincipioActivo.toLowerCase())).length === 0 && (
                                                     <p className="text-sm text-gray-500 py-4 w-full text-center">
-                                                        No se encontraron principios activos con "{searchPrincipioActivo}"
+                                                        No se encontraron principios activos con "<span className="font-semibold">{searchPrincipioActivo}</span>"
                                                     </p>
                                                 )}
                                             </div>
                                         ) : (
-                                            <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
-                                                <svg className="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                                                </svg>
-                                                <p className="text-sm text-gray-500">No hay principios activos disponibles</p>
-                                                <p className="text-xs text-gray-400 mt-1">
+                                            <div className="text-center py-6 bg-purple-50/30 backdrop-blur-sm rounded-xl border-2 border-dashed border-purple-200">
+                                                <Upload className="mx-auto h-8 w-8 text-purple-300 mb-2" />
+                                                <p className="text-sm text-gray-600 font-medium">No hay principios activos disponibles</p>
+                                                <p className="text-xs text-gray-500 mt-1">
                                                     Primero debes crear principios activos desde el módulo correspondiente
                                                 </p>
                                             </div>
                                         )}
                                         
                                         {data.principio_activo_id && (
-                                            <div className="mt-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                                            <div className="mt-3 p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border-2 border-purple-200 backdrop-blur-sm">
                                                 <div className="flex items-center text-sm text-purple-800">
-                                                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                    </svg>
-                                                    <span className="font-medium">
-                                                        Principio activo seleccionado: {principiosActivos.find(p => p.id === data.principio_activo_id)?.nombre}
+                                                    <Check className="w-4 h-4 mr-2" />
+                                                    <span className="font-semibold">
+                                                        Seleccionado: {principiosActivos.find(p => p.id === data.principio_activo_id)?.nombre}
                                                     </span>
                                                 </div>
                                             </div>
@@ -342,11 +466,11 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                     {errors.principio_activo_id && <p className="text-red-600 text-sm mt-2">{errors.principio_activo_id}</p>}
                                 </div>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
 
                                     {/* Formulación */}
                                     <div>
-                                        <label htmlFor="formulacion" className="block text-sm font-medium text-gray-900 mb-2">
+                                        <label htmlFor="formulacion" className="block text-sm font-semibold text-gray-900 mb-2">
                                             Formulación
                                         </label>
                                         <input
@@ -354,15 +478,15 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                             id="formulacion"
                                             value={data.formulacion}
                                             onChange={(e) => setData('formulacion', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                            className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 transition-all duration-200 text-gray-900 placeholder-gray-400"
                                             placeholder="Ej: EC, WP, SL"
                                         />
-                                        {errors.formulacion && <p className="text-red-600 text-sm mt-2">{errors.formulacion}</p>}
+                                        {errors.formulacion && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.formulacion}</p>}
                                     </div>
 
                                     {/* Presentación */}
                                     <div>
-                                        <label htmlFor="presentacion" className="block text-sm font-medium text-gray-900 mb-2">
+                                        <label htmlFor="presentacion" className="block text-sm font-semibold text-gray-900 mb-2">
                                             Presentación
                                         </label>
                                         <input
@@ -370,23 +494,23 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                             id="presentacion"
                                             value={data.presentacion}
                                             onChange={(e) => setData('presentacion', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                            className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 transition-all duration-200 text-gray-900 placeholder-gray-400"
                                             placeholder="Ej: 1L, 500ml, 250g"
                                         />
-                                        {errors.presentacion && <p className="text-red-600 text-sm mt-2">{errors.presentacion}</p>}
+                                        {errors.presentacion && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.presentacion}</p>}
                                     </div>
                                 </div>
 
                                 {/* Estado Activo */}
-                                <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                                <div className="flex items-center space-x-3 p-4 bg-gradient-to-r from-emerald-50 to-lime-50 backdrop-blur-sm rounded-xl border-2 border-emerald-200">
                                     <input
                                         type="checkbox"
                                         id="activo"
                                         checked={data.activo}
                                         onChange={(e) => setData('activo', e.target.checked)}
-                                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        className="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-emerald-300 rounded"
                                     />
-                                    <label htmlFor="activo" className="text-sm font-medium text-gray-900">
+                                    <label htmlFor="activo" className="text-sm font-semibold text-gray-900">
                                         Producto activo (visible en el catálogo)
                                     </label>
                                 </div>
@@ -394,21 +518,19 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                         </div>
 
                         {/* Descripción y Detalles */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="px-6 py-4 bg-gradient-to-r from-green-50 to-emerald-50 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
+                        <div className="bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl shadow-emerald-500/10 border-2 border-white/50 overflow-hidden">
+                            <div className="px-4 sm:px-6 py-4 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b-2 border-blue-200/50">
+                                <h3 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center">
+                                    <FileText className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-blue-600" />
                                     Descripción y Características
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-1">Información técnica detallada del producto</p>
+                                <p className="text-xs sm:text-sm text-gray-600 mt-1">Información técnica detallada del producto</p>
                             </div>
                             
-                            <div className="p-6 space-y-6">
+                            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                                 {/* Descripción */}
                                 <div>
-                                    <label htmlFor="descripcion" className="block text-sm font-medium text-gray-900 mb-2">
+                                    <label htmlFor="descripcion" className="block text-sm font-semibold text-gray-900 mb-2">
                                         Descripción
                                     </label>
                                     <textarea
@@ -416,218 +538,190 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                         rows={3}
                                         value={data.descripcion}
                                         onChange={(e) => setData('descripcion', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all duration-200 text-gray-900 placeholder-gray-400 resize-none"
                                         placeholder="Describe las características principales del producto..."
                                     />
-                                    {errors.descripcion && <p className="text-red-600 text-sm mt-2">{errors.descripcion}</p>}
+                                    {errors.descripcion && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.descripcion}</p>}
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-6">
-                                    {/* Banda */}
-                                    {/* <div>
-                                        <label htmlFor="banda" className="block text-sm font-medium text-gray-900 mb-2">
-                                            Banda
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="banda"
-                                            value={data.banda}
-                                            onChange={(e) => setData('banda', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                            placeholder="Ej: Verde, Azul, Roja"
-                                        />
-                                        {errors.banda && <p className="text-red-600 text-sm mt-2">{errors.banda}</p>}
-                                    </div>     */}
-                                    
-
-                                    {/* Banda Toxicológica */}
-                                    <div>
-                                        <label htmlFor="banda_toxicologica" className="block text-sm font-medium text-gray-900 mb-2">
-                                            Banda Toxicológica
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="banda_toxicologica"
-                                            value={data.banda_toxicologica}
-                                            onChange={(e) => setData('banda_toxicologica', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                            placeholder="Ej: Verde, Azul, Roja"
-                                        />
-                                        {errors.banda_toxicologica && <p className="text-red-600 text-sm mt-2">{errors.banda_toxicologica}</p>}
-                                    </div>
+                                {/* Banda Toxicológica */}
+                                <div>
+                                    <label htmlFor="banda_toxicologica" className="block text-sm font-semibold text-gray-900 mb-2">
+                                        Banda Toxicológica
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="banda_toxicologica"
+                                        value={data.banda_toxicologica}
+                                        onChange={(e) => setData('banda_toxicologica', e.target.value)}
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all duration-200 text-gray-900 placeholder-gray-400"
+                                        placeholder="Ej: Verde, Azul, Roja, Amarilla"
+                                    />
+                                    {errors.banda_toxicologica && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.banda_toxicologica}</p>}
                                 </div>
 
                                 {/* Acción */}
                                 <div>
-                                    <label htmlFor="accion" className="block text-sm font-medium text-gray-900 mb-2">
+                                    <label htmlFor="accion" className="block text-sm font-semibold text-gray-900 mb-2">
                                         Acción
                                     </label>
                                     <textarea
                                         id="accion"
-                                        rows={2}
+                                        rows={3}
                                         value={data.accion}
                                         onChange={(e) => setData('accion', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all duration-200 text-gray-900 placeholder-gray-400 resize-none"
                                         placeholder="Describe cómo actúa el producto..."
                                     />
-                                    {errors.accion && <p className="text-red-600 text-sm mt-2">{errors.accion}</p>}
+                                    {errors.accion && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.accion}</p>}
                                 </div>
 
                                 {/* Mecanismo de Acción */}
                                 <div>
-                                    <label htmlFor="mecanismo_de_accion" className="block text-sm font-medium text-gray-900 mb-2">
+                                    <label htmlFor="mecanismo_de_accion" className="block text-sm font-semibold text-gray-900 mb-2">
                                         Mecanismo de Acción
                                     </label>
                                     <textarea
                                         id="mecanismo_de_accion"
-                                        rows={2}
+                                        rows={3}
                                         value={data.mecanismo_de_accion}
                                         onChange={(e) => setData('mecanismo_de_accion', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all duration-200 text-gray-900 placeholder-gray-400 resize-none"
                                         placeholder="Explica el mecanismo de acción específico..."
                                     />
-                                    {errors.mecanismo_de_accion && <p className="text-red-600 text-sm mt-2">{errors.mecanismo_de_accion}</p>}
+                                    {errors.mecanismo_de_accion && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.mecanismo_de_accion}</p>}
                                 </div>
                             </div>
                         </div>
 
                         {/* Aplicación y Uso */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="px-6 py-4 bg-gradient-to-r from-yellow-50 to-orange-50 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                    </svg>
+                        <div className="bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl shadow-emerald-500/10 border-2 border-white/50 overflow-hidden">
+                            <div className="px-4 sm:px-6 py-4 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border-b-2 border-yellow-200/50">
+                                <h3 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center">
+                                    <Package className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-yellow-600" />
                                     Aplicación y Uso
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-1">Información sobre aplicación y recomendaciones</p>
+                                <p className="text-xs sm:text-sm text-gray-600 mt-1">Información sobre aplicación y recomendaciones</p>
                             </div>
                             
-                            <div className="p-6 space-y-6">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    {/* Malezas */}
-                                    <div>
-                                        <label htmlFor="malezas" className="block text-sm font-medium text-gray-900 mb-2">
-                                            Malezas
-                                        </label>
-                                        <textarea
-                                            id="malezas"
-                                            rows={3}
-                                            value={data.malezas}
-                                            onChange={(e) => setData('malezas', e.target.value)}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                                            placeholder="Lista las malezas que controla..."
-                                        />
-                                        {errors.malezas && <p className="text-red-600 text-sm mt-2">{errors.malezas}</p>}
-                                    </div>
+                            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+                                {/* Malezas */}
+                                <div>
+                                    <label htmlFor="malezas" className="block text-sm font-semibold text-gray-900 mb-2">
+                                        Malezas que Controla
+                                    </label>
+                                    <textarea
+                                        id="malezas"
+                                        rows={3}
+                                        value={data.malezas}
+                                        onChange={(e) => setData('malezas', e.target.value)}
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-yellow-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-400 transition-all duration-200 text-gray-900 placeholder-gray-400 resize-none"
+                                        placeholder="Lista las malezas que controla..."
+                                    />
+                                    {errors.malezas && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.malezas}</p>}
+                                </div>
 
-                                    {/* Cultivos */}
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-900 mb-3">
-                                            Cultivos Aplicables
-                                        </label>
-                                        <div className="space-y-3">
-                                            <p className="text-xs text-gray-500">
-                                                Selecciona los cultivos donde se puede aplicar este producto
-                                            </p>
-                                            
-                                            {/* Buscador de cultivos */}
+                                {/* Cultivos */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-900 mb-3">
+                                        Cultivos Aplicables
+                                    </label>
+                                    <div className="space-y-3">
+                                        <p className="text-xs text-gray-600 bg-emerald-50/50 rounded-lg p-2">
+                                            Selecciona los cultivos donde se puede aplicar este producto
+                                        </p>
+                                        
+                                        {/* Buscador de cultivos */}
+                                        <div className="relative">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                             <input
                                                 type="text"
                                                 placeholder="Buscar cultivos..."
                                                 value={searchCultivo}
                                                 onChange={(e) => setSearchCultivo(e.target.value)}
-                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-sm"
+                                                className="w-full pl-10 pr-4 py-2.5 bg-white/80 backdrop-blur-sm border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 transition-all duration-200 text-sm"
                                             />
-                                            
-                                            {cultivos && cultivos.length > 0 ? (
-                                                <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
-                                                    {cultivos
-                                                        .filter(cultivo => 
-                                                            cultivo.nombre.toLowerCase().includes(searchCultivo.toLowerCase())
-                                                        )
-                                                        .map((cultivo) => {
-                                                            const isSelected = data.cultivos_ids.includes(cultivo.id);
-                                                            return (
-                                                                <label
-                                                                    key={cultivo.id}
-                                                                    className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
-                                                                        isSelected
-                                                                            ? 'bg-blue-100 text-blue-800 border-blue-300 shadow-md'
-                                                                            : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
-                                                                    }`}
-                                                                >
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        checked={isSelected}
-                                                                        onChange={() => handleCultivoChange(cultivo.id)}
-                                                                        className="sr-only"
-                                                                    />
-                                                                    <span className="flex items-center">
-                                                                        {isSelected && (
-                                                                            <svg className="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                            </svg>
-                                                                        )}
-                                                                        {cultivo.nombre}
-                                                                    </span>
-                                                                </label>
-                                                            );
-                                                        })}
-                                                    {cultivos.filter(c => c.nombre.toLowerCase().includes(searchCultivo.toLowerCase())).length === 0 && (
-                                                        <p className="text-sm text-gray-500 py-4 w-full text-center">
-                                                            No se encontraron cultivos con "{searchCultivo}"
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            ) : (
-                                                <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
-                                                    <svg className="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                                                    </svg>
-                                                    <p className="text-sm text-gray-500">No hay cultivos disponibles</p>
-                                                    <p className="text-xs text-gray-400 mt-1">
-                                                        Primero debes crear cultivos desde el módulo correspondiente
-                                                    </p>
-                                                </div>
-                                            )}
-                                            
-                                            {data.cultivos_ids.length > 0 && (
-                                                <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                                                    <div className="flex items-center text-sm text-blue-800">
-                                                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                        </svg>
-                                                        <span className="font-medium">
-                                                            {data.cultivos_ids.length} cultivo{data.cultivos_ids.length !== 1 ? 's' : ''} seleccionado{data.cultivos_ids.length !== 1 ? 's' : ''}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
                                         </div>
-                                        {errors.cultivos_ids && <p className="text-red-600 text-sm mt-2">{errors.cultivos_ids}</p>}
+                                            
+                                        {cultivos && cultivos.length > 0 ? (
+                                            <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 sm:p-4 bg-emerald-50/30 backdrop-blur-sm rounded-xl border-2 border-emerald-200">
+                                                {cultivos
+                                                    .filter(cultivo => 
+                                                        cultivo.nombre.toLowerCase().includes(searchCultivo.toLowerCase())
+                                                    )
+                                                    .map((cultivo) => {
+                                                        const isSelected = data.cultivos_ids.includes(cultivo.id);
+                                                        return (
+                                                            <label
+                                                                key={cultivo.id}
+                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-xs sm:text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                    isSelected
+                                                                        ? 'bg-gradient-to-r from-emerald-500 to-lime-500 text-white border-emerald-400 shadow-lg shadow-emerald-500/30 scale-105'
+                                                                        : 'bg-white/80 text-gray-700 border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 hover:scale-105'
+                                                                }`}
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={isSelected}
+                                                                    onChange={() => handleCultivoChange(cultivo.id)}
+                                                                    className="sr-only"
+                                                                />
+                                                                <span className="flex items-center gap-1.5">
+                                                                    {isSelected && <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                                                                    {cultivo.nombre}
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    })}
+                                                {cultivos.filter(c => c.nombre.toLowerCase().includes(searchCultivo.toLowerCase())).length === 0 && (
+                                                    <p className="text-sm text-gray-500 py-4 w-full text-center">
+                                                        No se encontraron cultivos con "<span className="font-semibold">{searchCultivo}</span>"
+                                                    </p>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div className="text-center py-6 bg-emerald-50/30 backdrop-blur-sm rounded-xl border-2 border-dashed border-emerald-200">
+                                                <Upload className="mx-auto h-8 w-8 text-emerald-300 mb-2" />
+                                                <p className="text-sm text-gray-600 font-medium">No hay cultivos disponibles</p>
+                                                <p className="text-xs text-gray-500 mt-1">
+                                                    Primero debes crear cultivos desde el módulo correspondiente
+                                                </p>
+                                            </div>
+                                        )}
+                                        
+                                        {data.cultivos_ids.length > 0 && (
+                                            <div className="mt-3 p-3 bg-gradient-to-r from-emerald-50 to-lime-50 rounded-xl border-2 border-emerald-200 backdrop-blur-sm">
+                                                <div className="flex items-center text-sm text-emerald-800">
+                                                    <Check className="w-4 h-4 mr-2" />
+                                                    <span className="font-semibold">
+                                                        {data.cultivos_ids.length} cultivo{data.cultivos_ids.length !== 1 ? 's' : ''} seleccionado{data.cultivos_ids.length !== 1 ? 's' : ''}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
+                                    {errors.cultivos_ids && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.cultivos_ids}</p>}
                                 </div>
 
                                 {/* Dosis */}
                                 <div>
-                                    <label htmlFor="dosis" className="block text-sm font-medium text-gray-900 mb-2">
+                                    <label htmlFor="dosis" className="block text-sm font-semibold text-gray-900 mb-2">
                                         Dosis
                                     </label>
                                     <textarea
                                         id="dosis"
-                                        rows={2}
+                                        rows={3}
                                         value={data.dosis}
                                         onChange={(e) => setData('dosis', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-yellow-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-400 transition-all duration-200 text-gray-900 placeholder-gray-400 resize-none"
                                         placeholder="Especifica las dosis recomendadas..."
                                     />
-                                    {errors.dosis && <p className="text-red-600 text-sm mt-2">{errors.dosis}</p>}
+                                    {errors.dosis && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.dosis}</p>}
                                 </div>
 
                                 {/* Recomendaciones de Uso */}
                                 <div>
-                                    <label htmlFor="recomendaciones_de_uso" className="block text-sm font-medium text-gray-900 mb-2">
+                                    <label htmlFor="recomendaciones_de_uso" className="block text-sm font-semibold text-gray-900 mb-2">
                                         Recomendaciones de Uso
                                     </label>
                                     <textarea
@@ -635,31 +729,34 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                         rows={3}
                                         value={data.recomendaciones_de_uso}
                                         onChange={(e) => setData('recomendaciones_de_uso', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-yellow-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-400 transition-all duration-200 text-gray-900 placeholder-gray-400 resize-none"
                                         placeholder="Incluye recomendaciones importantes para el uso..."
                                     />
-                                    {errors.recomendaciones_de_uso && <p className="text-red-600 text-sm mt-2">{errors.recomendaciones_de_uso}</p>}
+                                    {errors.recomendaciones_de_uso && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.recomendaciones_de_uso}</p>}
                                 </div>
 
                                 {/* Árboles de Recomendación */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-sm font-semibold text-gray-900 mb-3">
                                         Árboles de Recomendación
                                     </label>
                                     <div className="space-y-3">
-                                        <p className="text-xs text-gray-500">Selecciona uno o varios árboles de recomendación</p>
+                                        <p className="text-xs text-gray-600 bg-orange-50/50 rounded-lg p-2">Selecciona uno o varios árboles de recomendación</p>
                                         
                                         {/* Buscador de árboles */}
-                                        <input
-                                            type="text"
-                                            placeholder="Buscar árboles de recomendación..."
-                                            value={searchArbol}
-                                            onChange={(e) => setSearchArbol(e.target.value)}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 text-sm"
-                                        />
+                                        <div className="relative">
+                                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                            <input
+                                                type="text"
+                                                placeholder="Buscar árboles de recomendación..."
+                                                value={searchArbol}
+                                                onChange={(e) => setSearchArbol(e.target.value)}
+                                                className="w-full pl-10 pr-4 py-2.5 bg-white/80 backdrop-blur-sm border-2 border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition-all duration-200 text-sm"
+                                            />
+                                        </div>
                                         
                                         {arbolesRecomendacion && arbolesRecomendacion.length > 0 ? (
-                                            <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 bg-gray-50 rounded-lg border">
+                                            <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-3 sm:p-4 bg-orange-50/30 backdrop-blur-sm rounded-xl border-2 border-orange-200">
                                                 {arbolesRecomendacion
                                                     .filter(arbol => 
                                                         arbol.nombre.toLowerCase().includes(searchArbol.toLowerCase())
@@ -669,19 +766,15 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                                         return (
                                                             <label
                                                                 key={arbol.id}
-                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
+                                                                className={`inline-flex items-center px-3 py-2 rounded-full text-xs sm:text-sm font-medium cursor-pointer transition-all duration-200 border-2 ${
                                                                     isSelected
-                                                                        ? 'bg-emerald-100 text-emerald-800 border-emerald-300 shadow-md'
-                                                                        : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                                        ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white border-orange-400 shadow-lg shadow-orange-500/30 scale-105'
+                                                                        : 'bg-white/80 text-gray-700 border-orange-200 hover:bg-orange-50 hover:border-orange-300 hover:scale-105'
                                                                 }`}
                                                             >
                                                                 <input type="checkbox" checked={isSelected} onChange={() => handleArbolChange(arbol.id)} className="sr-only" />
-                                                                <span className="flex items-center">
-                                                                    {isSelected && (
-                                                                        <svg className="w-4 h-4 mr-2 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                        </svg>
-                                                                    )}
+                                                                <span className="flex items-center gap-1.5">
+                                                                    {isSelected && <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                                                                     {arbol.nombre}
                                                                 </span>
                                                             </label>
@@ -689,53 +782,48 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                                     })}
                                                 {arbolesRecomendacion.filter(a => a.nombre.toLowerCase().includes(searchArbol.toLowerCase())).length === 0 && (
                                                     <p className="text-sm text-gray-500 py-4 w-full text-center">
-                                                        No se encontraron árboles con "{searchArbol}"
+                                                        No se encontraron árboles con "<span className="font-semibold">{searchArbol}</span>"
                                                     </p>
                                                 )}
                                             </div>
                                         ) : (
-                                            <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
-                                                <p className="text-sm text-gray-500">No hay árboles de recomendación disponibles</p>
-                                                <p className="text-xs text-gray-400 mt-1">Primero crea árboles desde su módulo</p>
+                                            <div className="text-center py-6 bg-orange-50/30 backdrop-blur-sm rounded-xl border-2 border-dashed border-orange-200">
+                                                <Upload className="mx-auto h-8 w-8 text-orange-300 mb-2" />
+                                                <p className="text-sm text-gray-600 font-medium">No hay árboles de recomendación disponibles</p>
+                                                <p className="text-xs text-gray-500 mt-1">Primero crea árboles desde su módulo</p>
                                             </div>
                                         )}
                                         {data.arboles_ids.length > 0 && (
-                                            <div className="mt-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                                                <div className="flex items-center text-sm text-emerald-800">
-                                                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                    </svg>
-                                                    <span className="font-medium">{data.arboles_ids.length} árbol(es) seleccionado(s)</span>
+                                            <div className="mt-3 p-3 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border-2 border-orange-200 backdrop-blur-sm">
+                                                <div className="flex items-center text-sm text-orange-800">
+                                                    <Check className="w-4 h-4 mr-2" />
+                                                    <span className="font-semibold">{data.arboles_ids.length} árbol(es) seleccionado(s)</span>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
-                                    {errors.arboles_ids && <p className="text-red-600 text-sm mt-2">{errors.arboles_ids}</p>}
+                                    {errors.arboles_ids && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.arboles_ids}</p>}
                                 </div>
                             </div>
                         </div>
 
                         {/* Documentos */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="px-6 py-4 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
+                        <div className="bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl shadow-emerald-500/10 border-2 border-white/50 overflow-hidden">
+                            <div className="px-4 sm:px-6 py-4 bg-gradient-to-r from-pink-500/10 to-purple-500/10 border-b-2 border-pink-200/50">
+                                <h3 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center">
+                                    <FileText className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-pink-600" />
                                     Documentos Técnicos
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-1">Fichas técnicas, etiquetas y documentación</p>
+                                <p className="text-xs sm:text-sm text-gray-600 mt-1">Fichas técnicas, etiquetas y documentación</p>
                             </div>
                             
-                            <div className="p-6">
+                            <div className="p-4 sm:p-6">
                                 <div>
-                                    <label htmlFor="pdfs" className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label htmlFor="pdfs" className="block text-sm font-semibold text-gray-900 mb-3">
                                         PDFs / Documentos
                                     </label>
-                                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors duration-200">
-                                        <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
+                                    <div className="border-2 border-dashed border-pink-300 rounded-xl p-6 sm:p-8 text-center hover:border-pink-400 hover:bg-pink-50/30 transition-all duration-200 bg-white/40 backdrop-blur-sm">
+                                        <Upload className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-pink-400 mb-3 sm:mb-4" />
                                         <input
                                             type="file"
                                             id="pdfs"
@@ -745,10 +833,10 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                             className="hidden"
                                         />
                                         <label htmlFor="pdfs" className="cursor-pointer">
-                                            <span className="text-blue-600 hover:text-blue-500 font-medium">
+                                            <span className="text-pink-600 hover:text-pink-500 font-semibold text-sm sm:text-base">
                                                 Seleccionar archivos PDF
                                             </span>
-                                            <span className="text-gray-500"> o arrastra y suelta aquí</span>
+                                            <span className="text-gray-500 text-sm sm:text-base"> o arrastra y suelta aquí</span>
                                         </label>
                                         <p className="text-xs text-gray-500 mt-2">
                                             Múltiples archivos PDF (máx. 10MB cada uno)
@@ -756,59 +844,50 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                                     </div>
                                     
                                     {data.pdfs && data.pdfs.length > 0 && (
-                                        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                                            <h4 className="text-sm font-medium text-gray-900 mb-2">
+                                        <div className="mt-4 p-4 bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl border-2 border-pink-200">
+                                            <h4 className="text-sm font-semibold text-gray-900 mb-3">
                                                 Archivos seleccionados ({data.pdfs.length}):
                                             </h4>
                                             <ul className="space-y-2">
                                                 {Array.from(data.pdfs).map((pdf, index) => (
-                                                    <li key={index} className="flex items-center text-sm text-gray-600">
-                                                        <svg className="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
-                                                        </svg>
-                                                        {pdf.name}
+                                                    <li key={index} className="flex items-center text-sm text-gray-700 bg-white/60 rounded-lg px-3 py-2">
+                                                        <FileText className="w-4 h-4 mr-2 text-red-500" />
+                                                        <span className="truncate">{pdf.name}</span>
                                                     </li>
                                                 ))}
                                             </ul>
                                         </div>
                                     )}
                                     
-                                    {errors.pdfs && <p className="text-red-600 text-sm mt-2">{errors.pdfs}</p>}
+                                    {errors.pdfs && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.pdfs}</p>}
                                 </div>
                             </div>
                         </div>
 
                         {/* Botones de Acción */}
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div className="flex flex-col sm:flex-row gap-4 justify-end">
+                        <div className="bg-white/60 backdrop-blur-lg rounded-2xl shadow-xl shadow-emerald-500/10 border-2 border-white/50 p-4 sm:p-6">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-end">
                                 <Link
                                     href={route('admin.productos')}
-                                    className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-gray-300 text-base font-semibold rounded-xl text-gray-700 bg-white/80 backdrop-blur-sm hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 hover:scale-105"
                                 >
-                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    <X className="w-5 h-5" />
                                     Cancelar
                                 </Link>
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-xl text-white bg-gradient-to-r from-emerald-600 to-lime-600 hover:from-emerald-700 hover:to-lime-700 shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105"
                                 >
                                     {processing ? (
                                         <>
-                                            <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                <path className="opacity-75" fill="currentColor" d="m100 50c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10s-10 4.477-10 10zm-9-3h12l-4-4m0 8l4-4"></path>
-                                            </svg>
-                                            Creando producto...
+                                            <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                                            <span>Creando producto...</span>
                                         </>
                                     ) : (
                                         <>
-                                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                            </svg>
-                                            Crear Producto
+                                            <Check className="w-5 h-5" />
+                                            <span>Crear Producto</span>
                                         </>
                                     )}
                                 </button>
@@ -816,7 +895,8 @@ export default function CreateProduct({ categorias, cultivos, principiosActivos,
                         </div>
                     </form>
                 </div>
+                </div>
             </div>
-        </AuthenticatedLayout>
+        </>
     );
 }
