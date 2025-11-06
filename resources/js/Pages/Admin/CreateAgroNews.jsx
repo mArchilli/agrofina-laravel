@@ -108,15 +108,15 @@ export default function CreateAgroNews({ auth }) {
                                     </div>
                                 </div>
 
-                                {/* Volver al Dashboard */}
+                                {/* Volver al sitio */}
                                 <Link
-                                    href={route('admin.agronews.index')}
-                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-300 text-emerald-700 hover:text-emerald-900 hover:bg-emerald-50 transition-all duration-300"
+                                    href="/"
+                                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                     </svg>
-                                    <span className="text-sm font-medium">Volver</span>
+                                    Volver al sitio
                                 </Link>
 
                                 {/* Cerrar Sesión */}
@@ -206,10 +206,23 @@ export default function CreateAgroNews({ auth }) {
                 <main className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     {/* Header de la página */}
                     <div className="mb-8">
-                        <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-700 to-lime-600 text-transparent bg-clip-text mb-2">
-                            Agregar AgroNews
-                        </h1>
-                        <p className="text-gray-600">Complete la información del archivo y súbalo al sistema AgroNews.</p>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                            <div className="flex-1">
+                                <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-700 to-lime-600 text-transparent bg-clip-text mb-2">
+                                    Subir nueva AgroNews
+                                </h1>
+                                <p className="text-gray-600">Complete la información del archivo y súbalo al sistema AgroNews.</p>
+                            </div>
+                            <Link
+                                href={route('admin.agronews.index')}
+                                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
+                            >
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Volver a gestión de AgroNews
+                            </Link>
+                        </div>
                     </div>
 
                     {/* Formulario */}

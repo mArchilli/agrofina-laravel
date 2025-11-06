@@ -254,7 +254,7 @@ export default function AgroNewsDashboard({ auth, agroNews }) {
                         {/* Título y descripción */}
                         <div className="mb-6">
                             <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
-                                Archivos <span className="bg-gradient-to-r from-emerald-600 via-lime-500 to-yellow-500 bg-clip-text text-transparent">AgroNews</span>
+                                Gestionar <span className="bg-gradient-to-r from-emerald-600 via-lime-500 to-yellow-500 bg-clip-text text-transparent">AgroNews</span>
                             </h1>
                             <p className="text-emerald-700/80 mt-2">Gestiona todos los documentos PDF de AgroNews</p>
                         </div>
