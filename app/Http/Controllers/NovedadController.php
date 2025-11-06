@@ -90,8 +90,37 @@ class NovedadController extends Controller
     {
         $novedades = Novedad::orderBy('fecha_carga', 'desc')->get();
         
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_NOVEDADES_IMAGES_PATH', '/images/novedades/');
+        $frontendPdfsPath = env('VITE_NOVEDADES_PDFS_PATH', '/PDFs/novedades/');
+        
+        // Transformar las rutas de las novedades
+        $novedadesTransformadas = $novedades->map(function ($novedad) use ($frontendImagesPath, $frontendPdfsPath) {
+            return [
+                'id' => $novedad->id,
+                'titulo' => $novedad->titulo,
+                'texto' => $novedad->texto,
+                'fecha_carga' => $novedad->fecha_carga,
+                'activo' => $novedad->activo,
+                'created_at' => $novedad->created_at,
+                'updated_at' => $novedad->updated_at,
+                'imagenes' => $novedad->imagenes ? collect($novedad->imagenes)->map(function ($imagen) use ($frontendImagesPath) {
+                    return [
+                        'nombre' => $imagen['nombre'],
+                        'path' => asset(trim($frontendImagesPath, '/') . '/' . basename($imagen['path']))
+                    ];
+                })->toArray() : [],
+                'archivos' => $novedad->archivos ? collect($novedad->archivos)->map(function ($archivo) use ($frontendPdfsPath) {
+                    return [
+                        'nombre' => $archivo['nombre'],
+                        'path' => asset(trim($frontendPdfsPath, '/') . '/' . basename($archivo['path']))
+                    ];
+                })->toArray() : [],
+            ];
+        });
+        
         return Inertia::render('NovedadesDashboard', [
-            'novedades' => $novedades
+            'novedades' => $novedadesTransformadas
         ]);
     }
 
@@ -166,13 +195,27 @@ class NovedadController extends Controller
      */
     public function edit(Novedad $novedad)
     {
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_NOVEDADES_IMAGES_PATH', '/images/novedades/');
+        $frontendPdfsPath = env('VITE_NOVEDADES_PDFS_PATH', '/PDFs/novedades/');
+
         return Inertia::render('EditNovedad', [
             'novedad' => [
                 'id' => $novedad->id,
                 'titulo' => $novedad->titulo,
                 'texto' => $novedad->texto,
-                'imagenes' => $novedad->imagenes,
-                'archivos' => $novedad->archivos,
+                'imagenes' => $novedad->imagenes ? collect($novedad->imagenes)->map(function ($imagen) use ($frontendImagesPath) {
+                    return [
+                        'nombre' => $imagen['nombre'],
+                        'path' => asset(trim($frontendImagesPath, '/') . '/' . basename($imagen['path']))
+                    ];
+                })->toArray() : [],
+                'archivos' => $novedad->archivos ? collect($novedad->archivos)->map(function ($archivo) use ($frontendPdfsPath) {
+                    return [
+                        'nombre' => $archivo['nombre'],
+                        'path' => asset(trim($frontendPdfsPath, '/') . '/' . basename($archivo['path']))
+                    ];
+                })->toArray() : [],
                 'fecha_carga' => $novedad->fecha_carga,
                 'activo' => $novedad->activo,
                 'created_at' => $novedad->created_at,
