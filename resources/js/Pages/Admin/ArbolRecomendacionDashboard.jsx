@@ -93,9 +93,12 @@ export default function ArbolRecomendacionDashboard({ arboles }) {
 
                                 {/* Volver al sitio */}
                                 <Link
-                                    href={route('dashboard')}
-                                    className="px-4 py-2 rounded-xl border-2 border-emerald-300 text-emerald-700 font-medium hover:bg-emerald-50 transition-all duration-300"
+                                    href="/"
+                                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
                                 >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                    </svg>
                                     Volver al sitio
                                 </Link>
 
@@ -180,16 +183,25 @@ export default function ArbolRecomendacionDashboard({ arboles }) {
                     </div>
                 </header>
 
-                <main className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-7xl mx-auto">
-                        {/* Título y botón */}
-                        <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                            <div>
-                                <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 via-lime-600 to-emerald-500 bg-clip-text text-transparent mb-2">
-                                    Gestión de Árboles de Recomendación
-                                </h1>
-                                <p className="text-gray-600">Administra los árboles de decisión para recomendación de productos</p>
-                            </div>
+                <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    {/* Título y botones */}
+                    <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 via-lime-600 to-emerald-500 bg-clip-text text-transparent mb-2">
+                                Gestión de Árboles de Recomendación
+                            </h1>
+                            <p className="text-gray-600">Administra los árboles de decisión para recomendación de productos</p>
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                            <Link
+                                href={route('admin.productos')}
+                                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
+                            >
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Gestión de Productos
+                            </Link>
                             <Link
                                 href={route('admin.arboles-recomendacion.create')}
                                 className="group relative px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 overflow-hidden hover:scale-105"
@@ -203,6 +215,7 @@ export default function ArbolRecomendacionDashboard({ arboles }) {
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                             </Link>
                         </div>
+                    </div>
 
                         {/* Buscador */}
                         <div className="mb-6 backdrop-blur-2xl bg-white/60 border-2 border-emerald-200/40 rounded-2xl shadow-xl p-6">
@@ -316,7 +329,6 @@ export default function ArbolRecomendacionDashboard({ arboles }) {
                                 </div>
                             )}
                         </div>
-                    </div>
                 </main>
             </div>
 

@@ -106,12 +106,12 @@ export default function ProductosDashboard({ auth, productos, categorias }) {
                                 {/* Volver al sitio */}
                                 <Link
                                     href="/"
-                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-300 text-emerald-700 hover:text-emerald-900 hover:bg-emerald-50 transition-all duration-300"
+                                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                     </svg>
-                                    <span className="text-sm font-medium">Volver al sitio</span>
+                                    Volver al sitio
                                 </Link>
 
                                 {/* Cerrar Sesión */}
@@ -207,15 +207,26 @@ export default function ProductosDashboard({ auth, productos, categorias }) {
                             </h1>
                             <p className="text-gray-600 mt-2">Administra el catálogo de productos agroquímicos</p>
                         </div>
-                        <Link
-                            href={route('admin.productos.create')}
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:scale-105 transition-all duration-300"
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                            </svg>
-                            Nuevo Producto
-                        </Link>
+                        <div className="flex items-center gap-3">
+                            <Link
+                                href={route('dashboard')}
+                                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Panel de administración
+                            </Link>
+                            <Link
+                                href={route('admin.productos.create')}
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:scale-105 transition-all duration-300"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                                Nuevo Producto
+                            </Link>
+                        </div>
                     </div>
 
                     {/* 4 Mini-Cards de Gestión */}
@@ -292,7 +303,7 @@ export default function ProductosDashboard({ auth, productos, categorias }) {
                     {/* Filtro de Categorías */}
                     <div className="mb-6 backdrop-blur-xl bg-white/60 border border-emerald-200/50 rounded-2xl p-6 shadow-lg shadow-emerald-500/20">
                         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
                                 <label htmlFor="category-filter" className="text-sm font-semibold text-gray-800">
                                     Filtrar por categoría:
                                 </label>
@@ -300,7 +311,7 @@ export default function ProductosDashboard({ auth, productos, categorias }) {
                                     id="category-filter"
                                     value={selectedCategory}
                                     onChange={(e) => setSelectedCategory(e.target.value)}
-                                    className="backdrop-blur-xl bg-white/80 border-2 border-emerald-200/60 rounded-xl px-4 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+                                    className="backdrop-blur-xl bg-white/80 border-2 border-emerald-200/60 rounded-xl px-4 py-2 pr-10 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3cpath%20d%3D%22M7%207l3-3%203%203m0%206l-3%203-3-3%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3c%2Fsvg%3E')] bg-[length:1.5em] bg-[right_0.5rem_center] bg-no-repeat"
                                 >
                                     <option value="all">Todas las categorías</option>
                                     {categorias && categorias.map((categoria) => (

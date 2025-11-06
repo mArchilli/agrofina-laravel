@@ -84,9 +84,6 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                             <div className="hidden md:flex items-center gap-4">
                                 {/* User Card */}
                                 <div className="flex items-center gap-3 px-4 py-2 backdrop-blur-xl bg-emerald-50/80 rounded-2xl border-2 border-emerald-200/50">
-                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-lime-500 flex items-center justify-center text-white font-bold shadow-lg shadow-emerald-500/30">
-                                        {auth.user.name.charAt(0).toUpperCase()}
-                                    </div>
                                     <div className="text-left">
                                         <p className="text-sm font-semibold text-gray-800">{auth.user.name}</p>
                                         <p className="text-xs text-emerald-600 font-medium">Administrador</p>
@@ -95,9 +92,12 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
 
                                 {/* Volver al sitio */}
                                 <Link
-                                    href={route('dashboard')}
-                                    className="px-4 py-2 rounded-xl border-2 border-emerald-300 text-emerald-700 font-medium hover:bg-emerald-50 transition-all duration-300"
+                                    href="/"
+                                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
                                 >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                    </svg>
                                     Volver al sitio
                                 </Link>
 
@@ -130,14 +130,9 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                         {mobileMenuOpen && (
                             <div className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 backdrop-blur-xl bg-white/95 rounded-2xl border-2 border-emerald-200/50 shadow-2xl shadow-emerald-500/20 overflow-hidden animate-fadeIn">
                                 <div className="p-4 border-b-2 border-emerald-200/50 bg-gradient-to-r from-emerald-50/50 to-lime-50/50">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-lime-500 flex items-center justify-center text-white font-bold shadow-lg shadow-emerald-500/30">
-                                            {auth.user.name.charAt(0).toUpperCase()}
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold text-gray-800">{auth.user.name}</p>
-                                            <p className="text-sm text-emerald-600 font-medium">Administrador</p>
-                                        </div>
+                                    <div>
+                                        <p className="font-semibold text-gray-800">{auth.user.name}</p>
+                                        <p className="text-sm text-emerald-600 font-medium">Administrador</p>
                                     </div>
                                 </div>
 
@@ -186,7 +181,7 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
 
                 {/* Main Content */}
                 <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    {/* Título y botón */}
+                    {/* Título y botones */}
                     <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
                             <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 via-lime-600 to-emerald-500 bg-clip-text text-transparent mb-2">
@@ -194,18 +189,29 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                             </h1>
                             <p className="text-gray-600">Administra los principios activos de tus productos</p>
                         </div>
-                        <Link
-                            href={route('admin.principios-activos.create')}
-                            className="group relative px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 overflow-hidden hover:scale-105"
-                        >
-                            <span className="relative z-10 flex items-center gap-2">
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        <div className="flex flex-wrap gap-3">
+                            <Link
+                                href={route('admin.productos')}
+                                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-300 hover:border-emerald-400 rounded-xl transition-all duration-300 hover:bg-emerald-50 backdrop-blur-sm"
+                            >
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                 </svg>
-                                Nuevo Principio Activo
-                            </span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                        </Link>
+                                Gestión de Productos
+                            </Link>
+                            <Link
+                                href={route('admin.principios-activos.create')}
+                                className="group relative px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 overflow-hidden hover:scale-105"
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Nuevo Principio Activo
+                                </span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                            </Link>
+                        </div>
                     </div>
 
                     {/* Buscador */}
