@@ -2,7 +2,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 
-const bannerImg = '/images/products/banner-products.jpg';
+const bannerImg = '/images/img-products.jpg';
 
 export default function Productos({ 
     productos, 

@@ -179,10 +179,10 @@ function MainContent() {
 
 function Downloads() {
   const items = [
-    { label: 'Certificado IRAM 14001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIRAM-14001-2023.pdf' },
-    { label: 'Certificado IQNET 14001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIQNET-14001-2023.pdf' },
-    { label: 'Certificado IRAM 45001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIRAM-45001-2023.pdf' },
-    { label: 'Certificado IQNET 45001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIQNET-45001-2023.pdf' },
+    { label: 'Descargar Certificado IRAM 14001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIRAM-14001-2023.pdf' },
+    { label: 'Download Certificate IQNET 14001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIQNET-14001-2023.pdf' },
+    { label: 'Descargar Certificado IRAM 45001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIRAM-45001-2023.pdf' },
+    { label: 'Download Certificate IQNET 45001 (pdf)', file: '/pdfs/products/Agrofina-CertificadoIQNET-45001-2023.pdf' },
   ]
 
   return (
@@ -195,7 +195,6 @@ function Downloads() {
             style={{ width: '80px', height: '8px', background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)' }}
           />
         </div>
-        <p className="mt-1 text-gray-600 text-sm">Descargá las certificaciones vigentes de nuestro sistema de gestión.</p>
 
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
                   {items.map((it) => (
