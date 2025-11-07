@@ -1,7 +1,9 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function EditArbolRecomendacion({ arbol }) {
+    const { auth } = usePage().props;
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { data, setData, put, processing, errors, isDirty } = useForm({
         nombre: arbol.nombre || '',
         descripcion: arbol.descripcion || '',
@@ -10,69 +12,378 @@ export default function EditArbolRecomendacion({ arbol }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    put(route('admin.arboles-recomendacion.update', { arboles_recomendacion: arbol.id }));
+        put(route('admin.arboles-recomendacion.update', { arboles_recomendacion: arbol.id }));
+    };
+
+    const handleLogout = () => {
+        router.post(route('logout'));
     };
 
     return (
-        <AuthenticatedLayout
-            header={
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h2 className="font-semibold text-2xl text-gray-800 leading-tight">Editar Árbol de Recomendación</h2>
-                        <p className="text-sm text-gray-600 mt-1">Editando: <span className="font-medium">{arbol.nombre}</span></p>
-                    </div>
-                    <Link href={route('admin.arboles-recomendacion')} className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-lg transition-colors duration-200">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                        Volver
-                    </Link>
-                </div>
-            }
-        >
+        <>
             <Head title={`Editar - ${arbol.nombre}`} />
 
-            <div className="py-8">
-                <div className="max-w-4xl mx-auto sm:px-6 lg:px-8">
-                    {isDirty && (
-                        <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
-                            Tienes cambios sin guardar
+            {/* Background con círculos de gradiente */}
+            <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-lime-50 to-yellow-50 relative overflow-hidden">
+                {/* Círculos decorativos de fondo */}
+                <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-emerald-200/30 via-lime-200/30 to-yellow-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-lime-200/30 via-emerald-200/30 to-cyan-200/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                <div className="fixed top-1/2 left-1/2 w-[700px] h-[700px] bg-gradient-to-br from-yellow-200/20 via-emerald-200/20 to-lime-200/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+                {/* Header Superior */}
+                <header className="relative z-50 backdrop-blur-xl bg-white/80 border-b border-emerald-200/50 shadow-2xl shadow-emerald-500/10">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-20">
+                            {/* Logo */}
+                            <Link href={route('dashboard')}>
+                                <img src="/images/logo-login.png" alt="Agrofina" className="h-12 w-auto transition-transform duration-300 hover:scale-105" />
+                            </Link>
+
+                            {/* Navegación entre secciones - Desktop */}
+                            <nav className="hidden md:flex items-center gap-2">
+                                <Link
+                                    href={route('admin.productos')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
+                                >
+                                    Productos
+                                </Link>
+                                <Link
+                                    href={route('admin.novedades.index')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                >
+                                    Novedades
+                                </Link>
+                                <Link
+                                    href={route('admin.agronews.index')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                >
+                                    AgroNews
+                                </Link>
+                            </nav>
+
+                            {/* User Info & Actions - Desktop */}
+                            <div className="hidden md:flex items-center gap-4">
+                                {/* Usuario */}
+                                <div className="flex items-center gap-3 px-4 py-2.5 backdrop-blur-xl bg-emerald-50/80 rounded-2xl border border-emerald-200/50">
+                                    <div>
+                                        <p className="text-sm font-semibold text-gray-800">{auth.user.name}</p>
+                                        <p className="text-xs text-emerald-600">Administrador</p>
+                                    </div>
+                                </div>
+
+                                {/* Volver al sitio */}
+                                <Link
+                                    href="/"
+                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-300 text-emerald-700 hover:text-emerald-900 hover:bg-emerald-50 transition-all duration-300"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                    </svg>
+                                    <span className="text-sm font-medium">Volver al sitio</span>
+                                </Link>
+
+                                {/* Cerrar Sesión */}
+                                <button
+                                    onClick={handleLogout}
+                                    className="relative overflow-hidden px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                                >
+                                    <span className="relative z-10 text-sm">Cerrar Sesión</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full animate-shimmer"></div>
+                                </button>
+                            </div>
+
+                            {/* Botón Menú Hamburguesa - Mobile */}
+                            <button
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                className="md:hidden p-2 rounded-xl bg-emerald-50/80 border border-emerald-200/50 text-emerald-700 hover:bg-emerald-100 transition-all"
+                            >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    {mobileMenuOpen ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                    )}
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Menú Mobile - Dropdown */}
+                    {mobileMenuOpen && (
+                        <div className="md:hidden absolute top-full left-0 right-0 backdrop-blur-xl bg-white/95 border-b border-emerald-200/50 shadow-2xl shadow-emerald-500/20 animate-fadeIn">
+                            <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
+                                {/* Usuario Info */}
+                                <div className="flex items-center gap-3 px-4 py-3 backdrop-blur-xl bg-emerald-50/80 rounded-2xl border border-emerald-200/50">
+                                    <div>
+                                        <p className="text-sm font-semibold text-gray-800">{auth.user.name}</p>
+                                        <p className="text-xs text-emerald-600">Administrador</p>
+                                    </div>
+                                </div>
+
+                                {/* Navegación */}
+                                <nav className="space-y-2">
+                                    <Link
+                                        href={route('admin.productos')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
+                                    >
+                                        📦 Productos
+                                    </Link>
+                                    <Link
+                                        href={route('admin.novedades.index')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    >
+                                        � Novedades
+                                    </Link>
+                                    <Link
+                                        href={route('admin.agronews.index')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    >
+                                        📰 AgroNews
+                                    </Link>
+                                </nav>
+
+                                {/* Acciones */}
+                                <div className="space-y-2 pt-4 border-t border-emerald-200/30">
+                                    <Link
+                                        href="/"
+                                        className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-all duration-300 font-semibold"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                        </svg>
+                                        Volver al sitio
+                                    </Link>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                                    >
+                                        Cerrar Sesión
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     )}
+                </header>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="px-6 py-4 bg-gradient-to-r from-green-50 to-emerald-50 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                                    <svg className="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                    Datos del Árbol
-                                </h3>
-                            </div>
-                            <div className="p-6 space-y-6">
-                                <div>
-                                    <label htmlFor="nombre" className="block text-sm font-medium text-gray-900 mb-2">Nombre <span className="text-red-500">*</span></label>
-                                    <input id="nombre" type="text" value={data.nombre} onChange={(e) => setData('nombre', e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required />
-                                    {errors.nombre && <p className="text-red-600 text-sm mt-2">{errors.nombre}</p>}
-                                </div>
-                                <div>
-                                    <label htmlFor="descripcion" className="block text-sm font-medium text-gray-900 mb-2">Descripción</label>
-                                    <textarea id="descripcion" rows={4} value={data.descripcion} onChange={(e) => setData('descripcion', e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" />
-                                    {errors.descripcion && <p className="text-red-600 text-sm mt-2">{errors.descripcion}</p>}
-                                </div>
-                                <div className="flex items-center space-x-3 p-4 bg-green-50 rounded-lg border border-green-200">
-                                    <input type="checkbox" id="activo" checked={data.activo} onChange={(e) => setData('activo', e.target.checked)} className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" />
-                                    <label htmlFor="activo" className="text-sm font-medium text-gray-900">Árbol activo</label>
+                <main className="relative z-10 py-8">
+                    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                        {/* Título y acciones */}
+                        <div className="mb-8">
+                            <div className="backdrop-blur-2xl bg-white/60 rounded-2xl p-6 border-2 border-emerald-200/40 shadow-xl">
+                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                    <div>
+                                        <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-lime-600 bg-clip-text text-transparent mb-2">
+                                            Editar Árbol de Recomendación
+                                        </h1>
+                                        <p className="text-gray-700">
+                                            Modificando: <span className="font-bold text-emerald-700">{arbol.nombre}</span>
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-wrap gap-3">
+                                        <Link
+                                            href={route('admin.arboles-recomendacion')}
+                                            className="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-xl bg-white/80 border-2 border-gray-300 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-300"
+                                        >
+                                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                            </svg>
+                                            Volver al Listado
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div className="flex justify-end gap-3">
-                                <Link href={route('admin.arboles-recomendacion')} className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50">Cancelar</Link>
-                                <button type="submit" disabled={processing || !isDirty} className="inline-flex items-center px-6 py-3 rounded-lg text-white bg-green-600 hover:bg-green-700 disabled:opacity-50">Guardar Cambios</button>
+                        {/* Indicador de cambios */}
+                        {isDirty && (
+                            <div className="mb-6 backdrop-blur-xl bg-amber-50/90 border-2 border-amber-300/50 rounded-2xl p-4 shadow-xl shadow-amber-500/20 animate-fadeIn">
+                                <div className="flex">
+                                    <div className="flex-shrink-0">
+                                        <svg className="w-6 h-6 text-amber-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-sm font-bold text-amber-900">⚠️ Tienes cambios sin guardar</h3>
+                                        <p className="text-sm text-amber-800 mt-1">
+                                            Recuerda guardar los cambios antes de salir de esta página.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Estado del árbol */}
+                        <div className="mb-8">
+                            <div className="backdrop-blur-xl bg-white/80 rounded-2xl shadow-xl border-2 border-emerald-200/40 p-5">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center space-x-3">
+                                        <div className={`w-4 h-4 rounded-full ${arbol.activo ? 'bg-gradient-to-r from-emerald-500 to-lime-500 shadow-lg shadow-emerald-500/50' : 'bg-gradient-to-r from-red-500 to-orange-500 shadow-lg shadow-red-500/50'}`}></div>
+                                        <span className={`text-sm font-bold ${arbol.activo ? 'text-emerald-700' : 'text-red-700'}`}>
+                                            {arbol.activo ? '✅ Árbol Activo' : '❌ Árbol Inactivo'}
+                                        </span>
+                                    </div>
+                                    <div className="text-xs font-semibold text-gray-500 backdrop-blur-xl bg-gray-100/80 px-3 py-1 rounded-lg">
+                                        ID: {arbol.id}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-8">
+                            {/* Información Principal */}
+                            <div className="backdrop-blur-2xl bg-white/60 border-2 border-emerald-200/40 rounded-2xl shadow-xl overflow-hidden">
+                                <div className="px-6 py-4 bg-gradient-to-r from-emerald-50/80 to-lime-50/80 border-b-2 border-emerald-200/40">
+                                    <h3 className="text-lg font-bold text-gray-900 flex items-center">
+                                        <svg className="w-6 h-6 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        Editar Datos del Árbol
+                                    </h3>
+                                    <p className="text-sm text-gray-600 mt-1">Modifica la información básica del árbol de recomendación</p>
+                                </div>
+                                
+                                <div className="p-6 space-y-6">
+                                    {/* Nombre del árbol */}
+                                    <div>
+                                        <label htmlFor="nombre" className="block text-sm font-bold text-gray-900 mb-2">
+                                            Nombre del Árbol <span className="text-red-500">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="nombre"
+                                            value={data.nombre}
+                                            onChange={(e) => setData('nombre', e.target.value)}
+                                            className="w-full px-4 py-3 backdrop-blur-xl bg-white/80 border-2 border-emerald-200/60 rounded-xl focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300"
+                                            placeholder="Ej: Recomendaciones para Trigo, Soja..."
+                                            required
+                                        />
+                                        {errors.nombre && (
+                                            <p className="text-red-600 text-sm mt-2 flex items-center font-semibold">
+                                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                                </svg>
+                                                {errors.nombre}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Descripción */}
+                                    <div>
+                                        <label htmlFor="descripcion" className="block text-sm font-bold text-gray-900 mb-2">
+                                            Descripción
+                                        </label>
+                                        <textarea
+                                            id="descripcion"
+                                            rows={4}
+                                            value={data.descripcion}
+                                            onChange={(e) => setData('descripcion', e.target.value)}
+                                            className="w-full px-4 py-3 backdrop-blur-xl bg-white/80 border-2 border-emerald-200/60 rounded-xl focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300 resize-none"
+                                            placeholder="Describe el propósito del árbol de recomendación..."
+                                        />
+                                        <p className="text-xs text-gray-600 mt-2 font-medium">
+                                            💡 Información sobre el árbol de recomendación y su aplicación
+                                        </p>
+                                        {errors.descripcion && (
+                                            <p className="text-red-600 text-sm mt-2 flex items-center font-semibold">
+                                                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                                </svg>
+                                                {errors.descripcion}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Estado activo */}
+                                    <div className="flex items-start space-x-3 p-4 backdrop-blur-xl bg-emerald-50/80 rounded-xl border-2 border-emerald-300/60">
+                                        <input
+                                            type="checkbox"
+                                            id="activo"
+                                            checked={data.activo}
+                                            onChange={(e) => setData('activo', e.target.checked)}
+                                            className="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-emerald-300 rounded mt-0.5"
+                                        />
+                                        <div className="flex-1">
+                                            <label htmlFor="activo" className="text-sm font-bold text-gray-900 block">
+                                                ✅ Árbol activo
+                                            </label>
+                                            <p className="text-xs text-gray-700 mt-1">
+                                                Los árboles marcados como activos estarán disponibles para usar en el sistema
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {errors.activo && (
+                                        <p className="text-red-600 text-sm mt-2 flex items-center font-semibold">
+                                            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                            </svg>
+                                            {errors.activo}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Botones de Acción */}
+                            <div className="flex flex-col sm:flex-row gap-4 justify-end">
+                                <Link
+                                    href={route('admin.arboles-recomendacion')}
+                                    className="inline-flex items-center justify-center px-6 py-3 rounded-xl backdrop-blur-xl bg-white/80 border-2 border-gray-300 text-base font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
+                                >
+                                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    Cancelar
+                                </Link>
+                                <button
+                                    type="submit"
+                                    disabled={processing || !isDirty}
+                                    className="group relative inline-flex items-center justify-center px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white text-base font-semibold shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden hover:scale-105"
+                                >
+                                    <span className="relative z-10 flex items-center">
+                                        {processing ? (
+                                            <>
+                                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                Guardando cambios...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                {isDirty ? 'Guardar Cambios' : 'Sin Cambios'}
+                                            </>
+                                        )}
+                                    </span>
+                                    {!processing && isDirty && (
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                    )}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </main>
             </div>
-        </AuthenticatedLayout>
+
+            <style dangerouslySetInnerHTML={{__html: `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes shimmer {
+                    0%, 100% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                }
+                .animate-shimmer {
+                    background-size: 200% 200%;
+                    animation: shimmer 3s ease-in-out infinite;
+                }
+                .animate-fadeIn {
+                    animation: fadeIn 0.3s ease-out;
+                }
+            `}} />
+        </>
     );
 }

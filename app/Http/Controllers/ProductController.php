@@ -155,6 +155,25 @@ class ProductController extends Controller
         $categorias = Categoria::where('activo', true)
             ->orderBy('nombre')
             ->get();
+
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_PRODUCT_IMAGES_PATH', '/images/products/');
+        $frontendPdfsPath = env('VITE_PRODUCT_PDFS_PATH', '/PDFs/products/');
+
+        // Transformar las rutas de productos
+        $productos->getCollection()->transform(function ($producto) use ($frontendImagesPath, $frontendPdfsPath) {
+            if ($producto->imagen) {
+                $producto->imagen = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
+            }
+            
+            if ($producto->pdfs && is_array($producto->pdfs)) {
+                $producto->pdfs = collect($producto->pdfs)->map(function ($pdf) use ($frontendPdfsPath) {
+                    return asset(trim($frontendPdfsPath, '/') . '/' . basename($pdf));
+                })->toArray();
+            }
+            
+            return $producto;
+        });
         
         return Inertia::render('Admin/ProductosDashboard', [
             'productos' => $productos,
@@ -287,8 +306,30 @@ class ProductController extends Controller
             ->orderBy('nombre')
             ->get(['id', 'nombre']);
 
+        // Cargar relaciones
+        $producto->load(['categoria', 'cultivos', 'principioActivo', 'arbolesRecomendacion']);
+
+        // Obtener las rutas del frontend
+        $frontendImagesPath = env('VITE_PRODUCT_IMAGES_PATH', '/images/products/');
+        $frontendPdfsPath = env('VITE_PRODUCT_PDFS_PATH', '/PDFs/products/');
+
+        // Crear array del producto con rutas transformadas
+        $productoArray = $producto->toArray();
+        
+        // Transformar ruta de imagen
+        if ($producto->imagen) {
+            $productoArray['imagen'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
+        }
+        
+        // Transformar rutas de PDFs
+        if ($producto->pdfs && is_array($producto->pdfs)) {
+            $productoArray['pdfs'] = collect($producto->pdfs)->map(function ($pdf) use ($frontendPdfsPath) {
+                return asset(trim($frontendPdfsPath, '/') . '/' . basename($pdf));
+            })->toArray();
+        }
+
         return Inertia::render('Admin/EditProduct', [
-            'producto' => $producto->load(['categoria', 'cultivos', 'principioActivo', 'arbolesRecomendacion']),
+            'producto' => $productoArray,
             'categorias' => $categorias,
             'cultivos' => $cultivos,
             'principiosActivos' => $principiosActivos,
