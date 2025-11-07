@@ -286,8 +286,8 @@ function ProductCategoriesGrid() {
         { id: 1, name: 'Herbicidas', img: '/images/AGF_ICO_Herbicidas.png' },
         { id: 2, name: 'Insecticidas', img: '/images/AGF_ICO_Insecticidas.png' },
         { id: 3, name: 'Fungicidas', img: '/images/AGF_ICO_Fungicidas.png' },
-        { id: 5, name: 'Coadyuvantes', img: '/images/AGF_ICO_Coadyuvantes.png' },
-        { id: 6, name: 'Fitoreguladores', img: '/images/AGF_ICO_Fitoreguladores.png' },
+        { id: 6, name: 'Coadyuvantes', img: '/images/AGF_ICO_Coadyuvantes.png' },
+        { id: 5, name: 'Fitoreguladores', img: '/images/AGF_ICO_Fitoreguladores.png' },
     ];
 
     return (

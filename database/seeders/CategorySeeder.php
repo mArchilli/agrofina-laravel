@@ -34,6 +34,16 @@ class CategorySeeder extends Seeder
                 'descripcion' => 'Productos nutricionales para el desarrollo y crecimiento óptimo de los cultivos. Incluye fertilizantes foliares y de suelo.',
                 'activo' => true,
             ],
+            [
+                'nombre' => 'Coadyuvantes',
+                'descripcion' => 'Productos que mejoran la eficacia de otros agroquímicos. Incluye adherentes, dispersantes y surfactantes para optimizar las aplicaciones.',
+                'activo' => true,
+            ],
+            [
+                'nombre' => 'Fitoreguladores',
+                'descripcion' => 'Productos para regular el crecimiento y desarrollo de las plantas. Incluye reguladores de crecimiento y productos para manejo fisiológico de cultivos.',
+                'activo' => true,
+            ],
         ];
 
         foreach ($categorias as $categoria) {
