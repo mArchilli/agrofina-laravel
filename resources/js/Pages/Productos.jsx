@@ -213,7 +213,7 @@ function ProductCard({ producto }) {
                     <img
                         src={`${producto.imagen}`}
                         alt={producto.nombre}
-                        className="absolute inset-0 h-full w-full object-contain p-4 transition-all duration-300 group-hover:scale-110"
+                        className="absolute inset-0 h-full w-full object-contain transition-all duration-300 group-hover:scale-110"
                         loading="lazy"
                     />
                 ) : (

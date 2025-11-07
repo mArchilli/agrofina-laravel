@@ -32,12 +32,12 @@ export default function ShowProduct({ producto }) {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Imagen del producto */}
-                        <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-2xl p-8 ring-1 ring-emerald-200/60 shadow-sm flex items-center justify-center">
+                        <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-2xl overflow-hidden ring-1 ring-emerald-200/60 shadow-sm">
                             {producto.imagen ? (
                                 <img
                                     src={`${producto.imagen}`}
                                     alt={producto.nombre}
-                                    className="max-h-96 w-auto object-contain"
+                                    className="w-full h-full object-cover"
                                 />
                             ) : (
                                 <div className="flex items-center justify-center h-96">

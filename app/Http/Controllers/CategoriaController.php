@@ -65,7 +65,10 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        return Inertia::render('Admin/CategoriaEdit', [
+        // Cargar el conteo de productos
+        $categoria->loadCount('productos');
+        
+        return Inertia::render('Admin/EditCategoria', [
             'categoria' => $categoria,
         ]);
     }

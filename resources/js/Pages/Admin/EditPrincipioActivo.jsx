@@ -32,75 +32,72 @@ export default function EditPrincipioActivo({ principioActivo }) {
                 <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-lime-200/30 via-emerald-200/30 to-cyan-200/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
                 <div className="fixed top-1/2 left-1/2 w-[700px] h-[700px] bg-gradient-to-br from-yellow-200/20 via-emerald-200/20 to-lime-200/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
 
-                {/* Header */}
-                <header className="relative z-50 backdrop-blur-xl bg-white/80 border-b-2 border-emerald-200/50 shadow-2xl shadow-emerald-500/10">
+                {/* Header Superior */}
+                <header className="relative z-50 backdrop-blur-xl bg-white/80 border-b border-emerald-200/50 shadow-2xl shadow-emerald-500/10">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between items-center h-20">
+                        <div className="flex items-center justify-between h-20">
                             {/* Logo */}
-                            <Link href={route('dashboard')} className="flex items-center group">
-                                <img 
-                                    src="/images/logo-login.png" 
-                                    alt="Logo" 
-                                    className="h-12 transition-transform duration-300 group-hover:scale-105" 
-                                />
+                            <Link href={route('dashboard')}>
+                                <img src="/images/logo-login.png" alt="Agrofina" className="h-12 w-auto transition-transform duration-300 hover:scale-105" />
                             </Link>
 
-                            {/* Desktop Navigation */}
-                            <nav className="hidden md:flex items-center space-x-2">
+                            {/* Navegación entre secciones - Desktop */}
+                            <nav className="hidden md:flex items-center gap-2">
                                 <Link
                                     href={route('admin.productos')}
-                                    className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    className="px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
                                 >
-                                    📦 Productos
+                                    Productos
                                 </Link>
                                 <Link
-                                    href="#"
-                                    className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    href={route('admin.novedades.index')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
                                 >
-                                    📰 Novedades
+                                    Novedades
                                 </Link>
                                 <Link
-                                    href="#"
-                                    className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                    href={route('admin.agronews.index')}
+                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
                                 >
-                                    🌾 AgroNews
+                                    AgroNews
                                 </Link>
                             </nav>
 
-                            {/* User Info */}
-                            <div className="hidden md:flex items-center space-x-4">
-                                <div className="backdrop-blur-xl bg-emerald-50/80 rounded-2xl px-4 py-2 border-2 border-emerald-200/50 shadow-lg shadow-emerald-500/10">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-lime-500 flex items-center justify-center text-white font-bold shadow-lg shadow-emerald-500/30">
-                                            {auth.user.name.charAt(0).toUpperCase()}
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-bold text-gray-900">{auth.user.name}</p>
-                                            <p className="text-xs text-emerald-600 font-medium">Administrador</p>
-                                        </div>
+                            {/* User Info & Actions - Desktop */}
+                            <div className="hidden md:flex items-center gap-4">
+                                {/* Usuario */}
+                                <div className="flex items-center gap-3 px-4 py-2.5 backdrop-blur-xl bg-emerald-50/80 rounded-2xl border border-emerald-200/50">
+                                    <div>
+                                        <p className="text-sm font-semibold text-gray-800">{auth.user.name}</p>
+                                        <p className="text-xs text-emerald-600">Administrador</p>
                                     </div>
                                 </div>
 
+                                {/* Volver al sitio */}
                                 <Link
-                                    href={route('dashboard')}
-                                    className="px-4 py-2 rounded-xl border-2 border-emerald-300 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 transition-all duration-300"
+                                    href="/"
+                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-300 text-emerald-700 hover:text-emerald-900 hover:bg-emerald-50 transition-all duration-300"
                                 >
-                                    🏠 Volver al sitio
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                    </svg>
+                                    <span className="text-sm font-medium">Volver al sitio</span>
                                 </Link>
 
+                                {/* Cerrar Sesión */}
                                 <button
                                     onClick={handleLogout}
-                                    className="group relative px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 overflow-hidden"
+                                    className="relative overflow-hidden px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                                 >
-                                    <span className="relative z-10">Cerrar Sesión</span>
-                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                    <span className="relative z-10 text-sm">Cerrar Sesión</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full animate-shimmer"></div>
                                 </button>
                             </div>
 
-                            {/* Mobile menu button */}
+                            {/* Botón Menú Hamburguesa - Mobile */}
                             <button
                                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-emerald-50"
+                                className="md:hidden p-2 rounded-xl bg-emerald-50/80 border border-emerald-200/50 text-emerald-700 hover:bg-emerald-100 transition-all"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     {mobileMenuOpen ? (
@@ -111,51 +108,63 @@ export default function EditPrincipioActivo({ principioActivo }) {
                                 </svg>
                             </button>
                         </div>
+                    </div>
 
-                        {/* Mobile menu */}
-                        {mobileMenuOpen && (
-                            <div className="md:hidden py-4 border-t border-emerald-200/50 animate-fadeIn">
-                                <div className="flex flex-col space-y-2">
+                    {/* Menú Mobile - Dropdown */}
+                    {mobileMenuOpen && (
+                        <div className="md:hidden absolute top-full left-0 right-0 backdrop-blur-xl bg-white/95 border-b border-emerald-200/50 shadow-2xl shadow-emerald-500/20 animate-fadeIn">
+                            <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
+                                {/* Usuario Info */}
+                                <div className="flex items-center gap-3 px-4 py-3 backdrop-blur-xl bg-emerald-50/80 rounded-2xl border border-emerald-200/50">
+                                    <div>
+                                        <p className="text-sm font-semibold text-gray-800">{auth.user.name}</p>
+                                        <p className="text-xs text-emerald-600">Administrador</p>
+                                    </div>
+                                </div>
+
+                                {/* Navegación */}
+                                <nav className="space-y-2">
                                     <Link
                                         href={route('admin.productos')}
-                                        className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
                                     >
                                         📦 Productos
                                     </Link>
                                     <Link
-                                        href="#"
-                                        className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                        href={route('admin.novedades.index')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
                                     >
-                                        📰 Novedades
+                                        � Novedades
                                     </Link>
                                     <Link
-                                        href="#"
-                                        className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
+                                        href={route('admin.agronews.index')}
+                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
                                     >
-                                        🌾 AgroNews
+                                        📰 AgroNews
                                     </Link>
-                                    <div className="pt-2 border-t border-emerald-200/50">
-                                        <div className="px-4 py-2">
-                                            <p className="text-sm font-bold text-gray-900">{auth.user.name}</p>
-                                            <p className="text-xs text-emerald-600">Administrador</p>
-                                        </div>
-                                        <Link
-                                            href={route('dashboard')}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50/80 rounded-xl"
-                                        >
-                                            🏠 Volver al sitio
-                                        </Link>
-                                        <button
-                                            onClick={handleLogout}
-                                            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-xl"
-                                        >
-                                            Cerrar Sesión
-                                        </button>
-                                    </div>
+                                </nav>
+
+                                {/* Acciones */}
+                                <div className="space-y-2 pt-4 border-t border-emerald-200/30">
+                                    <Link
+                                        href="/"
+                                        className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-all duration-300 font-semibold"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                        </svg>
+                                        Volver al sitio
+                                    </Link>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-lime-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                                    >
+                                        Cerrar Sesión
+                                    </button>
                                 </div>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </header>
 
                 <main className="relative z-10 py-8">
