@@ -280,12 +280,14 @@ function FeaturedProductsCarousel() {
 }
 
 function ProductCategoriesGrid() {
+    // Mapeo de categorías con sus nombres exactos de la base de datos
+    // Los IDs corresponden al orden en el CategorySeeder
     const categories = [
-        { key: 'coadyuvantes', name: 'Coadyuvantes', img: '/images/AGF_ICO_Coadyuvantes.png' },
-        { key: 'herbicidas', name: 'Herbicidas', img: '/images/AGF_ICO_Herbicidas.png' },
-        { key: 'fungicidas', name: 'Fungicidas', img: '/images/AGF_ICO_Fungicidas.png' },
-        { key: 'fitoreguladores', name: 'Fitoreguladores', img: '/images/AGF_ICO_Fitoreguladores.png' },
-        { key: 'insecticidas', name: 'Insecticidas', img: '/images/AGF_ICO_Insecticidas.png' },
+        { id: 1, name: 'Herbicidas', img: '/images/AGF_ICO_Herbicidas.png' },
+        { id: 2, name: 'Insecticidas', img: '/images/AGF_ICO_Insecticidas.png' },
+        { id: 3, name: 'Fungicidas', img: '/images/AGF_ICO_Fungicidas.png' },
+        { id: 5, name: 'Coadyuvantes', img: '/images/AGF_ICO_Coadyuvantes.png' },
+        { id: 6, name: 'Fitoreguladores', img: '/images/AGF_ICO_Fitoreguladores.png' },
     ];
 
     return (
@@ -346,8 +348,8 @@ function ProductCategoriesGrid() {
             <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5 [&>*:last-child]:col-span-2 [&>*:last-child]:w-[calc(50%-0.5rem)] [&>*:last-child]:sm:w-[calc(50%-0.625rem)] [&>*:last-child]:justify-self-center [&>*:last-child]:md:col-span-1 [&>*:last-child]:md:w-auto [&>*:last-child]:md:justify-self-auto">
                 {categories.map((cat, index) => (
                     <Link
-                        key={cat.key}
-                        href={`/productos/${cat.key}`}
+                        key={cat.id}
+                        href={`/productos?categoria=${cat.id}`}
                         aria-label={`Ver ${cat.name}`}
                         className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-100/90 via-white/70 to-lime-100/90 backdrop-blur-sm ring-1 ring-emerald-300/60 shadow-sm transition-all duration-300 hover:shadow-lg hover:ring-2 hover:ring-emerald-400/90 hover:-translate-y-1"
                     >
