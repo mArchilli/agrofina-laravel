@@ -13,6 +13,19 @@ export default function ShowProduct({ producto }) {
                 <Breadcrumbs producto={producto} />
                 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+                    {/* Botón Volver */}
+                    <div className="mb-6 flex justify-start">
+                        <Link
+                            href={route('productos')}
+                            className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:bg-emerald-700 hover:shadow-lg hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Volver a Productos
+                        </Link>
+                    </div>
+
                     {/* Header del producto */}
                     <div className="mb-8">
                         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-emerald-900">
@@ -103,6 +116,47 @@ export default function ShowProduct({ producto }) {
                                 </div>
                             )}
 
+                            <div className="flex flex-col gap-6">
+                                {/* PDFs */}
+                                {producto.pdfs && producto.pdfs.length > 0 && (
+                                    <div className="order-1 lg:order-2 bg-gradient-to-br from-emerald-50 to-lime-50 rounded-2xl p-6 ring-1 ring-emerald-200/60 shadow-sm">
+                                        <h3 className="text-xl font-semibold text-emerald-900 mb-4 flex items-center gap-2">
+                                            <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                            Documentación Técnica
+                                        </h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                            {producto.pdfs.map((pdf, index) => (
+                                                <a
+                                                    key={index}
+                                                    href={`${pdf}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center justify-between border border-emerald-300 rounded-lg bg-white px-4 py-3 font-medium text-emerald-800 shadow-sm transition-all duration-300 hover:bg-emerald-50 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                                                    download
+                                                >
+                                                    <span className="text-sm">{producto.nombre} - Documento {index + 1}.pdf</span>
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                    </svg>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Descripción */}
+                                {producto.descripcion && (
+                                    <div className="order-2 lg:order-1 bg-white rounded-2xl p-6 ring-1 ring-emerald-200/60 shadow-sm">
+                                        <h3 className="text-xl font-semibold text-emerald-900 mb-4">Descripción</h3>
+                                        <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                                            {producto.descripcion}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Árboles de Recomendación */}
                             {producto.arboles_recomendacion && producto.arboles_recomendacion.length > 0 && (
                                 <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-xl p-4 ring-1 ring-emerald-200/60 shadow-sm">
@@ -158,15 +212,7 @@ export default function ShowProduct({ producto }) {
                         </div>
                     </div>
 
-                    {/* Descripción */}
-                    {producto.descripcion && (
-                        <div className="mt-8 bg-white rounded-2xl p-6 ring-1 ring-emerald-200/60 shadow-sm">
-                            <h3 className="text-xl font-semibold text-emerald-900 mb-4">Descripción</h3>
-                            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-                                {producto.descripcion}
-                            </div>
-                        </div>
-                    )}
+
 
                     {/* Acción */}
                     {producto.accion && (
@@ -218,47 +264,9 @@ export default function ShowProduct({ producto }) {
                         </div>
                     )}
 
-                    {/* PDFs */}
-                    {producto.pdfs && producto.pdfs.length > 0 && (
-                        <div className="mt-8 bg-gradient-to-br from-emerald-50 to-lime-50 rounded-2xl p-6 ring-1 ring-emerald-200/60 shadow-sm">
-                            <h3 className="text-xl font-semibold text-emerald-900 mb-4 flex items-center gap-2">
-                                <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                Documentación Técnica
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                {producto.pdfs.map((pdf, index) => (
-                                    <a
-                                        key={index}
-                                        href={`${pdf}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center justify-between border border-emerald-300 rounded-lg bg-white px-4 py-3 font-medium text-emerald-800 shadow-sm transition-all duration-300 hover:bg-emerald-50 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                                        download
-                                    >
-                                        <span className="text-sm">{producto.nombre} - Documento {index + 1}.pdf</span>
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                        </svg>
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-                    )}
 
-                    {/* Botón Volver */}
-                    <div className="mt-8 flex justify-center">
-                        <Link
-                            href={route('productos')}
-                            className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:bg-emerald-700 hover:shadow-lg hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                            Volver a Productos
-                        </Link>
-                    </div>
+
+
                 </div>
             </div>
         </GuestLayout>
