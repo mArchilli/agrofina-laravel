@@ -285,7 +285,7 @@ export default function Productos({
 
                 {/* Grid de productos */}
                 {productos.length === 0 ? (
-                    <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-2xl p-12 text-center ring-1 ring-emerald-200/60">
+                    <div className=" rounded-2xl p-12 text-center ring-1 ring-emerald-200/60">
                         <svg className="mx-auto h-16 w-16 text-emerald-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                         </svg>
@@ -313,7 +313,7 @@ function ProductCard({ producto }) {
     return (
         <div className="group relative overflow-hidden rounded-2xl bg-white ring-1 ring-emerald-200/60 shadow-sm transition-all duration-300 hover:shadow-xl hover:ring-2 hover:ring-emerald-400/90 hover:-translate-y-1 flex flex-col">
             {/* Imagen del producto */}
-            <div className="relative aspect-square bg-gradient-to-br from-emerald-50 to-lime-50 overflow-hidden">
+            <div className="relative aspect-square overflow-hidden">
                 {producto.imagen ? (
                     <img
                         src={`${producto.imagen}`}
@@ -442,9 +442,9 @@ function ProductCard({ producto }) {
 
 function Hero() {
     return (
-        <section className="relative w-full overflow-hidden h-[46vh] md:h-screen" aria-label="Imagen principal - Productos">
+        <section className="relative w-full overflow-hidden h-[46vh]" aria-label="Imagen principal - Productos">
             <div
-                className="h-[46vh] md:h-screen w-full bg-cover bg-center"
+                className="h-[46vh] w-full bg-cover bg-center"
                 style={{ backgroundImage: `url(${bannerImg})` }}
                 aria-hidden
             />

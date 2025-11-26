@@ -64,57 +64,11 @@ export default function ShowProduct({ producto }) {
                         {/* Información básica */}
                         <div className="space-y-6">
                             {/* Categoría */}
-                            {producto.categoria && (
-                                <InfoCard
-                                    icon={<CategoryIcon />}
-                                    title="Categoría"
-                                    content={producto.categoria.nombre}
-                                />
-                            )}
+                            
 
-                            {/* Principio Activo */}
-                            {producto.principio_activo_id && producto.principio_activo && (
-                                <InfoCard
-                                    icon={<FlaskIcon />}
-                                    title="Principio Activo"
-                                    content={producto.principio_activo.nombre}
-                                />
-                            )}
+                            
 
-                            {/* Formulación */}
-                            {producto.formulacion && (
-                                <InfoCard
-                                    icon={<BeakerIcon />}
-                                    title="Formulación"
-                                    content={producto.formulacion}
-                                />
-                            )}
-
-                            {/* Cultivos */}
-                            {producto.cultivos && producto.cultivos.length > 0 && (
-                                <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-xl p-4 ring-1 ring-emerald-200/60 shadow-sm">
-                                    <div className="flex items-start gap-3">
-                                        <div className="flex-shrink-0 text-emerald-600">
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                            </svg>
-                                        </div>
-                                        <div className="flex-grow">
-                                            <h4 className="text-sm font-medium text-emerald-700 mb-2">Cultivos</h4>
-                                            <div className="flex flex-wrap gap-1.5">
-                                                {producto.cultivos.map((cultivo) => (
-                                                    <span
-                                                        key={cultivo.id}
-                                                        className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-600 text-white shadow-sm"
-                                                    >
-                                                        {cultivo.nombre}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                            
 
                             <div className="flex flex-col gap-6">
                                 {/* PDFs */}
@@ -127,21 +81,24 @@ export default function ShowProduct({ producto }) {
                                             Documentación Técnica
                                         </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                            {producto.pdfs.map((pdf, index) => (
-                                                <a
-                                                    key={index}
-                                                    href={`${pdf}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center justify-between border border-emerald-300 rounded-lg bg-white px-4 py-3 font-medium text-emerald-800 shadow-sm transition-all duration-300 hover:bg-emerald-50 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                                                    download
-                                                >
-                                                    <span className="text-sm">{producto.nombre} - Documento {index + 1}.pdf</span>
-                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                                    </svg>
-                                                </a>
-                                            ))}
+                                            {producto.pdfs.map((pdf, index) => {
+                                                const fileName = pdf.split('/').pop().replace('.pdf', '');
+                                                return (
+                                                    <a
+                                                        key={index}
+                                                        href={`${pdf}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center justify-between border border-emerald-300 rounded-lg bg-white px-4 py-3 font-medium text-emerald-800 shadow-sm transition-all duration-300 hover:bg-emerald-50 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                                                        download
+                                                    >
+                                                        <span className="text-sm">{fileName}</span>
+                                                        <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                        </svg>
+                                                    </a>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 )}
@@ -210,6 +167,58 @@ export default function ShowProduct({ producto }) {
                                 />
                             )}
                         </div>
+
+                        {producto.categoria && (
+                                <InfoCard
+                                    icon={<CategoryIcon />}
+                                    title="Categoría"
+                                    content={producto.categoria.nombre}
+                                />
+                            )}
+
+                            {/* Principio Activo */}
+                            {producto.principio_activo_id && producto.principio_activo && (
+                                <InfoCard
+                                    icon={<FlaskIcon />}
+                                    title="Principio Activo"
+                                    content={producto.principio_activo.nombre}
+                                />
+                            )}
+
+                            {/* Formulación */}
+                            {producto.formulacion && (
+                                <InfoCard
+                                    icon={<BeakerIcon />}
+                                    title="Formulación"
+                                    content={producto.formulacion}
+                                />
+                            )}
+
+                            {/* Cultivos */}
+                            {producto.cultivos && producto.cultivos.length > 0 && (
+                                <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-xl p-4 ring-1 ring-emerald-200/60 shadow-sm">
+                                    <div className="flex items-start gap-3">
+                                        <div className="flex-shrink-0 text-emerald-600">
+                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                            </svg>
+                                        </div>
+                                        <div className="flex-grow">
+                                            <h4 className="text-sm font-medium text-emerald-700 mb-2">Cultivos</h4>
+                                            <div className="flex flex-wrap gap-1.5">
+                                                {producto.cultivos.map((cultivo) => (
+                                                    <span
+                                                        key={cultivo.id}
+                                                        className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-600 text-white shadow-sm"
+                                                    >
+                                                        {cultivo.nombre}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                     </div>
 
 

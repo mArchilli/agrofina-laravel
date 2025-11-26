@@ -28,5 +28,10 @@ class DatabaseSeeder extends Seeder
             PrincipioActivoSeeder::class,
             ArbolRecomendacionSeeder::class,
         ]);
+
+         // Seed products
+        $this->call([
+            ProductSeeder::class
+        ]);
     }
 }
