@@ -291,9 +291,9 @@ function InfoCard({ icon, title, content }) {
 
 function Hero() {
     return (
-        <section className="relative w-full overflow-hidden h-[46vh] md:h-screen" aria-label="Imagen principal - Productos">
+        <section className="relative w-full overflow-hidden h-[46vh]" aria-label="Imagen principal - Productos">
             <div
-                className="h-[46vh] md:h-screen w-full bg-cover bg-center"
+                className="h-[46vh]  w-full bg-cover bg-center"
                 style={{ backgroundImage: `url(${bannerImg})` }}
                 aria-hidden
             />

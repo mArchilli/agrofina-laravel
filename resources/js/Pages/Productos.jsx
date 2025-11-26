@@ -17,6 +17,7 @@ export default function Productos({
         filtros.cultivo ? (Array.isArray(filtros.cultivo) ? filtros.cultivo : filtros.cultivo.split(',')) : []
     );
     const [cultivosExpanded, setCultivosExpanded] = useState(false);
+    const [cultivoSearch, setCultivoSearch] = useState('');
     const [selectedPrincipioActivo, setSelectedPrincipioActivo] = useState(filtros.principio_activo || '');
     const [selectedArbolRecomendacion, setSelectedArbolRecomendacion] = useState(filtros.arbol_recomendacion || '');
 
@@ -49,6 +50,7 @@ export default function Productos({
         setSelectedPrincipioActivo('');
         setSelectedArbolRecomendacion('');
         setCultivosExpanded(false);
+        setCultivoSearch('');
         
         router.get(route('productos'), {}, {
             preserveState: true,
@@ -170,15 +172,40 @@ export default function Productos({
                                     )}
                                 </button>
                             </div>
+
+                            {/* Buscador de cultivos */}
+                            <div className="mb-3">
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg className="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="Buscar cultivo..."
+                                        value={cultivoSearch}
+                                        onChange={(e) => {
+                                            setCultivoSearch(e.target.value);
+                                            if (e.target.value && !cultivosExpanded) {
+                                                setCultivosExpanded(true);
+                                            }
+                                        }}
+                                        className="block w-full pl-9 pr-3 py-1.5 border border-emerald-300 rounded-lg leading-5 bg-white placeholder-gray-300 focus:outline-none focus:placeholder-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 sm:text-sm transition duration-150 ease-in-out"
+                                    />
+                                </div>
+                            </div>
                             
                             <div className={`transition-all duration-300 ease-in-out ${
                                 cultivosExpanded ? 'max-h-96' : 'max-h-24'
                             } overflow-y-auto overflow-x-hidden`}>
                                 <div className="flex flex-wrap gap-2 p-3 bg-white rounded-lg border border-emerald-300">
-                                    {cultivos.length === 0 ? (
-                                        <p className="text-sm text-emerald-600/70 py-2">No hay cultivos disponibles</p>
+                                    {cultivos.filter(c => c.nombre.toLowerCase().includes(cultivoSearch.toLowerCase())).length === 0 ? (
+                                        <p className="text-sm text-emerald-600/70 py-2 w-full text-center">No se encontraron cultivos</p>
                                     ) : (
-                                        cultivos.map((cultivo) => {
+                                        cultivos
+                                            .filter(c => c.nombre.toLowerCase().includes(cultivoSearch.toLowerCase()))
+                                            .map((cultivo) => {
                                             const isSelected = selectedCultivos.includes(cultivo.id.toString());
                                             return (
                                                 <button
