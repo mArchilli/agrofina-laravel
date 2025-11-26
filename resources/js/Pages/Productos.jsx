@@ -13,14 +13,27 @@ export default function Productos({
     filtros 
 }) {
     const [selectedCategoria, setSelectedCategoria] = useState(filtros.categoria || '');
-    const [selectedCultivo, setSelectedCultivo] = useState(filtros.cultivo || '');
+    const [selectedCultivos, setSelectedCultivos] = useState(
+        filtros.cultivo ? (Array.isArray(filtros.cultivo) ? filtros.cultivo : filtros.cultivo.split(',')) : []
+    );
+    const [cultivosExpanded, setCultivosExpanded] = useState(false);
     const [selectedPrincipioActivo, setSelectedPrincipioActivo] = useState(filtros.principio_activo || '');
     const [selectedArbolRecomendacion, setSelectedArbolRecomendacion] = useState(filtros.arbol_recomendacion || '');
+
+    const toggleCultivo = (cultivoId) => {
+        setSelectedCultivos(prev => {
+            if (prev.includes(cultivoId.toString())) {
+                return prev.filter(id => id !== cultivoId.toString());
+            } else {
+                return [...prev, cultivoId.toString()];
+            }
+        });
+    };
 
     const handleFilter = () => {
         const params = {};
         if (selectedCategoria) params.categoria = selectedCategoria;
-        if (selectedCultivo) params.cultivo = selectedCultivo;
+        if (selectedCultivos.length > 0) params.cultivo = selectedCultivos.join(',');
         if (selectedPrincipioActivo) params.principio_activo = selectedPrincipioActivo;
         if (selectedArbolRecomendacion) params.arbol_recomendacion = selectedArbolRecomendacion;
 
@@ -32,9 +45,10 @@ export default function Productos({
 
     const handleReset = () => {
         setSelectedCategoria('');
-        setSelectedCultivo('');
+        setSelectedCultivos([]);
         setSelectedPrincipioActivo('');
         setSelectedArbolRecomendacion('');
+        setCultivosExpanded(false);
         
         router.get(route('productos'), {}, {
             preserveState: true,
@@ -63,81 +77,150 @@ export default function Productos({
                         </h2>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {/* Filtro Categoría */}
-                        <div>
-                            <label className="block text-sm font-medium text-emerald-800 mb-2">
-                                Categoría
-                            </label>
-                            <select
-                                value={selectedCategoria}
-                                onChange={(e) => setSelectedCategoria(e.target.value)}
-                                className="w-full rounded-lg border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm transition-all duration-200"
-                            >
-                                <option value="">Todas las categorías</option>
-                                {categorias.map((cat) => (
-                                    <option key={cat.id} value={cat.id}>
-                                        {cat.nombre}
-                                    </option>
-                                ))}
-                            </select>
+                    <div className="space-y-4">
+                        {/* Primera fila - Filtros de selección simple */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {/* Filtro Categoría */}
+                            <div>
+                                <label className="block text-sm font-medium text-emerald-800 mb-2">
+                                    Categoría
+                                </label>
+                                <select
+                                    value={selectedCategoria}
+                                    onChange={(e) => setSelectedCategoria(e.target.value)}
+                                    className="w-full rounded-lg border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm transition-all duration-200"
+                                >
+                                    <option value="">Todas las categorías</option>
+                                    {categorias.map((cat) => (
+                                        <option key={cat.id} value={cat.id}>
+                                            {cat.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro Principio Activo */}
+                            <div>
+                                <label className="block text-sm font-medium text-emerald-800 mb-2">
+                                    Principio Activo
+                                </label>
+                                <select
+                                    value={selectedPrincipioActivo}
+                                    onChange={(e) => setSelectedPrincipioActivo(e.target.value)}
+                                    className="w-full rounded-lg border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm transition-all duration-200"
+                                >
+                                    <option value="">Todos los principios activos</option>
+                                    {principiosActivos.map((pa) => (
+                                        <option key={pa.id} value={pa.id}>
+                                            {pa.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Filtro Árbol de Recomendación */}
+                            <div>
+                                <label className="block text-sm font-medium text-emerald-800 mb-2">
+                                    Árbol de Recomendación
+                                </label>
+                                <select
+                                    value={selectedArbolRecomendacion}
+                                    onChange={(e) => setSelectedArbolRecomendacion(e.target.value)}
+                                    className="w-full rounded-lg border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm transition-all duration-200"
+                                >
+                                    <option value="">Todos</option>
+                                    {arbolesRecomendacion.map((ar) => (
+                                        <option key={ar.id} value={ar.id}>
+                                            {ar.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
 
-                        {/* Filtro Cultivo */}
-                        <div>
-                            <label className="block text-sm font-medium text-emerald-800 mb-2">
-                                Cultivo
-                            </label>
-                            <select
-                                value={selectedCultivo}
-                                onChange={(e) => setSelectedCultivo(e.target.value)}
-                                className="w-full rounded-lg border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm transition-all duration-200"
-                            >
-                                <option value="">Todos los cultivos</option>
-                                {cultivos.map((cult) => (
-                                    <option key={cult.id} value={cult.id}>
-                                        {cult.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Filtro Principio Activo */}
-                        <div>
-                            <label className="block text-sm font-medium text-emerald-800 mb-2">
-                                Principio Activo
-                            </label>
-                            <select
-                                value={selectedPrincipioActivo}
-                                onChange={(e) => setSelectedPrincipioActivo(e.target.value)}
-                                className="w-full rounded-lg border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm transition-all duration-200"
-                            >
-                                <option value="">Todos los principios activos</option>
-                                {principiosActivos.map((pa) => (
-                                    <option key={pa.id} value={pa.id}>
-                                        {pa.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Filtro Árbol de Recomendación */}
-                        <div>
-                            <label className="block text-sm font-medium text-emerald-800 mb-2">
-                                Árbol de Recomendación
-                            </label>
-                            <select
-                                value={selectedArbolRecomendacion}
-                                onChange={(e) => setSelectedArbolRecomendacion(e.target.value)}
-                                className="w-full rounded-lg border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm transition-all duration-200"
-                            >
-                                <option value="">Todos</option>
-                                {arbolesRecomendacion.map((ar) => (
-                                    <option key={ar.id} value={ar.id}>
-                                        {ar.nombre}
-                                    </option>
-                                ))}
-                            </select>
+                        {/* Segunda fila - Filtro Cultivos (selección múltiple) */}
+                        <div className="pt-2 border-t border-emerald-200/50">
+                            <div className="flex items-center justify-between mb-2">
+                                <label className="block text-sm font-medium text-emerald-800">
+                                    Cultivos {selectedCultivos.length > 0 && (
+                                        <span className="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-emerald-600 rounded-full">
+                                            {selectedCultivos.length}
+                                        </span>
+                                    )}
+                                </label>
+                                <button
+                                    type="button"
+                                    onClick={() => setCultivosExpanded(!cultivosExpanded)}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-emerald-700 bg-emerald-100 rounded-lg hover:bg-emerald-200 transition-colors duration-200"
+                                >
+                                    {cultivosExpanded ? (
+                                        <>
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                                            </svg>
+                                            Contraer
+                                        </>
+                                    ) : (
+                                        <>
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                            Expandir
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                            
+                            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                                cultivosExpanded ? 'max-h-96 opacity-100' : 'max-h-24 opacity-100'
+                            }`}>
+                                <div className={`flex flex-wrap gap-2 p-3 bg-white rounded-lg border border-emerald-300 ${
+                                    cultivosExpanded ? '' : 'max-h-20 overflow-hidden relative'
+                                }`}>
+                                    {cultivos.length === 0 ? (
+                                        <p className="text-sm text-emerald-600/70 py-2">No hay cultivos disponibles</p>
+                                    ) : (
+                                        cultivos.map((cultivo) => {
+                                            const isSelected = selectedCultivos.includes(cultivo.id.toString());
+                                            return (
+                                                <button
+                                                    key={cultivo.id}
+                                                    type="button"
+                                                    onClick={() => toggleCultivo(cultivo.id)}
+                                                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                                                        isSelected
+                                                            ? 'bg-emerald-600 text-white shadow-md hover:bg-emerald-700 scale-105'
+                                                            : 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300'
+                                                    }`}
+                                                >
+                                                    {isSelected && (
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    )}
+                                                    {cultivo.nombre}
+                                                </button>
+                                            );
+                                        })
+                                    )}
+                                    {!cultivosExpanded && cultivos.length > 0 && (
+                                        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+                                    )}
+                                </div>
+                            </div>
+                            
+                            {selectedCultivos.length > 0 && (
+                                <button
+                                    type="button"
+                                    onClick={() => setSelectedCultivos([])}
+                                    className="mt-2 text-xs text-emerald-600 hover:text-emerald-800 font-medium flex items-center gap-1 transition-colors duration-200"
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    Limpiar selección de cultivos
+                                </button>
+                            )}
                         </div>
                     </div>
 
