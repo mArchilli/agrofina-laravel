@@ -171,12 +171,10 @@ export default function Productos({
                                 </button>
                             </div>
                             
-                            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                                cultivosExpanded ? 'max-h-96 opacity-100' : 'max-h-24 opacity-100'
-                            }`}>
-                                <div className={`flex flex-wrap gap-2 p-3 bg-white rounded-lg border border-emerald-300 ${
-                                    cultivosExpanded ? '' : 'max-h-20 overflow-hidden relative'
-                                }`}>
+                            <div className={`transition-all duration-300 ease-in-out ${
+                                cultivosExpanded ? 'max-h-96' : 'max-h-24'
+                            } overflow-y-auto overflow-x-hidden`}>
+                                <div className="flex flex-wrap gap-2 p-3 bg-white rounded-lg border border-emerald-300">
                                     {cultivos.length === 0 ? (
                                         <p className="text-sm text-emerald-600/70 py-2">No hay cultivos disponibles</p>
                                     ) : (
@@ -202,9 +200,6 @@ export default function Productos({
                                                 </button>
                                             );
                                         })
-                                    )}
-                                    {!cultivosExpanded && cultivos.length > 0 && (
-                                        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none" />
                                     )}
                                 </div>
                             </div>
