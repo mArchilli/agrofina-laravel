@@ -7,6 +7,7 @@ export default function EditProduct({ producto, categorias, cultivos, principios
     const { data, setData, put, processing, errors, reset } = useForm({
         nombre: producto.nombre || '',
         imagen: null,
+        imagen_portada: null,
         categoria_id: producto.categoria_id || '',
         principio_activo_id: producto.principio_activo_id || '',
         formulacion: producto.formulacion || '',
@@ -26,6 +27,7 @@ export default function EditProduct({ producto, categorias, cultivos, principios
     });
 
     const [imagePreview, setImagePreview] = useState(null);
+    const [imagePortadaPreview, setImagePortadaPreview] = useState(null);
     const [searchPrincipioActivo, setSearchPrincipioActivo] = useState('');
     const [searchCultivo, setSearchCultivo] = useState('');
     const [searchArbol, setSearchArbol] = useState('');
@@ -122,6 +124,34 @@ export default function EditProduct({ producto, categorias, cultivos, principios
         if (fileInput) fileInput.value = '';
     };
 
+    const handleImagePortadaChange = (e) => {
+        const file = e.target.files[0];
+        setData('imagen_portada', file);
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePortadaPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setImagePortadaPreview(null);
+        }
+    };
+
+    const removeImagePortada = () => {
+        setData('imagen_portada', null);
+        // Restaurar la imagen de portada original del producto si existe
+        if (producto.imagen_portada) {
+            setImagePortadaPreview(producto.imagen_portada);
+        } else {
+            setImagePortadaPreview(null);
+        }
+        // Reset the file input
+        const fileInput = document.getElementById('imagen_portada');
+        if (fileInput) fileInput.value = '';
+    };
+
     const handlePdfsChange = (e) => {
         setData('pdfs', Array.from(e.target.files));
     };
@@ -166,7 +196,10 @@ export default function EditProduct({ producto, categorias, cultivos, principios
         if (producto.imagen) {
             setImagePreview(producto.imagen);
         }
-    }, [producto.imagen]);
+        if (producto.imagen_portada) {
+            setImagePortadaPreview(producto.imagen_portada);
+        }
+    }, [producto.imagen, producto.imagen_portada]);
 
     return (
         <>
@@ -390,6 +423,7 @@ export default function EditProduct({ producto, categorias, cultivos, principios
                                         <label className="block text-sm font-semibold text-gray-900 mb-2">
                                             Imagen del Producto
                                         </label>
+                                        <p className="text-xs text-gray-600 mb-2">Esta imagen se mostrará en la vista del producto.</p>
                                         <div className="space-y-3">
                                             {imagePreview ? (
                                                 <div className="relative">
@@ -437,6 +471,61 @@ export default function EditProduct({ producto, categorias, cultivos, principios
                                         {errors.imagen && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.imagen}</p>}
                                     </div>
 
+                                    {/* Imagen de Portada */}
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-900 mb-2">
+                                            Imagen de Portada
+                                        </label>
+                                        <p className="text-xs text-gray-600 mb-2">Esta imagen se mostrará en la vista general de productos.</p>
+                                        <div className="space-y-3">
+                                            {imagePortadaPreview ? (
+                                                <div className="relative">
+                                                    <div className="w-full h-48 rounded-xl border-2 border-dashed border-lime-200 bg-white/50 overflow-hidden flex items-center justify-center p-4">
+                                                        <img
+                                                            src={imagePortadaPreview}
+                                                            alt="Preview Portada"
+                                                            className="max-w-full max-h-full object-cover"
+                                                        />
+                                                    </div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={removeImagePortada}
+                                                        className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110"
+                                                    >
+                                                        <X className="w-4 h-4" />
+                                                    </button>
+                                                    {producto.imagen_portada && imagePortadaPreview === producto.imagen_portada && (
+                                                        <div className="absolute bottom-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                                                            Imagen actual
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <div className="w-full h-48 border-2 border-dashed border-lime-300 rounded-xl flex items-center justify-center hover:border-lime-400 hover:bg-lime-50/30 transition-all duration-200 bg-white/30 backdrop-blur-sm">
+                                                    <div className="text-center p-4">
+                                                        <Upload className="mx-auto h-10 w-10 text-lime-400 mb-3" />
+                                                        <p className="text-sm text-gray-600 font-medium">Selecciona imagen de portada</p>
+                                                        <p className="text-xs text-gray-500 mt-1">JPG, PNG, GIF, SVG</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            
+                                            <input
+                                                type="file"
+                                                id="imagen_portada"
+                                                accept="image/*"
+                                                onChange={handleImagePortadaChange}
+                                                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border-2 border-lime-200 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-lime-400 transition-all duration-200 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-lime-50 file:text-lime-700 hover:file:bg-lime-100"
+                                            />
+                                            <p className="text-xs text-gray-500">
+                                                Formatos: JPG, PNG, GIF, SVG (máx. 2MB) - Deja vacío para mantener la imagen actual
+                                            </p>
+                                        </div>
+                                        {errors.imagen_portada && <p className="text-red-600 text-sm mt-2 flex items-center gap-1"><X className="w-4 h-4" />{errors.imagen_portada}</p>}
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                                     {/* Categoría */}
                                     <div>
                                         <label htmlFor="categoria_id" className="block text-sm font-semibold text-gray-900 mb-2">

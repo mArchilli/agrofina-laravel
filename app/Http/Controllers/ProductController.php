@@ -64,6 +64,11 @@ class ProductController extends Controller
                 $productoArray['imagen'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
             }
             
+            // Transformar ruta de imagen_portada
+            if ($producto->imagen_portada) {
+                $productoArray['imagen_portada'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen_portada));
+            }
+            
             // Transformar rutas de PDFs
             if ($producto->pdfs && is_array($producto->pdfs)) {
                 $productoArray['pdfs'] = collect($producto->pdfs)->map(function ($pdf) use ($frontendPdfsPath) {
@@ -131,6 +136,11 @@ class ProductController extends Controller
             $productoArray['imagen'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
         }
         
+        // Transformar ruta de imagen_portada
+        if ($producto->imagen_portada) {
+            $productoArray['imagen_portada'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen_portada));
+        }
+        
         // Transformar rutas de PDFs
         if ($producto->pdfs && is_array($producto->pdfs)) {
             $productoArray['pdfs'] = collect($producto->pdfs)->map(function ($pdf) use ($frontendPdfsPath) {
@@ -164,6 +174,10 @@ class ProductController extends Controller
         $productos->getCollection()->transform(function ($producto) use ($frontendImagesPath, $frontendPdfsPath) {
             if ($producto->imagen) {
                 $producto->imagen = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
+            }
+            
+            if ($producto->imagen_portada) {
+                $producto->imagen_portada = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen_portada));
             }
             
             if ($producto->pdfs && is_array($producto->pdfs)) {
@@ -218,6 +232,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen_portada' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'categoria_id' => 'nullable|exists:categorias,id',
             'principio_activo_id' => 'nullable|exists:principio_activos,id',
             'principio_activo' => 'nullable|string|max:255',
@@ -247,6 +262,14 @@ class ProductController extends Controller
             $nombreImagen = time() . '_' . str_replace(' ', '_', $imagen->getClientOriginalName());
             $imagen->move(public_path(env('PRODUCT_IMAGES_PATH')), $nombreImagen);
             $validated['imagen'] = env('PRODUCT_IMAGES_PATH') . '/' . $nombreImagen;
+        }
+
+        // Manejar la imagen de portada
+        if ($request->hasFile('imagen_portada')) {
+            $imagenPortada = $request->file('imagen_portada');
+            $nombreImagenPortada = time() . '_portada_' . str_replace(' ', '_', $imagenPortada->getClientOriginalName());
+            $imagenPortada->move(public_path(env('PRODUCT_IMAGES_PATH')), $nombreImagenPortada);
+            $validated['imagen_portada'] = env('PRODUCT_IMAGES_PATH') . '/' . $nombreImagenPortada;
         }
 
         // Manejar los PDFs
@@ -321,6 +344,11 @@ class ProductController extends Controller
             $productoArray['imagen'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen));
         }
         
+        // Transformar ruta de imagen_portada
+        if ($producto->imagen_portada) {
+            $productoArray['imagen_portada'] = asset(trim($frontendImagesPath, '/') . '/' . basename($producto->imagen_portada));
+        }
+        
         // Transformar rutas de PDFs
         if ($producto->pdfs && is_array($producto->pdfs)) {
             $productoArray['pdfs'] = collect($producto->pdfs)->map(function ($pdf) use ($frontendPdfsPath) {
@@ -345,6 +373,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen_portada' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'categoria_id' => 'nullable|exists:categorias,id',
             'principio_activo_id' => 'nullable|exists:principio_activos,id',
             'principio_activo' => 'nullable|string|max:255',
@@ -379,6 +408,19 @@ class ProductController extends Controller
             $nombreImagen = time() . '_' . str_replace(' ', '_', $imagen->getClientOriginalName());
             $imagen->move(public_path(env('PRODUCT_IMAGES_PATH')), $nombreImagen);
             $validated['imagen'] = env('PRODUCT_IMAGES_PATH') . '/' . $nombreImagen;
+        }
+
+        // Manejar la imagen de portada
+        if ($request->hasFile('imagen_portada')) {
+            // Eliminar imagen de portada anterior si existe
+            if ($producto->imagen_portada && file_exists(public_path($producto->imagen_portada))) {
+                unlink(public_path($producto->imagen_portada));
+            }
+            
+            $imagenPortada = $request->file('imagen_portada');
+            $nombreImagenPortada = time() . '_portada_' . str_replace(' ', '_', $imagenPortada->getClientOriginalName());
+            $imagenPortada->move(public_path(env('PRODUCT_IMAGES_PATH')), $nombreImagenPortada);
+            $validated['imagen_portada'] = env('PRODUCT_IMAGES_PATH') . '/' . $nombreImagenPortada;
         }
 
         // Manejar los PDFs

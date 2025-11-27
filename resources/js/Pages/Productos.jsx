@@ -313,8 +313,15 @@ function ProductCard({ producto }) {
     return (
         <div className="group relative overflow-hidden rounded-2xl bg-white ring-1 ring-emerald-200/60 shadow-sm transition-all duration-300 hover:shadow-xl hover:ring-2 hover:ring-emerald-400/90 hover:-translate-y-1 flex flex-col">
             {/* Imagen del producto */}
-            <div className="relative aspect-square overflow-hidden">
-                {producto.imagen ? (
+            <div className="relative aspect-square bg-gradient-to-br from-emerald-50 to-lime-50 overflow-hidden">
+                {producto.imagen_portada ? (
+                    <img
+                        src={`${producto.imagen_portada}`}
+                        alt={producto.nombre}
+                        className="absolute inset-0 h-full w-full object-cover transition-all duration-300 group-hover:scale-110"
+                        loading="lazy"
+                    />
+                ) : producto.imagen ? (
                     <img
                         src={`${producto.imagen}`}
                         alt={producto.nombre}
