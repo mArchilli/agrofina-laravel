@@ -16,12 +16,6 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        // Desactivar claves foráneas, truncar tablas relacionadas y productos, luego reactivar
-        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        \DB::table('arbol_recomendacion_producto')->truncate();
-        \DB::table('cultivo_producto')->truncate();
-        \DB::table('productos')->truncate();
-        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         #region Producto 1: 2.4 D Agrofina LV®
 
@@ -340,10 +334,9 @@ class ProductSeeder extends Seeder
             $arbolArrozPost = ArbolRecomendacion::firstOrCreate(['nombre' => 'Arroz en post emergencia']);
             $productoClaron->arbolesRecomendacion()->sync([$arbolArrozPost->id]);
 
+        #endregion
 
-
-
-
+        
 
 
 
