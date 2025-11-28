@@ -16,6 +16,12 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
+        // Desactivar claves foráneas, truncar tablas relacionadas y productos, luego reactivar
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        \DB::table('arbol_recomendacion_producto')->truncate();
+        \DB::table('cultivo_producto')->truncate();
+        \DB::table('productos')->truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         #region Producto 1: 2.4 D Agrofina LV®
 
@@ -297,7 +303,42 @@ class ProductSeeder extends Seeder
 
         #endregion
 
+        #region Producto 9: Claron®
 
+            // 1. Buscar o crear la Categoría
+            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoClaron = PrincipioActivo::firstOrCreate(['nombre' => 'Cyhalofop-butil 18%']);
+
+            // 3. Crear el Producto
+            $productoClaron = Producto::create([
+                'nombre' => 'CLARON®',
+                'categoria_id' => $categoriaHerbicida->id,
+                'principio_activo_id' => $principioActivoClaron->id,
+                'formulacion' => null,
+                'descripcion' => 'Es un herbicida post-emergente, para el control de gramíneas, con acción sistémica y selectiva para cultivos de arroz de inundación y secano. Se absorbe rápidamente a través del follaje y se transloca a los tejidos meristemáticos de la planta donde ejerce su acción herbicida. La detención del crecimiento de las malezas comienza a las pocas horas de la aplicación. A los pocos días se observan: clorosis en las hojas y tallos, coloración que va del rojo al morado y necrosis en los puntos de crecimiento.',
+                'accion' => 'Sistémico.',
+                'mecanismo_de_accion' => 'Inhibidor de la enzima ACCasa. Grupo A.',
+                'malezas' => 'Capín.',
+                'dosis' => '1,5 a 2 L/ha.',
+                'recomendaciones_de_uso' => 'Aplicar cuando las gramíneas están en activo crecimiento, las mismas deben tener entre 3 hojas verdaderas y 1 a 2 macollos. Para un control más efectivo, se debe proceder a inundar definitivamente el cultivo a las 24 horas posteriores a la aplicación del producto.',
+                'imagen' => '/images/products/claron-producto.jpg',
+                'imagen_portada' => '/images/products/claron-portada.png',
+                'pdfs' => [
+                    '/pdfs/products/Claron - Marbete.pdf',
+                    '/pdfs/products/Claron - Hoja de Datos de Seguridad (MSDS).pdf'
+                ],
+                'activo' => true,
+            ]);
+
+            // 4. Asociar Cultivos
+            $cultivoArroz = Cultivo::firstOrCreate(['nombre' => 'Arroz']);
+            $productoClaron->cultivos()->sync([$cultivoArroz->id]);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolArrozPost = ArbolRecomendacion::firstOrCreate(['nombre' => 'Arroz en post emergencia']);
+            $productoClaron->arbolesRecomendacion()->sync([$arbolArrozPost->id]);
 
 
 
