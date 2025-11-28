@@ -734,6 +734,292 @@ class ProductSeeder extends Seeder
 
         #endregion
 
-        //No borrar este espacio
+        #region Producto 21: Formax III®
+
+        // 1. Buscar o crear la Categoría
+        $categoriaFungicida = Categoria::firstOrCreate(['nombre' => 'Fungicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoFormax = PrincipioActivo::firstOrCreate([
+            'nombre' => 'Azoxistrobin 5,62% + Cyproconazole 3% + Boscalid 6%'
+        ]);
+
+        // 3. Crear el Producto
+        $productoFormax = Producto::create([
+            'nombre' => 'FORMAX III®',
+            'categoria_id' => $categoriaFungicida->id,
+            'principio_activo_id' => $principioActivoFormax->id,
+            'formulacion' => 'Suspensión Concentrada (SC)',
+            'descripcion' => 'Es un fungicida sistémico para el control de enfermedades foliares en cultivo de soja y maní, compuesto por 3 principios activos de diferentes modos de acción. Por un lado, se combina la destacada acción preventiva y antiesporulante de azoxistrobina, perteneciente al grupo de las estrobilurinas, con el efecto curativo y erradicante de cyproconazole, perteneciente al grupo de los triazoles. El tercer componente, Boscalid, es una carboxamida, de acción sistémica local y que se transloca translaminarmente. De esta manera, se logra tener una herramienta para el manejo de resistencias, con una mayor residualidad en el control de enfermedades por el agregado de la carboxamida.',
+            'accion' => 'Preventivo, antiesporulante, curativo, erradicante, sistémico.',
+            'mecanismo_de_accion' => "Azoxystrobina: Inhibe la respiración mitocondrial de los hongos a través del bloqueo de la transferencia de electrones entre el mitocondrio b y el citocromo c. (Grupo 11).\nCiproconazole: Inhibe la síntesis de Ergosterol (Grupo 3).\nBoscalid: Inhibe el complejo II en la mitocondria. (Grupo 7).",
+            'malezas' => 'Mancha marrón (Septoria glycines), Mancha púrpura de la semilla o Tizón de la hoja (Cercospora kickuchii); Viruela tardía (Cercosporidium personatum), Viruela temprana (Cercospora arachidicola).',
+            'dosis' => 'Maní: 1,1 L/ha + 0,5 L/ha de ZINAX (EMAG).\nSoja: 0,75 L/ha + 0,5 L/ha de ZINAX (EMAG).',
+            'recomendaciones_de_uso' => 'Maní: Realizar la primera aplicación con la aparición de los primeros síntomas y repetir en caso de ser necesario a los 21 días.\n\nSoja: A partir de R3 hasta R6, cuando se observen los primeros síntomas en la planta. En caso de persistir condiciones favorables para la enfermedad y ante la aparición de nuevas pústulas, realizar una segunda aplicación.',
+            'imagen' => '/images/products/Formax III-producto.jpg',
+            'imagen_portada' => '/images/products/Formax III-portada.png',
+            'pdfs' => [
+                '/pdfs/products/Formax III - Marbete.pdf',
+                '/pdfs/products/Formax III - Hoja de Datos de Seguridad (MSDS).pdf',
+                '/pdfs/products/Formax III - Flyer comercial.pdf',
+                '/pdfs/products/Formax III - Flyer Soja y Mani.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoMani = Cultivo::firstOrCreate(['nombre' => 'Maní']);
+        $cultivoSoja = Cultivo::firstOrCreate(['nombre' => 'Soja']);
+        $productoFormax->cultivos()->sync([$cultivoMani->id, $cultivoSoja->id]);
+        #endregion
+
+        #region Producto 22: Formax Neo®
+        
+
+        // 1. Buscar o crear la Categoría
+        $categoriaFungicidaNeo = Categoria::firstOrCreate(['nombre' => 'Fungicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoFormaxNeo = PrincipioActivo::firstOrCreate([
+            'nombre' => 'Boscalid 10% + Difenoconazole 15% SC'
+        ]);
+
+        // 3. Crear el Producto
+        $productoFormaxNeo = Producto::create([
+            'nombre' => 'FORMAX NEO®',
+            'categoria_id' => $categoriaFungicidaNeo->id,
+            'principio_activo_id' => $principioActivoFormaxNeo->id,
+            'formulacion' => 'Suspensión Concentrada (SC)',
+            'descripcion' => 'Difenoconazole es un funguicida sistémico perteneciente al grupo de los triazoles (Grupo 3), que actúa como inhibidor de la biosíntesis de esteroles de membrana. Provee acción preventiva duradera y acción curativa contra un amplio rango de enfermedades. Dentro de los triazoles es uno de los más efectivos para el control de las enfermedades de soja y maní, complementándose muy bien con el efecto residual de la carboxamida Boscalid, de acción sistémica local y que se transloca translaminarmente. De esta manera, se logra tener una herramienta para el manejo de resistencias, con una mayor residualidad en el control de enfermedades por el agregado de la carboxamida. Sustentabilidad: Formax neo es banda verde y la dosis promedio es un 40 % menos que su antecesor Formax III.',
+            'accion' => 'Preventivo, antiesporulante, curativo, erradicante, sistémico.',
+            'mecanismo_de_accion' => "Difenoconazole: Inhibe la síntesis de Ergosterol (Grupo 3). Boscalid: Inhibe el complejo II en la mitocondria. (Grupo 7).",
+            'malezas' => 'Mancha marrón (Septoria glycines), Mancha púrpura de la semilla o Tizón de la hoja (Cercospora kickuchii); Viruela tardía (Cercosporidium personatum), Viruela temprana (Cercospora arachidicola).',
+            'dosis' => "Maní: 0,65 L/ha.\nSoja: 0,45 L/ha.",
+            'recomendaciones_de_uso' => "Maní: Realizar la primera aplicación con la aparición de los primeros síntomas y repetir en caso de ser necesario a los 21 días.\nSoja: A partir de R3 hasta R6, cuando se observen los primeros síntomas en la planta. En caso de persistir condiciones favorables para la enfermedad y ante la aparición de nuevas pústulas, realizar una segunda aplicación.",
+            'imagen' => '/images/products/Formax-Neo-producto.jpg',
+            'imagen_portada' => '/images/products/Formax-Neo-portada.jpg',
+            'pdfs' => [
+                '/pdfs/products/Formax Neo - Marbete.pdf',
+                '/pdfs/products/Formax Neo - Hoja de Datos de Seguridad (MSDS).pdf',
+                '/pdfs/products/Formax Neo - Flyer.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoManiNeo = Cultivo::firstOrCreate(['nombre' => 'Maní']);
+        $cultivoSojaNeo = Cultivo::firstOrCreate(['nombre' => 'Soja']);
+        $productoFormaxNeo->cultivos()->sync([$cultivoManiNeo->id, $cultivoSojaNeo->id]);
+        #endregion
+
+        #region Producto 23: Girasol: Árbol de recomendación completo
+
+        $productoGirasol = Producto::create([
+            'nombre' => 'GIRASOL: Árbol de recomendación completo',
+            'imagen' => '/images/products/Girasol-completo.jpg',
+            'imagen_portada' => '/images/products/Girasol-completo.jpg',
+            'pdfs' => ['/pdfs/products/Girasol - Arbol de Recomendacion Completo.pdf'],
+            'activo' => true,
+        ]);
+
+        // Asociar Árbol de Recomendación
+        $arbolGirasol = ArbolRecomendacion::firstOrCreate(['nombre' => 'Girasol (completo)']);
+        $productoGirasol->arbolesRecomendacion()->sync([$arbolGirasol->id]);
+        #endregion
+
+        #region Producto 24: GLUFAN®
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaGlufan = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoGlufan = PrincipioActivo::firstOrCreate([
+            'nombre' => 'Glufosinato de Amonio 20%'
+        ]);
+
+        // 3. Crear el Producto
+        $productoGlufan = Producto::create([
+            'nombre' => 'GLUFAN®',
+            'categoria_id' => $categoriaHerbicidaGlufan->id,
+            'principio_activo_id' => $principioActivoGlufan->id,
+            'formulacion' => 'Concentrado Soluble (SL).',
+            'descripcion' => 'GLUFAN es un herbicida de contacto con cierta sistemia, para aplicaciones en barbecho químico y post-emergente selectivo en aplicaciones de cobertura total sobre maíces que indiquen la posibilidad de dicho uso en los rótulos y en bolsas de semillas híbridas de maíz resistente a Glufosinato de amonio.',
+            'accion' => 'Contacto, con cierta acción sistémica.',
+            'mecanismo_de_accion' => 'Inhibidor de la glutamino sintetasa. Grupo H.',
+            'malezas' => 'Gramineas y Hoja anchas. Ciperaceas.',
+            'dosis' => 'Barbecho químico 1,5 a 3,5 l/ha.\nÁreas sin cultivo y frutales 2,5 a 8 l/ha.',
+            'recomendaciones_de_uso' => 'Aplicar cuando el cultivo de maíz resistente a Glufosinato tenga entre 3 a 4 hojas. Emplear las dosis más bajas en los primeros estadíos vegetativos de las malezas latifoliadas (2-4 hojas) y al comienzo del macollaje en gramíneas. Las dosis más altas son para malezas de mayor tamaño. Factores ambientales como temperaturas menores a 10°C o superiores a 25 °C, y/o estrés hídrico pueden disminuir la performance de Glufan.',
+            'imagen' => '/images/products/Glufan-producto.jpg',
+            'imagen_portada' => '/images/products/Glufan-portada.png',
+            'pdfs' => [
+                '/pdfs/products/Glufan - Marbete.pdf',
+                '/pdfs/products/Glufan - Hoja de Datos de Seguridad.pdf',
+                '/pdfs/products/Glufan - Flyer Comercial.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Árboles de Recomendación
+        $arbolesGlufanNombres = [
+            'Sorgo en barbecho',
+            'Maíz en post emergencia'
+        ];
+        $arbolGlufanIds = [];
+        foreach ($arbolesGlufanNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolGlufanIds[] = $arbol->id;
+        }
+        $productoGlufan->arbolesRecomendacion()->sync($arbolGlufanIds);
+        #endregion
+
+        #region Producto 25: HALOX® 81
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaHalox = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoHalox = PrincipioActivo::firstOrCreate([
+            'nombre' => 'Haloxifop-P-metil 81%'
+        ]);
+
+        // 3. Crear el Producto
+        $productoHalox = Producto::create([
+            'nombre' => 'HALOX® 81',
+            'categoria_id' => $categoriaHerbicidaHalox->id,
+            'principio_activo_id' => $principioActivoHalox->id,
+            'formulacion' => 'Concentrado Emulsionable (EC)',
+            'descripcion' => 'Halox 81 es un herbicida post-emergente sistémico para el control de gramíneas, selectivo para los cultivos de soja, girasol, maní, poroto y algodón. Las malezas tratadas con HALOX 81 detienen su crecimiento y las hojas muestran, a los pocos días de la aplicación, tonalidades violáceas, amarillas y finalmente marrones. En los rizomas, destruye inicialmente las yemas, y luego el tejido se necrosa.',
+            'accion' => 'Sistémico.',
+            'mecanismo_de_accion' => 'Inhibidores de la acetil coenzima -A carboxilasa (ACCasa). Grupo A.',
+            'malezas' => 'Brachiaria plantaginea. Capín. Cola de zorro. Pasto de cuaresma. Pasto Morado. Pie de gallina. Gramón. Pasto bermuda. Sorgo de Alepo (Riz/Sem). Maíz guacho tolerante a glifosato.',
+            'dosis' => '0,055- 0,195 L/ha.',
+            'recomendaciones_de_uso' => 'En lotes de siembra y laboreo tradicional se deberá trabajar el suelo antes de la siembra para asegurar homogeneidad en la emergencia de las malezas. No escardillar antes de la aplicación del producto. En lotes bajo siembra directa, aplicar cuando las malezas alcanzan la altura recomendada. Aplicar HALOX 81 siempre con el agregado de Zinax (EMAG).',
+            'imagen' => '/images/products/Halox-81-producto.jpg',
+            'imagen_portada' => '/images/products/Halox-81-portada.png',
+            'pdfs' => [
+                '/pdfs/products/Halox 81 - Marbete.pdf',
+                '/pdfs/products/Halox 81 - Hoja de Seguridad de Datos.pdf',
+                '/pdfs/products/Halox 81 - Flyer Comercial.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosHaloxNombres = ['Algodón', 'Girasol', 'Soja', 'Maní', 'Poroto'];
+        $cultivoHaloxIds = [];
+        foreach ($cultivosHaloxNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoHaloxIds[] = $cultivo->id;
+        }
+        $productoHalox->cultivos()->sync($cultivoHaloxIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesHaloxNombres = [
+            'Algodón en post emergencia',
+            'Soja en post emergencia',
+            'Girasol en post emergencia',
+            'Maní en post emergencia',
+            'Poroto en post emergencia'
+        ];
+        $arbolHaloxIds = [];
+        foreach ($arbolesHaloxNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolHaloxIds[] = $arbol->id;
+        }
+        $productoHalox->arbolesRecomendacion()->sync($arbolHaloxIds);
+        #endregion
+
+        #region Producto 26: IDRIS®
+
+        // 1. Buscar o crear la Categoría
+        $categoriaInsecticidaIdris = Categoria::firstOrCreate(['nombre' => 'Insecticidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoIdris = PrincipioActivo::firstOrCreate([
+            'nombre' => 'Flubendiamide 48%'
+        ]);
+
+        // 3. Crear el Producto
+        $productoIdris = Producto::create([
+            'nombre' => 'IDRIS®',
+            'categoria_id' => $categoriaInsecticidaIdris->id,
+            'principio_activo_id' => $principioActivoIdris->id,
+            'formulacion' => 'SC (Suspensión Concentrada)',
+            'descripcion' => 'Insecticida de primera línea tecnologica perteneciente a la clase química diamidas, recomendado para el control de las orugas más difíciles en una amplia gama de cultivos, selectivo en fauna benéfica y perfil favorable para el comercio de alimentos. Única flubendiamide banda verde.',
+            'accion' => 'Contacto e Ingestión.',
+            'mecanismo_de_accion' => 'Moduladores de receptores de ryanodine.',
+            'malezas' => 'Oruga medidora (Rachiplusia), Oruga de las leguminosas (Anticarsia gemmatalis), Falsa medidora (Pseudoplusia includens), Oruga bolillera (Helicoverpa sp.), Oruga de la hoja (Alabama argillacea), Gusano cortador (Agrotis sp.), Isoca de la espiga (Heliothis zea), Polilla del Tomate (Tutta absoluta), Gusano de la pera y la manzana, Carpocapsa (Cydia pomonella), Bicho canasto (Oiketicus platensis), Oruguita enruladota (Argyrotaenia sphaleropa), Cogollero del maíz (Spodoptera frugiperda), Isoca de las coles (Plutella xylostella), Isoca medidora (Rachiplusia nu), Oruga Cortadora (Agrotis ipsylon), Oruga militar tardía (Spodoptera frugiperda), Palomita transparente del zapallo (Diaphanea hyalinata), Gusano del brote del duraznero (Grafolita Molesta).',
+            'dosis' => '0,02 a 0,1 L/ha dependiendo de cultivo y plaga (ver marbete).',
+            'recomendaciones_de_uso' => 'Tratar el cultivo con IDRIS según umbrales de daño económico (UDE) con el agregado de 0,5 L/ha de Zinax (EMAG). Se recomienda rotar el uso de IDRIS o cualquier otro producto perteneciente al Grupo 28 de insecticidas con productos de diferentes modos de acción. No realizar más de 2 aplicaciones a un mismo cultivo. Lea atentamente el marbete antes de uso.',
+            'imagen' => '/images/products/Idris-producto.jpg',
+            'imagen_portada' => '/images/products/Idris-portada.jpg',
+            'pdfs' => [
+                '/pdfs/products/Idris - Marbete.pdf',
+                '/pdfs/products/Idris - Hoja de Datos de Seguridad.pdf',
+                '/pdfs/products/Idris - Flyer Comercial.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosIdrisNombres = ['Soja', 'Poroto', 'Maíz', 'Maíz dulce', 'Algodón', 'Tabaco', 'Tomate', 'Pera', 'Manzano', 'Brócoli', 'Coliflor', 'Lechuga', 'Melón', 'Sandía', 'Zapallo', 'Duraznero', 'Ciruelo'];
+        $cultivoIdrisIds = [];
+        foreach ($cultivosIdrisNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoIdrisIds[] = $cultivo->id;
+        }
+        $productoIdris->cultivos()->sync($cultivoIdrisIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesIdrisNombres = [
+            'Algodón en post emergencia',
+            'Soja en post emergencia',
+            'Maíz en post emergencia',
+            'Poroto en post emergencia'
+        ];
+        $arbolIdrisIds = [];
+        foreach ($arbolesIdrisNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolIdrisIds[] = $arbol->id;
+        }
+        $productoIdris->arbolesRecomendacion()->sync($arbolIdrisIds);
+        #endregion
+
+        #region Producto 27: KIER III®
+        // 1. Buscar o crear la Categoría
+        $categoriaInsecticidaKier = Categoria::firstOrCreate(['nombre' => 'Insecticidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoKier = PrincipioActivo::firstOrCreate([
+            'nombre' => 'Abamectina 0,18% + Lufenuron 1,5% + Bifentrin 1,8%'
+        ]);
+
+        // 3. Crear el Producto
+        $productoKier = Producto::create([
+            'nombre' => 'KIER III®',
+            'categoria_id' => $categoriaInsecticidaKier->id,
+            'principio_activo_id' => $principioActivoKier->id,
+            'formulacion' => 'Concentrado Emulsionable (EC)',
+            'descripcion' => 'Es una triple mezcla de insecticidas para el cultivo de soja, compuesta por abamectina, lufenuron y bifentrin, con gran poder de volteo y prolongado efecto residual. Está recomendado para el control de orugas defoliadoras. La presencia de abamectina refuerza la acción contra plagas de difícil control como arañuelas y trips.',
+            'accion' => 'Contacto e ingestión.',
+            'mecanismo_de_accion' => 'Bifentrin: Actúa a a nivel de los canales de sodio (Grupo 15). Lufenuron: Inhibidor de la síntesis de quitina (IGR) (Grupo 3A). Abamectina: Actúa modulando los canales de cloro (Grupo 6).',
+            'malezas' => 'Oruga de las leguminosas, Isoca medidora, Trips y Arañuela roja común.',
+            'dosis' => '1 L/ha. No requiere agregado de aceite.',
+            'imagen' => '/images/products/Kier-III-producto.jpg',
+            'imagen_portada' => '/images/products/Kier-III-portada.png',
+            'pdfs' => [
+                '/pdfs/products/Kier III - Marbete.pdf',
+                '/pdfs/products/Kier III - Hoja de Datos de Seguridad.pdf',
+                '/pdfs/products/Kier III - Flyer Comercial.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoSojaKier = Cultivo::firstOrCreate(['nombre' => 'Soja']);
+        $productoKier->cultivos()->sync([$cultivoSojaKier->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolSojaPostKier = ArbolRecomendacion::firstOrCreate(['nombre' => 'Soja en post emergencia']);
+        $productoKier->arbolesRecomendacion()->sync([$arbolSojaPostKier->id]);
+        #endregion
     }
 }
