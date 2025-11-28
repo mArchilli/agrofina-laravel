@@ -297,7 +297,7 @@ class ProductSeeder extends Seeder
 
         #endregion
 
-        #region Producto 9: Claron®
+        #region Producto 10: Claron®
 
             // 1. Buscar o crear la Categoría
             $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
@@ -336,13 +336,403 @@ class ProductSeeder extends Seeder
 
         #endregion
 
+        #region Producto 11: CAÑA DE AZÚCAR: Árbol de recomendación completo
         
+        $productoCanaAzucar = Producto::create([
+            'nombre' => 'CAÑA DE AZÚCAR: Árbol de recomendación completo',
+            'imagen' => '/images/productos/Cana-de-azucar-completo.jpg',
+            'imagen_portada' => '/images/productos/Cana-de-azucar-completo.jpg',
+            'pdfs' => ['/PDFs/Cana de azucar - Arbol de Recomendacion Completo.pdf'],
+            'activo' => true,
+        ]);
 
+        // Asociar Árbol de Recomendación
+        $arbolCanaAzucar = ArbolRecomendacion::firstOrCreate(['nombre' => 'Caña de azucar (completo)']);
+        $productoCanaAzucar->arbolesRecomendacion()->sync([$arbolCanaAzucar->id]);
 
+        #endregion
 
+        #region Producto 12: CLARON 36®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaClaron36 = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoClaron36 = PrincipioActivo::firstOrCreate(['nombre' => 'Cyhalofop-butil 36 % EC']);
 
+        // 3. Crear el Producto
+        $productoClaron36 = Producto::create([
+            'nombre' => 'CLARON 36®',
+            'categoria_id' => $categoriaHerbicidaClaron36->id,
+            'principio_activo_id' => $principioActivoClaron36->id,
+            'formulacion' => 'EC',
+            'descripcion' => 'Claron 36 es un herbicida post emergente, selectivo para el cultivo de arroz, con acción sistémica para el control de gramíneas, sobre todo capín (Echinochloa). Al estar dos veces más concentrado, permite disminuir la dosis a la mitad, mejorando la logística del productor y disminuyendo la emisión de plástico y costos asociados al transporte. Se absorbe rápidamente a través del follaje y se transloca a los tejidos meristemáticos de la planta donde ejerce su acción herbicida. A los pocos días de aplicado, se observa clorosis en hojas y tallos, coloración que va del rojo al morado y necrosis en los puntos de crecimiento.',
+            'accion' => 'Sistémico.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima ACCasa. Grupo A.',
+            'malezas' => 'Capín (Echinochloa spp.).',
+            'dosis' => '0,75 – 1 L/ha.',
+            'recomendaciones_de_uso' => 'Aplicar cuando las gramíneas están en activo crecimiento, las mismas deben tener entre 3 hojas verdaderas y 1 a 2 macollos. Para un control más efectivo, se debe proceder a inundar definitivamente el cultivo a las 24 horas posteriores a la aplicación del producto.',
+            'imagen' => '/images/productos/Claron36-producto.jpg',
+            'imagen_portada' => '/images/productos/Claron36-portada.jpg',
+            'pdfs' => ['/PDFs/Claron36 - Marbete.pdf', '/PDFs/Claron36 - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Claron36 - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
 
+        // 4. Asociar Cultivos
+        $cultivoArrozClaron36 = Cultivo::firstOrCreate(['nombre' => 'Arroz']);
+        $productoClaron36->cultivos()->sync([$cultivoArrozClaron36->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolArrozPostClaron36 = ArbolRecomendacion::firstOrCreate(['nombre' => 'Arroz en post emergencia']);
+        $productoClaron36->arbolesRecomendacion()->sync([$arbolArrozPostClaron36->id]);
+
+        #endregion
+
+        #region Producto 13: DARREN®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaDarren = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoDarren = PrincipioActivo::firstOrCreate(['nombre' => 'Flumioxazin 48%']);
+
+        // 3. Crear el Producto
+        $productoDarren = Producto::create([
+            'nombre' => 'DARREN®',
+            'categoria_id' => $categoriaHerbicidaDarren->id,
+            'principio_activo_id' => $principioActivoDarren->id,
+            'formulacion' => 'Suspensión Concentrada (SC)',
+            'descripcion' => 'Es un herbicida selectivo pre-siembra, para combatir malezas latifoliadas y suprimir gramíneas en los cultivos de soja, sorgo granífero, trigo, girasol y maíz. Actúa por contacto con un excelente poder residual. Es un herbicida que se activa con la luz, cuando es absorbido por las partes verdes de las malezas, destruyendo las membrana celular, lo que produce una necrosis de los tejidos. Cuando es aplicado a la superficie del suelo, es absorbido por las plántulas en germinación causando necrosis de los brotes e inhibición del crecimiento de las raíces.',
+            'accion' => 'Contacto, sistémico y residual.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinógeno oxidasa (PPO). Grupo E.',
+            'malezas' => 'Afata hembra, Albahaca silvestre, Ataco, Bejuco, Camambú, Campanilla, Capín arroz, Cardo asnal, Cardo negro, Cardo pendiente, Cardo ruso, Cebadilla, Cerraja, Chamico, Chinchilla, Cien nudos, Cola de zorro, Corregüela, Enredadera anual, Farolito, Flor de Santa Lucía, Gramillón, Gramón, Lagunilla, Lengua de vaca, Malva, Malva cimarrona, Morenita, Mostacilla, Nabo, Nabón, No me olvides, Ortiga, Ortiga mansa, Pasto braquiaria, Pasto colorado, Pasto de cuaresma, Quinoa blanca, Rabaniza, Rama negra, Ryegrass, Senecio, Sunchillo, Trébol de color blanco, Tutia, Verdolaga, Verónica, Violeta silvestre, Yuyo colorado.',
+            'dosis' => "Girasol, Maíz, Sorgo granífero: 0,05-0,1 L/ha.\nSoja: 0,104-0,156 L/ha.\nTrigo: 0,1-0,12 L/ha.",
+            'recomendaciones_de_uso' => 'En aplicaciones de pre-siembra del cultivo, entre la aplicación de DARREN y la siembra debe transcurrir para el cultivo de soja 7 días, maíz y sorgo granífero 20-30 días, girasol 20-30 días para las dosis de 0,050 L/ha y 45-60 días para las dosis superiores, y trigo 15 días.',
+            'imagen' => '/images/productos/Darren-producto.jpg',
+            'imagen_portada' => '/images/productos/Darren-portada.png',
+            'pdfs' => ['/PDFs/Darren - Marbete.pdf', '/PDFs/Darren - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Darren - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosDarrenNombres = ['Cerezas', 'Ciruelas', 'Cítricos', 'Damasco', 'Durazno', 'Girasol', 'Maíz', 'Pelón', 'Soja', 'Sorgo granífero', 'Trigo', 'Vid'];
+        $cultivoDarrenIds = [];
+        foreach ($cultivosDarrenNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoDarrenIds[] = $cultivo->id;
+        }
+        $productoDarren->cultivos()->sync($cultivoDarrenIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesDarrenNombres = [
+            'Trigo y cebada en barbecho',
+            'Sorgo en barbecho',
+            'Girasol en barbecho corto primavera',
+            'Maíz en barbecho',
+            'Soja en barbecho corto primavera'
+        ];
+        $arbolDarrenIds = [];
+        foreach ($arbolesDarrenNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolDarrenIds[] = $arbol->id;
+        }
+        $productoDarren->arbolesRecomendacion()->sync($arbolDarrenIds);
+
+        #endregion
+
+        #region Producto 14: DASEN®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaDasen = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoDasen = PrincipioActivo::firstOrCreate(['nombre' => 'Benazolin-etil 50%']);
+
+        // 3. Crear el Producto
+        $productoDasen = Producto::create([
+            'nombre' => 'DASEN®',
+            'categoria_id' => $categoriaHerbicidaDasen->id,
+            'principio_activo_id' => $principioActivoDasen->id,
+            'formulacion' => 'Suspensión Concentrada',
+            'descripcion' => 'Dasen® es un herbicida post emergente sistémico para el cultivo de soja y maní, que controla malezas de hoja ancha en post emergencia de las mismas, especialmente posicionado para el control de Yuyo colorado. Es absorbido principalmente por hojas y traslocado rápidamente por floema. Las malezas presentan síntomas de detención de crecimiento, deformación de tallo y hoja, produciéndose su muerte a los 10 a 20 días.',
+            'accion' => 'Sistémico.',
+            'mecanismo_de_accion' => 'Acción similar al ácido indolacetico. (Auxinas sintéticas). Grupo O.',
+            'malezas' => 'Chamico, Malva, Quinoa, Yuyo Colorado.',
+            'dosis' => "Soja: 0,6 – 0,8 L/ha.\nManí: 0,5 – 0,6 L/ha.",
+            'recomendaciones_de_uso' => 'Debe aplicarse en el momento en que las malezas se encuentren en activo crecimiento y tengan entre 5 – 10 cm de altura. En caso de síntomas de sequía o bajas temperaturas, debe evitarse los tratamientos con Dasen.',
+            'imagen' => '/images/productos/Dasen-producto.jpg',
+            'imagen_portada' => '/images/productos/Dasen-portada.png',
+            'pdfs' => ['/PDFs/Dasen - Marbete.pdf', '/PDFs/Dasen - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Dasen - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosDasenNombres = ['Soja', 'Maní'];
+        $cultivoDasenIds = [];
+        foreach ($cultivosDasenNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoDasenIds[] = $cultivo->id;
+        }
+        $productoDasen->cultivos()->sync($cultivoDasenIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesDasenNombres = [
+            'Soja en post emergencia',
+            'Maní en post emergencia'
+        ];
+        $arbolDasenIds = [];
+        foreach ($arbolesDasenNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolDasenIds[] = $arbol->id;
+        }
+        $productoDasen->arbolesRecomendacion()->sync($arbolDasenIds);
+
+        #endregion
+
+        #region Producto 15: DASEN® PLUS
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaDasenPlus = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoDasenPlus = PrincipioActivo::firstOrCreate(['nombre' => 'Benazolin-etil 20% + Fomesafen 13,3%']);
+
+        // 3. Crear el Producto
+        $productoDasenPlus = Producto::create([
+            'nombre' => 'DASEN® PLUS',
+            'categoria_id' => $categoriaHerbicidaDasenPlus->id,
+            'principio_activo_id' => $principioActivoDasenPlus->id,
+            'formulacion' => 'Suspensión Concentrada (SC)',
+            'descripcion' => 'Dasen Plus es un herbicida especialmente diseñado para el control de Yuyo colorado, en post emergencia del cultivo de soja. Dasen Plus es el único producto del mercado que combina el efecto de contacto del Fomesafen y la sistemia de Benazolin-etil, garantizando mayores controles y disminuyendo la posibilidad de rebrotes. Formulación exclusiva con excelente compatibilidad con el glifosato.',
+            'accion' => 'Contacto y sistémico.',
+            'mecanismo_de_accion' => 'Benazolín-etil: Acción similar al ácido indolacetico (Auxina sintética). Grupo O. Fomesafen: Inhibidor de la enzima Protoporfirinógeno oxidasa (PPO). Grupo E.',
+            'malezas' => 'Yuyo Colorado.',
+            'dosis' => 'Soja: 1,5 L/ha.',
+            'recomendaciones_de_uso' => 'Aplicar una vez que todas las malezas hayan emergido y se encuentren en activo crecimiento. No aplicar con malezas de tamaño superiores a 12 cm. No aplicar con aceite.',
+            'imagen' => '/images/productos/Dasen-plus-producto.jpg',
+            'imagen_portada' => '/images/productos/Dasen-plus-portada.png',
+            'pdfs' => ['/PDFs/Dasen Plus - Marbete.pdf', '/PDFs/Dasen Plus - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Dasen Plus - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoSojaDasenPlus = Cultivo::firstOrCreate(['nombre' => 'Soja']);
+        $productoDasenPlus->cultivos()->sync([$cultivoSojaDasenPlus->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolSojaPostDasenPlus = ArbolRecomendacion::firstOrCreate(['nombre' => 'Soja en post emergencia']);
+        $productoDasenPlus->arbolesRecomendacion()->sync([$arbolSojaPostDasenPlus->id]);
+
+        #endregion
+
+        #region Producto 16: ECTRAN® PLUS
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaEctran = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoEctran = PrincipioActivo::firstOrCreate(['nombre' => 'Bispyribac-sodio + quinclorac']);
+
+        // 3. Crear el Producto
+        $productoEctran = Producto::create([
+            'nombre' => 'ECTRAN® PLUS',
+            'categoria_id' => $categoriaHerbicidaEctran->id,
+            'principio_activo_id' => $principioActivoEctran->id,
+            'formulacion' => 'Polvo mojable (WP)',
+            'descripcion' => "Ectran plus es un herbicida selectivo y post-emergente para el cultivo de arroz. Controla gramíneas, latifoliadas y ciperáceas, actuando sobre malezas nacidas y sobre los futuros nacimientos debido al poder residual.\n\nECTRAN PLUS combina Bispiribac sodio y Quinclorac.\n\nBispiribac sodio es un herbicida post-emergente para cultivos de arroz de inundación y secano. Es de acción sistémica y selectiva, con la característica de ser absorbido tanto por el follaje como por las raíces de gramíneas, ciperáceas y latifoliadas.\n\nQuinclorac es un herbicida sistémico, con efecto residual en el cultivo de arroz indicado especialmente para el control de Echinochloa (Capín) como así también de otras malezas de hoja ancha y gramíneas. Es absorbido por semillas en germinación, por las raíces y también por vía foliar. Debido a su efecto residual controla capín que germina luego de su aplicación.",
+            'accion' => 'Sistémico.',
+            'mecanismo_de_accion' => 'Bispiribac sodio: Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B. Quinclorac: Inhibidor de la síntesis de celulosa. Grupo A.',
+            'malezas' => 'Chacrilla (Echinocloa cruspavonis), Pasto bandera (Urochloa platyphyla), Arroz-maleza (Oryza sativa L. f. spontanea), Pasto colonial o colorado (Echinochloa colonum), Pata de gallo (Echinochloa crus-galli), Duraznillo de agua (Ludwigia bonariensis), Papiro bravo (Cyperus virens), Chufa (Ciperus esculentus), Chufa salvaje (Cyperus esculentus var. legotoschyus).',
+            'dosis' => '1 Kg/ha de ECTRAN PLUS + 0,5 L/ha de Zinax.',
+            'recomendaciones_de_uso' => 'Para lograr un control más efectivo debe procederse a inundar definitivamente el cultivo 4 días después de la aplicación del producto. El caldo deberá usarse dentro de las 24 horas de preparado, caso contrario puede haber degradación del principio activo. De usarse una mezcla con otro plaguicida, cargar éste después de haberse homogeneizado la carga del herbicida. No aplicar con vientos superiores a 10 km/h, ni en condiciones de estrés hídrico y/o inversión térmica.',
+            'imagen' => '/images/productos/Ectran-plus-producto.jpg',
+            'imagen_portada' => '/images/productos/Ectran-plus-portada.jpg',
+            'pdfs' => ['/PDFs/Ectran Plus - Marbete.pdf', '/PDFs/Ectran Plus - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Ectran Plus - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoArrozEctran = Cultivo::firstOrCreate(['nombre' => 'Arroz']);
+        $productoEctran->cultivos()->sync([$cultivoArrozEctran->id]);
+
+        // 5. NO tiene Árboles de Recomendación
+
+        #endregion
+
+        #region Producto 17: ECTRAN®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaEctranSimple = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoEctranSimple = PrincipioActivo::firstOrCreate(['nombre' => 'Bispyribac-sodio 40%']);
+
+        // 3. Crear el Producto
+        $productoEctranSimple = Producto::create([
+            'nombre' => 'ECTRAN®',
+            'categoria_id' => $categoriaHerbicidaEctranSimple->id,
+            'principio_activo_id' => $principioActivoEctranSimple->id,
+            'formulacion' => 'Suspensión Concentrada (SC)',
+            'descripcion' => 'Es un herbicida post-emergente selectivo para el cultivo de arroz de inundación y secano. Permite controlar gramíneas, ciperáceas y latifoliadas.',
+            'accion' => 'Sistémico.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B.',
+            'malezas' => 'Gramíneas: Capín de arroz, Chacrilla, Colas de Zorro, Pasto colorado, Pasto de cuaresma, Pasto braquiaria, Canutillo. Latifoliadas: Eclipsa, Barba de indio, Yuyo colorado, Saetilla, Verdolaga, Flor de Santa Lucía, Camambú, Lagunilla, Ludwigia, Capelonia, Cala de agua, Pontederia, Poligonum, Espina colorada. Ciperáceas: Cipero entrerriano, Chufa salvaje, Totorilla, Junquillo, Eleocharis, Cipero común.',
+            'dosis' => '0,1 L/ha.',
+            'recomendaciones_de_uso' => 'El producto debe ser aplicado 14 a 21 días luego de emergidas las plántulas de arroz y con malezas en estado de 2da a 5ta hoja verdadera (gramíneas y ciperáceas) ó en estado de roseta (latifoliadas) de hasta 10 cm de diámetro de las mismas. El tratamiento en el estado de activo crecimiento de las malezas es indispensable para que se produzca una buena absorción y traslocación del producto previo a la entrada del agua de inundación. Para lograr un control más efectivo debe inundarse definitivamente el cultivo 4 días después de la aplicación del producto.',
+            'imagen' => '/images/productos/Ectran-portada.png',
+            'imagen_portada' => '/images/productos/Ectran-portada.png',
+            'pdfs' => ['/PDFs/Ectran - Marbete.pdf', '/PDFs/Ectran - Hoja de Datos de Seguridad (MSDS).pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoArrozEctranSimple = Cultivo::firstOrCreate(['nombre' => 'Arroz']);
+        $productoEctranSimple->cultivos()->sync([$cultivoArrozEctranSimple->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolArrozPostEctranSimple = ArbolRecomendacion::firstOrCreate(['nombre' => 'Arroz en post emergencia']);
+        $productoEctranSimple->arbolesRecomendacion()->sync([$arbolArrozPostEctranSimple->id]);
+
+        #endregion
+
+        #region Producto 18: FLOSIL® 50
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaFlosil = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoFlosil = PrincipioActivo::firstOrCreate(['nombre' => 'Fomesafen 50%']);
+
+        // 3. Crear el Producto
+        $productoFlosil = Producto::create([
+            'nombre' => 'FLOSIL® 50',
+            'categoria_id' => $categoriaHerbicidaFlosil->id,
+            'principio_activo_id' => $principioActivoFlosil->id,
+            'formulacion' => 'Concentrado Soluble (SL)',
+            'descripcion' => 'FLOSIL 50 es un herbicida post-emergente selectivo para los cultivos de soja, maní y poroto, que controla malezas de hoja ancha. Actúa por contacto, por lo que requiere de una aplicación cuidadosa para lograr una buena cobertura de las malezas y asegurar los mejores resultados. FLOSIL 50 es un producto concentrado, lo que permite reducir el uso de bidones, mejorando así la logística, el almacenamiento y la disminución en el uso de plástico siendo más amigables con el medio ambiente.',
+            'accion' => 'Contacto.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinógeno oxidasa (PPO). Grupo E.',
+            'malezas' => 'Bejuco (Ipomoea spp), Chamico (Datura ferox), Malva (Anoda cristata), Quinoa (Chenopodium álbum), Yuyo Colorado (Amaranthus sp), Verdolaga (Portulaca oleracea), Farolito (Nicandra physaloides), Chinchilla (Tagetes minuta), Lecherón (Euphorbia heterophylla), Nabo (Brassica campestris).',
+            'dosis' => 'Soja y Poroto: 0,35-0,7 L/ha.',
+            'recomendaciones_de_uso' => 'Aplicar después de que todas las malezas hayan emergido, cuando las mismas sean jóvenes (preferentemente no mayor a 5 cm) y en activo crecimiento. Para aplicaciones con Glifosato, se recomienda usar altos volúmenes de agua. Aplicar con humectante no iónico.',
+            'imagen' => '/images/productos/Flosil50-producto.jpg',
+            'imagen_portada' => '/images/productos/Flosil50-portada.png',
+            'pdfs' => ['/PDFs/Flosil 50 - Marbete.pdf', '/PDFs/Flosil 50 - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Flosil 50 - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosFlosilNombres = ['Maní', 'Poroto', 'Soja'];
+        $cultivoFlosilIds = [];
+        foreach ($cultivosFlosilNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoFlosilIds[] = $cultivo->id;
+        }
+        $productoFlosil->cultivos()->sync($cultivoFlosilIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesFlosilNombres = [
+            'Soja en post emergencia',
+            'Maní en post emergencia',
+            'Poroto en post emergencia'
+        ];
+        $arbolFlosilIds = [];
+        foreach ($arbolesFlosilNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolFlosilIds[] = $arbol->id;
+        }
+        $productoFlosil->arbolesRecomendacion()->sync($arbolFlosilIds);
+
+        #endregion
+
+        #region Producto 19: FLOUX®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaInsecticidaFloux = Categoria::firstOrCreate(['nombre' => 'Insecticidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoFloux = PrincipioActivo::firstOrCreate(['nombre' => 'Acetamiprid 2% + Lambdacialotrina 2%']);
+
+        // 3. Crear el Producto
+        $productoFloux = Producto::create([
+            'nombre' => 'FLOUX®',
+            'categoria_id' => $categoriaInsecticidaFloux->id,
+            'principio_activo_id' => $principioActivoFloux->id,
+            'formulacion' => 'Dispersión oleosa (OD)',
+            'descripcion' => 'Es un insecticida que combina 2 ingredientes activos que aseguran una acción de contacto y una prolongada actividad residual para un amplio espectro de plagas en el cultivo de soja. El Acetamiprid, es un neonicotinoide sistémico de alta residualidad que controla insectos succionadores, mientras la Lambdacialotrina es un piretroide que actúa sobre insectos succionadores y masticadores, otorgando poder de volteo. Debido a su exclusiva formulación OD (Dispersión Oleosa), no requiere del agregado de aceite. El coadyuvante elegido es específico para insecticidas y está basado en aceite vegetal. Su incorporación incrementa la actividad biológica, facilita su distribución en el caldo y permite una aplicación efectiva del producto en el cultivo.',
+            'accion' => 'Contacto e Ingestión.',
+            'mecanismo_de_accion' => 'Acetamiprid: Antagonista de los receptores nicotínicos de la acetilcolina (Grupo 4). Lambdacialotrina: Actúa a nivel de los canales de sodio (Grupo 3).',
+            'malezas' => 'Chinche verde, Chinche de la alfalfa, Chinche marrón, Alquiche chico, Arañuela roja común, Oruga de las leguminosas, Oruga medidora, Trips, Tucuras y Picudos.',
+            'dosis' => '1 L/ha. No requiere agregado de aceite.',
+            'recomendaciones_de_uso' => 'Aplicar en el momento oportuno según el nivel de infestación de la plaga.',
+            'imagen' => '/images/productos/Floux-producto.jpg',
+            'imagen_portada' => '/images/productos/Floux-portada.png',
+            'pdfs' => ['/PDFs/Floux - Marbete.pdf', '/PDFs/Floux - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Floux - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoSojaFloux = Cultivo::firstOrCreate(['nombre' => 'Soja']);
+        $productoFloux->cultivos()->sync([$cultivoSojaFloux->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolSojaPostFloux = ArbolRecomendacion::firstOrCreate(['nombre' => 'Soja en post emergencia']);
+        $productoFloux->arbolesRecomendacion()->sync([$arbolSojaPostFloux->id]);
+
+        #endregion
+
+        #region Producto 20: FLUSAN®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaFlusan = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoFlusan = PrincipioActivo::firstOrCreate(['nombre' => 'Diflufenican 50%']);
+
+        // 3. Crear el Producto
+        $productoFlusan = Producto::create([
+            'nombre' => 'FLUSAN®',
+            'categoria_id' => $categoriaHerbicidaFlusan->id,
+            'principio_activo_id' => $principioActivoFlusan->id,
+            'formulacion' => 'Suspensión concentrada (SC)',
+            'descripcion' => 'FLUSAN es un herbicida pre-emergente, que controla malezas de hoja ancha que afectan a pasturas y el cultivo de girasol. También se aplica en barbecho químico de soja y maíz respetando un periodo de pre-siembra de 60 a 15 días antes de la siembra de los cultivos. La absorción es por vía del hipocótile, durante la germinación de las malezas. Al aplicarlo, forma una barrera en la superficie del suelo, siendo absorbido por las plántulas de las malezas. El síntoma es una rápida decoloración, produciéndose la muerte de las mismas en un plazo de 5 días.',
+            'accion' => 'Pre-emergente.',
+            'mecanismo_de_accion' => 'Inhibidor de la síntesis de carotenoides. (Grupo F1).',
+            'malezas' => 'Abrepuño amarillo (Centaura solstisialis), Afata hembra (Sida spinosa), Albahaca silvestre (Galinsoga parviflora), Algodonosa/pelludilla (Gamochaetta spp.), Bolsa del pastor (Capsella bursa pastoris), Calabacilla (Silene gallica), Canchalagua (Veronica arvensis), Capiquí (Stellaria media), Cardo ruso (Salsola kali), Chamico (Datura ferox), Chinchilla (Tagetes minuta), Enredadera anual (Polygonum convolvolus), Lengua de vaca (Rumex crispus), Malva cimarrona (Anoda cristata), Manzanilla cimarrona (Anthemis cotula), Mastuerzo (Coronopus dydimus), Morenita (Kochia escoparia), Mostacilla (Rapistrum rugosom), Nabo (Brassica campestris), Nabón (Raphanus sativus), Ortiga (Urtica urens), Ortiga mansa (Lamiun amplexicaule), Pensamiento silvestre (Viola arvensis), Perejillo (Bowlesia incana), Quinoa (Chenopodium album), Rama negra (Conyza bonarensis), Sanguinaria (Polygonum aviculare), Verdolaga (Portulaca oleracea), Yuyo colorado (Amaranthus sp.).',
+            'dosis' => "BARBECHO QUÍMICO: 0,2-0,3 L/ha respetando un periodo pre-siembra de entre 60 y 15 días antes de la fecha de siembra en cultivos de soja y maíz.\nGIRASOL: 0,2-0,35 L/ha dependiendo del tipo de suelo.\nPASTURAS: 0,1 L/ha siempre en mezcla.",
+            'recomendaciones_de_uso' => 'Aplicar en pre-emergencia del cultivo, respetando los periodos de pre-siembra indicados según el cultivo.',
+            'banda' => 'Verde',
+            'imagen' => '/images/productos/Flusan-producto.jpg',
+            'imagen_portada' => '/images/productos/Flusan-portada.png',
+            'pdfs' => ['/PDFs/Flusan - Marbete.pdf', '/PDFs/Flusan - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Flusan - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosFlusanNombres = ['Barbechos químicos', 'Girasol', 'Praderas puras y consociadas', 'Soja', 'Maíz'];
+        $cultivoFlusanIds = [];
+        foreach ($cultivosFlusanNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoFlusanIds[] = $cultivo->id;
+        }
+        $productoFlusan->cultivos()->sync($cultivoFlusanIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesFlusanNombres = [
+            'Trigo y cebada en barbecho',
+            'Girasol en barbecho corto primavera',
+            'Girasol en pre emergencia',
+            'Maíz en barbecho',
+            'Soja en barbecho corto primavera'
+        ];
+        $arbolFlusanIds = [];
+        foreach ($arbolesFlusanNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolFlusanIds[] = $arbol->id;
+        }
+        $productoFlusan->arbolesRecomendacion()->sync($arbolFlusanIds);
+
+        #endregion
 
         //No borrar este espacio
     }
