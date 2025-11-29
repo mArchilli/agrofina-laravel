@@ -449,9 +449,9 @@ function ProductCard({ producto }) {
 
 function Hero() {
     return (
-        <section className="relative w-full overflow-hidden h-[46vh]" aria-label="Imagen principal - Productos">
+        <section className="relative w-full overflow-hidden h-[60vh]" aria-label="Imagen principal - Productos">
             <div
-                className="h-[46vh] w-full bg-cover bg-center"
+                className="h-[60vh] w-full bg-cover bg-center"
                 style={{ backgroundImage: `url(${bannerImg})` }}
                 aria-hidden
             />

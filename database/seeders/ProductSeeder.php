@@ -1021,5 +1021,493 @@ class ProductSeeder extends Seeder
         $arbolSojaPostKier = ArbolRecomendacion::firstOrCreate(['nombre' => 'Soja en post emergencia']);
         $productoKier->arbolesRecomendacion()->sync([$arbolSojaPostKier->id]);
         #endregion
+
+        #region Producto 28: KATRIN 80®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaKatrin = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoKatrin = PrincipioActivo::firstOrCreate(['nombre' => 'Imazapir 80%']);
+
+        // 3. Crear el Producto
+        $productoKatrin = Producto::create([
+            'nombre' => 'KATRIN® 80',
+            'categoria_id' => $categoriaHerbicidaKatrin->id,
+            'principio_activo_id' => $principioActivoKatrin->id,
+            'formulacion' => 'Polvo Soluble (SP)',
+            'descripcion' => "KATRIN 80 es un herbicida sistémico para uso pre- y post-emergente de las malezas con acción residual y de control, utilizado en cultivos de caña de azúcar y girasol tolerantes a las imidazolinonas, así como en pre-plantación de pino taeda.\n\nUna vez aplicado, las malezas detienen su desarrollo, ocurriendo la muerte de aquellas luego de 3 a 4 semanas.",
+            'accion' => 'Sistémico, residual.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B.',
+            'malezas' => "Abrojo chico, Abrojo grande, Albahaca silvestre, Ambay, Amor seco, Bananita, Cebadilla del campo, Chamico, Charrua, Chinchilla, Cola de zorro, Enredadera perenne, Flor de San Juan, Fumo bravo, Gramilla, Horquetera, Lecherón, Malva cimarrona, Maria mola, Matacampo, Mocopavo, Ortiga gigante, Paitén, Pasto bandera, Pasto de cuaresma, Pasto jesuita, Pasto yacaré, Pata de gallina, Peludilla, Quinoa, Roseta, Sanguinaria, Setaria, Tartago, Yuquery.\n\nControl Parcial de: Apio cimarrón, Cebollín, Chufa, Enredadera anual.",
+            'dosis' => "Girasol: 0.1 Kg/ha.\nCaña de azúcar: 0.6 kg/ha.\nPino Taeda: 0.5 kg/ha.",
+            'recomendaciones_de_uso' => "Girasol: No aplicar en casos de falta de humedad prolongada y cuando las malezas presenten síntomas de marchitez. Usar solamente en girasol tolerante a las imidazolinonas. Aplicación en post-emergencia temprana del cultivo y de las malezas.\n\nPino Taeda: Se debe aplicar en pre-plantación. Preparar el terreno procurando una baja cantidad de rastrojo y restos leñosos que interfieran en la aplicación; en el caso de uso de rastra, dejarlo libre de terrones y grandes desniveles, aplicar el producto con maleza emergida y dejar transcurrir entre la aplicación del producto y la plantación del cultivo un período de 15 a 30 días.",
+            'imagen' => '/images/productos/Katrin80-producto.jpg',
+            'imagen_portada' => '/images/productos/Katrin80-portada.png',
+            'pdfs' => ['/PDFs/Katrin 80 - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Katrin 80 - Marbete.pdf', '/PDFs/Katrin 80 - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosKatrinNombres = ['Girasol', 'Pino taeda', 'Caña de azúcar'];
+        $cultivoKatrinIds = [];
+        foreach ($cultivosKatrinNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoKatrinIds[] = $cultivo->id;
+        }
+        $productoKatrin->cultivos()->sync($cultivoKatrinIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolGirasolPost = ArbolRecomendacion::firstOrCreate(['nombre' => 'Girasol en post emergencia']);
+        $productoKatrin->arbolesRecomendacion()->sync([$arbolGirasolPost->id]);
+
+        #endregion
+
+        #region Producto 29: KIER III PLUS®
+
+        // 1. Buscar o crear la Categoría
+        $categoriaInsecticidaKier = Categoria::firstOrCreate(['nombre' => 'Insecticidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoKier = PrincipioActivo::firstOrCreate(['nombre' => 'Abamectina 0,9% + Lufenuron 7,5% + Bifentrín 9 %']);
+
+        // 3. Crear el Producto
+        $productoKier = Producto::create([
+            'nombre' => 'KIER III PLUS®',
+            'categoria_id' => $categoriaInsecticidaKier->id,
+            'principio_activo_id' => $principioActivoKier->id,
+            'formulacion' => 'EC (Concentrado Emulsionable)',
+            'descripcion' => "Es una triple mezcla de insecticidas para el cultivo de soja, compuesta por abamectina, lufenuron y bifentrin, con gran poder de volteo y prolongado efecto residual.\n\nRecomendado para el control de orugas defoliadoras. La presencia de abamectina y bifentrin refuerza la acción contra plagas de difícil control como arañuelas y trips.",
+            'accion' => 'Contacto e ingestión.',
+            'mecanismo_de_accion' => 'Bifentrin: Actúa a nivel de los canales de sodio (Grupo 15). Lufenuron: Inhibidor de la síntesis de quitina (IGR) (Grupo 3A). Abamectina: Actúa modulando los canales de cloro (Grupo 6).',
+            'malezas' => 'Oruga de las leguminosas, Isoca medidora, Trips y Arañuela roja común.',
+            'dosis' => '0.2 L/ha + 0.5 L/ha Zinax (EMAG).',
+            'recomendaciones_de_uso' => 'Leer atentamente el marbete. Aplicar SIEMPRE con el agregado de 0.5 L/ha Zinax (EMAG).',
+            'imagen' => '/images/productos/Kier-III-Plus-producto.jpg',
+            'imagen_portada' => '/images/productos/Kier-III-Plus-portada.jpg',
+            'pdfs' => ['/PDFs/Kier III Plus - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Kier III Plus - Marbete.pdf', '/PDFs/Kier III Plus - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoSojaKier = Cultivo::firstOrCreate(['nombre' => 'Soja']);
+        $productoKier->cultivos()->sync([$cultivoSojaKier->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolSojaPostKier = ArbolRecomendacion::firstOrCreate(['nombre' => 'Soja en post emergencia']);
+        $productoKier->arbolesRecomendacion()->sync([$arbolSojaPostKier->id]);
+
+        #endregion
+
+        #region Producto 30: Kylian® 48
+
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaKylian = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoKylian = PrincipioActivo::firstOrCreate(['nombre' => 'Cletodim 48%']);
+
+        // 3. Crear el Producto
+        $productoKylian = Producto::create([
+            'nombre' => 'KYLIAN® 48',
+            'categoria_id' => $categoriaHerbicidaKylian->id,
+            'principio_activo_id' => $principioActivoKylian->id,
+            'formulacion' => 'Concentrado Emulsionable (EC)',
+            'descripcion' => "Cletodim 48% es un herbicida graminicida sistémico y selectivo de post emergencia desarrollado para los cultivos de SOJA, MAÍZ, GIRASOL, MANÍ, ALGODÓN Y POROTO.\n\nKylian 48, inhibe la enzima acetil coenzima A carboxilasa (ACCasa) responsable de la biosintisis de lípidos, Los síntomas se manifiestan entre una y tres semanas posteriores a la aplicación, dependiendo de la especie y las condiciones ambientales.",
+            'accion' => 'Sistémico.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima acetil coenzima A carboxilasa (ACCasa).',
+            'malezas' => 'Capín arroz, Pasto de cuaresma, Pie de gallina, Sorgo de Alepo de semilla y de rizoma, Trigo guacho, Gramón, Pasto bermuda, Pasto puna, Maíz guacho tolerante a glifosato, Paja viscachera, Pasto salado, Pelo de chancho.',
+            'dosis' => 'En gramíneas anuales varía entre 200 y 300 cc/ha dependiendo del clima y del suelo. En gramíneas perennes requiere dosis mayores, hasta 500 cc/ha en sorgo y Alepo y hasta 1.2 L/ha en gramón. Aplicar siempre con 500 cc/ha de ZINAX.',
+            'recomendaciones_de_uso' => 'Realizar los tratamientos con buenas condiciones de humedad en el suelo y con las malezas en activo crecimiento. Evitar la superposición durante la aplicación y que la deriva afecte a cultivos adyacentes. No realizar aplicaciones con altas temperaturas, baja humedad, vientos fuertes, presencia de rocío o ante probabilidad de lluvia. El viento no debe exceder los 10 km/h y tampoco aplicar en ausencia total de viento, ni durante las horas de máxima insolación.',
+            'imagen' => '/images/productos/Kylian48-producto.jpg',
+            'imagen_portada' => '/images/productos/Kylian48-portada.png',
+            'pdfs' => ['/PDFs/Kylian 48 - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Kylian 48 - Marbete.pdf', '/PDFs/Kylian 48 - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosKylianNombres = ['Alfalfa', 'Algodón', 'Cebolla', 'Girasol', 'Maní', 'Papa', 'Poroto', 'Soja'];
+        $cultivoKylianIds = [];
+        foreach ($cultivosKylianNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoKylianIds[] = $cultivo->id;
+        }
+        $productoKylian->cultivos()->sync($cultivoKylianIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesKylianNombres = [
+            'Alfalfa en post emergencia',
+            'Soja en post emergencia',
+            'Girasol en post emergencia',
+            'Maní en post emergencia',
+            'Poroto en post emergencia'
+        ];
+        $arbolKylianIds = [];
+        foreach ($arbolesKylianNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolKylianIds[] = $arbol->id;
+        }
+        $productoKylian->arbolesRecomendacion()->sync($arbolKylianIds);
+
+        #endregion
+
+        #region Producto 31: LISI® 
+
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaLisi = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoLisi = PrincipioActivo::firstOrCreate(['nombre' => 'Quinclorac 25 %']);
+
+        // 3. Crear el Producto
+        $productoLisi = Producto::create([
+            'nombre' => 'LISI®',
+            'categoria_id' => $categoriaHerbicidaLisi->id,
+            'principio_activo_id' => $principioActivoLisi->id,
+            'formulacion' => 'Suspensión Concentrada (SC)',
+            'descripcion' => "LISI® es un herbicida sistémico post-emergente selectivo, con efecto residual en el cultivo de arroz, indicado especialmente para el control de Echinochloa (Capín), como también para malezas de hoja ancha y otras gramíneas.",
+            'accion' => 'Sistémico post-emergente.',
+            'mecanismo_de_accion' => 'Acción similar al ácido indolacético (Auxinas sinteticas).',
+            'malezas' => 'Capín resistente ALS, Pasto Colorado, Brachiaria, Bejuco.',
+            'presentacion' => 'Bidón de 5 Litros.',
+            'dosis' => '1.3 L/ha. Capín 1.5 L/ha.',
+            'recomendaciones_de_uso' => 'No aplicar en situaciones con humedad relativa menor al 60%, vientos mayores que 10 Km/h. No utilizar el agua procedente de arrozales tratados con LISI para regar otros cultivos. Luego de la aplicación, cerrar la salida de agua por el mayor tiempo posible (mínimo 7 días).',
+            'banda_toxicologica' => 'Azul',
+            'imagen' => '/images/productos/Lisi-producto.jpg',
+            'imagen_portada' => '/images/productos/Lisi-portada.jpg',
+            'pdfs' => ['/PDFs/Lisi - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Lisi - Marbete.pdf', '/PDFs/Lisi - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoArrozLisi = Cultivo::firstOrCreate(['nombre' => 'Arroz']);
+        $productoLisi->cultivos()->sync([$cultivoArrozLisi->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolArrozPostLisi = ArbolRecomendacion::firstOrCreate(['nombre' => 'Arroz en post emergencia']);
+        $productoLisi->arbolesRecomendacion()->sync([$arbolArrozPostLisi->id]);
+        
+        #endregion
+
+        #region Producto 32: MABYN
+
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaMabyn = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoMabyn = PrincipioActivo::firstOrCreate(['nombre' => '2,4-D Mezcla de sales 78,1 %. Equivalente ácido 2,4-D 34 %']);
+
+        // 3. Crear el Producto
+        $productoMabyn = Producto::create([
+            'nombre' => 'MABYN®',
+            'categoria_id' => $categoriaHerbicidaMabyn->id,
+            'principio_activo_id' => $principioActivoMabyn->id,
+            'formulacion' => 'SL (Concentrado Soluble)',
+            'descripcion' => "Exclusiva fomulación de 2,4-D con comprobada ultra baja volatilidad.\n\nPermite aplicar dosis con cantidades menores de ingrediente activo por hectárea comparadas con las demás sales y ésteres de 2,4-D, manteniendo la misma eficacia. Sin olor.\n\nHerbicida sistémico y de acción hormonal, para el control de malezas de hoja ancha en barbecho.\n\nMezcla de sales alquilamidopropildimetilamonio y dietanolamonio del ácido 2,4-D.",
+            'accion' => 'Sistémico.',
+            'mecanismo_de_accion' => 'Acción similar al acido indolacetico (Auxinas sinteticas). GRUPO O.',
+            'malezas' => 'Cerraja (Sonchus oleraceus), Escoba amarilla (Flaveria bidentis), Yuyo Colorado (Amarantus quitensis), Mastuerzo (Coronopus didymus), Bolsa de pastor (Capsella bursa-pastoris), Arrancamoños (Xanthium spinosum), Chamico (Datura ferox), Quínoa (Chenopodium album), Rama negra (Conyza sumatrensis), Verdolaga (Portulaca oleracea)',
+            'dosis' => '0.9 a 1.5 L/ha.',
+            'recomendaciones_de_uso' => 'Utilizar dosis inferiores contra malezas susceptibles, cuando sean pequeñas y en condiciones climáticas y suelo óptimas. Utilizar las dosis mayores cuando la maleza esté más desarrollada, o se trate de malezas mediana susceptibilidad.',
+            'imagen' => '/images/productos/Mabyn-producto.jpg',
+            'imagen_portada' => '/images/productos/Mabyn-portada.jpg',
+            'pdfs' => ['/PDFs/Mabyn - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Mabyn - Marbete.pdf', '/PDFs/Mabyn - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos - Barbecho
+        $cultivoBarbecho = Cultivo::firstOrCreate(['nombre' => 'Barbecho']);
+        $productoMabyn->cultivos()->sync([$cultivoBarbecho->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesMabynNombres = [
+            'Algodón en barbecho corto primavera',
+            'Arroz en barbecho corto primavera',
+            'Arroz en pre emergencia',
+            'Caña de azucar en barbecho',
+            'Trigo y cebada en pre emergencia',
+            'Trigo y cebada en barbecho',
+            'Sorgo en barbecho',
+            'Maíz en barbecho',
+            'Soja en barbecho corto primavera',
+            'Soja en barbecho largo'
+        ];
+        $arbolMabynIds = [];
+        foreach ($arbolesMabynNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolMabynIds[] = $arbol->id;
+        }
+        $productoMabyn->arbolesRecomendacion()->sync($arbolMabynIds);
+
+        #endregion
+
+        #region Producto 33: Maiz: Árbol de recomendación completo
+        
+        $productoMaizCompleto = Producto::create([
+            'nombre' => 'MAÍZ: Árbol de recomendación completo',
+            'imagen' => '/images/productos/Maiz-completo.jpg',
+            'imagen_portada' => '/images/productos/Maiz-completo.jpg',
+            'pdfs' => ['/PDFs/Maiz - Arbol de Recomendacion Completo.pdf'],
+            'activo' => true,
+        ]);
+
+        // Asociar Árbol de Recomendación
+        $arbolMaizCompleto = ArbolRecomendacion::firstOrCreate(['nombre' => 'Maíz (completo)']);
+        $productoMaizCompleto->arbolesRecomendacion()->sync([$arbolMaizCompleto->id]);
+
+        #endregion
+
+        #region Producto 34: Mani: Árbol de recomendación completo
+        $productoManiCompleto = Producto::create([
+            'nombre' => 'MANÍ: Árbol de recomendación completo',
+            'imagen' => '/images/productos/Mani-completo.jpg',
+            'imagen_portada' => '/images/productos/Mani-completo.jpg',
+            'pdfs' => ['/PDFs/Mani - Arbol de Recomendacion Completo.pdf'],
+            'activo' => true,
+        ]);
+
+        // Asociar Árbol de Recomendación
+        $arbolManiCompleto = ArbolRecomendacion::firstOrCreate(['nombre' => 'Maní (completo)']);
+        $productoManiCompleto->arbolesRecomendacion()->sync([$arbolManiCompleto->id]);
+
+        #endregion
+        
+        #region Producto 35: MANIAC®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaManiac = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoManiac = PrincipioActivo::firstOrCreate(['nombre' => 'Imazapic 70%']);
+
+        // 3. Crear el Producto
+        $productoManiac = Producto::create([
+            'nombre' => 'MANIAC®',
+            'categoria_id' => $categoriaHerbicidaManiac->id,
+            'principio_activo_id' => $principioActivoManiac->id,
+            'formulacion' => 'Polvo Soluble (SP)',
+            'descripcion' => "MANIAC es un herbicida sistémico selectivo pre- y post-emergente para los cultivos de maní y caña de azúcar tolerante a las imidazolinonas.\n\nUna vez aplicado, las malezas detienen su desarrollo, ocurriendo la muerte de aquellas luego de 3 a 4 semanas. MANIAC ejerce un control residual en las malezas susceptibles que germinan después de su aplicación. Se logra un excelente control de las malezas cuando las condiciones de humedad son óptimas en el cultivo.",
+            'accion' => 'Sistémico, residual.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B.',
+            'malezas' => 'Cebollín, Gramón, Sorgo de Alepo (Riz/Sem), Chufa, Pasto cuaresma, Verdolaga, Chamico, Malva, Quinoa.',
+            'dosis' => "Maní: 0.07-0.08 kg/ha.\nCaña de azúcar: 0.05 kg/ha.",
+            'recomendaciones_de_uso' => "Para el cultivo de caña de azúcar, se debe aplicar en pre-plantación, siendo el producto incorporado por el efecto de las lluvias posteriores, de no darse lluvias adecuadas, debe incorporarse mecánicamente.\n\nEn el caso del cultivo de maní, normalmente se aplica en pre-emergencia del cultivo y las malezas. Puede aplicarse en post-emergencia de las malezas, si estas son de escaso desarrollo.\n\nNo aplicar en condiciones de falta de humedad prolongada y cuando las malezas presentan síntomas de marchitez.",
+            'imagen' => '/images/productos/Maniac-producto.jpg',
+            'imagen_portada' => '/images/productos/Maniac-portada.png',
+            'pdfs' => ['/PDFs/Maniac - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Maniac - Marbete.pdf', '/PDFs/Maniac - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosManiacNombres = ['Maní', 'Caña de azúcar'];
+        $cultivoManiacIds = [];
+        foreach ($cultivosManiacNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoManiacIds[] = $cultivo->id;
+        }
+        $productoManiac->cultivos()->sync($cultivoManiacIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesManiacNombres = [
+            'Maní en pre emergencia',
+            'Maní en post emergencia'
+        ];
+        $arbolManiacIds = [];
+        foreach ($arbolesManiacNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolManiacIds[] = $arbol->id;
+        }
+        $productoManiac->arbolesRecomendacion()->sync($arbolManiacIds);
+
+        #endregion
+        
+        #region Producto 36: MARCH II®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaMarch = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoMarch = PrincipioActivo::firstOrCreate(['nombre' => 'Glifosato 66,2%']);
+
+        // 3. Crear el Producto
+        $productoMarch = Producto::create([
+            'nombre' => 'MARCH II®',
+            'categoria_id' => $categoriaHerbicidaMarch->id,
+            'principio_activo_id' => $principioActivoMarch->id,
+            'formulacion' => 'Concentración Soluble (SL)',
+            'descripcion' => "Herbicida postemergente, controla gramíneas, ciperáceas y malezas de hoja ancha.\n\nDe acción sistémica, es absorbido por hojas y tallos verdes y traslocado hacia las raíces y órganos vegetativos subterráneos, ocasionando la muerte total de las malezas emergidas. Se inactiva rápidamente en contacto con el suelo, por lo tanto no deja residuos y se puede sembrar después de su aplicación.",
+            'accion' => 'Sistémica.',
+            'mecanismo_de_accion' => 'Inhibidor de enolpiruvil-shikimato-3-fosfato sintasa (EPSP). Grupo G.',
+            'malezas' => "Anuales: Capín arroz (Echinochloa crus-galli), Pasto colorado (Echinochloa colonum) Pasto cuaresma o Pasto colchón (Digitaria sanguinalis), Pie de gallina (Eleusine indica), Abrojo grande (Xanthium cavanillesii), Chamico (Datura ferox), Chinchilla (Tagetes minuta), Malva cimarrona (Anoda cristata), Quinoa o Yuyo blanco (Chenopodium album) Verdolaga (Portulaca oleracea) Yuyo colorado o Ataco (Amaranthus quitensis)\n\nPerenne: Sorgo de Alepo (Sorghum halepense), Gramón (Cynodon dactylon)",
+            'dosis' => '1.6 – 2.9 L/ha para malezas anuales. 1.7 – 4.0 L/ha para malezas perennes.',
+            'recomendaciones_de_uso' => 'Aplicarse cuando las malezas se encuentran en activo crecimiento, con una altura menor a 15 cm, evitando aplicaciones sobre malezas cubiertas de tierra. No pulverizar si se preven lluvias durante las 6 horas posteriores a la aplicación o cuando el follaje de las malezas esté mojado.',
+            'imagen' => '/images/productos/March-II-producto.jpg',
+            'imagen_portada' => '/images/productos/March-II-portada.png',
+            'pdfs' => ['/PDFs/March II - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/March II - Marbete.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosMarchNombres = ['Alfalfa', 'Arroz', 'Algodón', 'Trigo', 'Cebada', 'Sorgo', 'Soja', 'Girasol', 'Maíz', 'Maní', 'Poroto', 'Caña de azúcar', 'Cítricos', 'Vid', 'Pinos', 'Yerba mate', 'Té', 'Barbecho'];
+        $cultivoMarchIds = [];
+        foreach ($cultivosMarchNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoMarchIds[] = $cultivo->id;
+        }
+        $productoMarch->cultivos()->sync($cultivoMarchIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesMarchNombres = [
+            'Alfalfa en barbecho',
+            'Alfalfa en pre emergencia',
+            'Alfalfa en post emergencia',
+            'Arroz en barbecho corto primavera',
+            'Caña de azúcar en barbecho',
+            'Algodón en barbecho corto primavera',
+            'Algodón en pre emergencia',
+            'Algodón en post emergencia',
+            'Trigo y cebada en barbecho',
+            'Sorgo en barbecho',
+            'Soja en post emergencia',
+            'Girasol en barbecho corto primavera',
+            'Maíz en barbecho',
+            'Maíz en post emergencia',
+            'Maní en barbecho corto primavera',
+            'Maní en pre emergencia',
+            'Poroto en barbecho',
+            'Soja en barbecho largo'
+        ];
+        $arbolMarchIds = [];
+        foreach ($arbolesMarchNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolMarchIds[] = $arbol->id;
+        }
+        $productoMarch->arbolesRecomendacion()->sync($arbolMarchIds);
+        
+        #endregion
+        
+        #region Producto 36: MARCH MAX® 
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaMarchMax = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoMarchMax = PrincipioActivo::firstOrCreate(['nombre' => 'Glifosato 75,7%']);
+
+        // 3. Crear el Producto
+        $productoMarchMax = Producto::create([
+            'nombre' => 'MARCH MAX®',
+            'categoria_id' => $categoriaHerbicidaMarchMax->id,
+            'principio_activo_id' => $principioActivoMarchMax->id,
+            'formulacion' => 'Gránulos Solubles',
+            'descripcion' => "March max es un herbicida no selectivo para el control postemergente de las malezas anuales y perennes en áreas agrícolas, industriales, caminos, vías férrea.\n\nDe acción sistemática, es absorbido por hojas y tallos verdes y traslocado hacia las raíces y órganos vegetativos subterráneos, ocasionando la muerte total de las malezas emergidas. Los efectos son lentos sobre todo en las especies perennes, donde después de transcurridos 4 a 5 días desde la aplicación comienza el amarillamiento y marchitamiento de las hojas y tallos que culminan con la muerte total de las malezas.",
+            'accion' => 'Sistémica.',
+            'mecanismo_de_accion' => 'Inhibidor de enolpiruvil-shikimato-3-fosfato sintasa (EPSP). Grupo G.',
+            'malezas' => "Anuales:\nGRAMINEAS: Capín /Pasto cañada (Echinochloa colonum), Capín (Echinochloa crus-galli), Cebadilla criolla (Bromus unioloides) Cola de zorro (Setaria spp.). Pasto cuaresma (Digitaria spp).\n\nLATIFOLIADAS: Yuyo Colorado / ataco (Amaranthus spp), Quinoa (Chenopodium album), Enredadera anual (Polygonum convolvulus), Ciennudos / sanguinaria (Polygonum aviculare), Chamico (Datura ferox), Amor seco / saetilla (Bidens pilosa).\n\nPerennes:\nSorgo de alepo/Cañota (Sorgum halepense), Gramón/gramilla/chepica (Cynodon Dactylon) Cebollín/cípero/junquillo (Cyperus rotundus), Cípero/junquillo (Cyperus esculentus), Camalote / Pasto de guinea (Panichum), Yuyo sapo (Wedelia glauca)",
+            'dosis' => "Malezas anuales: dosis de 1 kg/ha a 2.05 kg/ha.\nMalezas perennes: dosis de 1.25 kg/ha a 3 kg/ha.",
+            'recomendaciones_de_uso' => "Aplicarse cuando las malezas se encuentran en activo crecimiento, con una altura menor a 15 cm, evitando aplicaciones sobre malezas cubiertas de tierra. No pulverizar si se preven lluvias durante las 6 horas posteriores a la aplicación o cuando el follaje de las malezas esté mojado.\n\nEl glifosato pierde efectividad en presencia de aguas duras (aquellas con alto contenido de Calcio y Magnesio), Por lo cual se recomienda corregir la dureza del agua antes del agregado de MARCH MAX AGROFINA utilizando productos especiales disponibles para tal fin. Con respecto al pH de la solución se recomienda que el mismo sea neutro levemente ácido.",
+            'imagen' => '/images/productos/March-Max-producto.jpg',
+            'imagen_portada' => '/images/productos/March-Max-portada.jpg',
+            'pdfs' => ['/PDFs/March Max - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/March Max - Marbete.pdf', '/PDFs/March Max - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosMarchMaxNombres = ['Alfalfa', 'Arroz', 'Algodón', 'Trigo', 'Cebada', 'Sorgo', 'Soja', 'Girasol', 'Maíz', 'Maní', 'Poroto', 'Caña de azúcar', 'Cítricos', 'Vid', 'Pinos', 'Yerba mate', 'Té', 'Barbecho'];
+        $cultivoMarchMaxIds = [];
+        foreach ($cultivosMarchMaxNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoMarchMaxIds[] = $cultivo->id;
+        }
+        $productoMarchMax->cultivos()->sync($cultivoMarchMaxIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesMarchMaxNombres = [
+            'Alfalfa en barbecho',
+            'Alfalfa en pre emergencia',
+            'Alfalfa en post emergencia',
+            'Arroz en barbecho corto primavera',
+            'Caña de azúcar en barbecho',
+            'Algodón en barbecho corto primavera',
+            'Algodón en pre emergencia',
+            'Algodón en post emergencia',
+            'Trigo y cebada en barbecho',
+            'Sorgo en barbecho',
+            'Soja en post emergencia',
+            'Girasol en barbecho corto primavera',
+            'Maíz en barbecho',
+            'Maíz en post emergencia',
+            'Maní en barbecho corto primavera',
+            'Maní en pre emergencia',
+            'Poroto en barbecho',
+            'Soja en barbecho corto primavera',
+            'Soja en barbecho largo'
+        ];
+        $arbolMarchMaxIds = [];
+        foreach ($arbolesMarchMaxNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolMarchMaxIds[] = $arbol->id;
+        }
+        $productoMarchMax->arbolesRecomendacion()->sync($arbolMarchMaxIds);
+
+        #endregion
+        
+        #region Producto 36: MILLION®
+
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaMillion = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoMillion = PrincipioActivo::firstOrCreate(['nombre' => 'Lactofen 24%']);
+
+        // 3. Crear el Producto
+        $productoMillion = Producto::create([
+            'nombre' => 'MILLION®',
+            'categoria_id' => $categoriaHerbicidaMillion->id,
+            'principio_activo_id' => $principioActivoMillion->id,
+            'formulacion' => 'Concentrado Emulsionable (EC)',
+            'descripcion' => "MILLION es un herbicida post emergente de contacto y selectivo para cultivos de SOJA y MANÍ, que controla malezas latifoliadas. Cuando es absorbido por las partes verdes de las malezas se activa por la luz, destruyendo la membrana celular, lo que produce una necrosis de los tejidos vegetales. Sus síntomas comienzan a los 30 minutos de aplicado.",
+            'accion' => 'Contacto.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinogeno oxidasa (PPO). Grupo E',
+            'malezas' => 'Chamico, Chinchilla, Flor de Santa Lucía, Malva Cimarrona, Nabo, Yuyo Colorado, Verdolaga, Albahaca silvestre, Alkekenje, Farolito, Yuyo colorado resistente a ALS.',
+            'dosis' => "Maní: 0.250- 0.350 L/ha.\nSoja: 0.250 – 0.350 L/ha.",
+            'recomendaciones_de_uso' => "Aplicar una vez que todas las malezas hayan emergido, cuando las mismas sean jóvenes y en activo crecimiento.\n\nPara control de Yuyo Colorado resistente a ALS en soja consultar por mezcla con DASEN.\n\nNo aplicar bajo condiciones de sequía o en casos de falta de humedad prolongada y/o baja humedad relativa ambiente, no aplicar en horas del día de máxima insolación y alta temperatura, no aplicar en presencia de rocío, ni ante la inminencia de lluvias.",
+            'imagen' => '/images/productos/Million-producto.jpg',
+            'imagen_portada' => '/images/productos/Million-portada.png',
+            'pdfs' => ['/PDFs/Million - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Million - Marbete.pdf', '/PDFs/Million - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosMillionNombres = ['Maní', 'Soja'];
+        $cultivoMillionIds = [];
+        foreach ($cultivosMillionNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoMillionIds[] = $cultivo->id;
+        }
+        $productoMillion->cultivos()->sync($cultivoMillionIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesMillionNombres = [
+            'Soja en post emergencia',
+            'Maní en post emergencia'
+        ];
+        $arbolMillionIds = [];
+        foreach ($arbolesMillionNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolMillionIds[] = $arbol->id;
+        }
+        $productoMillion->arbolesRecomendacion()->sync($arbolMillionIds);
+
+        #endregion
+        
+
+        
+        //NO BORRAR ESTE ESPACIO
+
+        //NO BORRAR ESTE ESPACIO
+
+        //NO BORRAR ESTE ESPACIO
+
     }
 }

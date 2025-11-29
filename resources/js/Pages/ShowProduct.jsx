@@ -13,18 +13,6 @@ export default function ShowProduct({ producto }) {
                 <Breadcrumbs producto={producto} />
                 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-                    {/* Botón Volver */}
-                    <div className="mb-6 flex justify-start">
-                        <Link
-                            href={route('productos')}
-                            className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:bg-emerald-700 hover:shadow-lg hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                            Volver a Productos
-                        </Link>
-                    </div>
 
                     {/* Header del producto */}
                     <div className="mb-8">
@@ -64,12 +52,6 @@ export default function ShowProduct({ producto }) {
                         {/* Información básica */}
                         <div className="space-y-6">
                             {/* Categoría */}
-                            
-
-                            
-
-                            
-
                             <div className="flex flex-col gap-6">
                                 {/* PDFs */}
                                 {producto.pdfs && producto.pdfs.length > 0 && (
@@ -300,9 +282,9 @@ function InfoCard({ icon, title, content }) {
 
 function Hero() {
     return (
-        <section className="relative w-full overflow-hidden h-[46vh]" aria-label="Imagen principal - Productos">
+        <section className="relative w-full overflow-hidden h-[60vh]" aria-label="Imagen principal - Productos">
             <div
-                className="h-[46vh]  w-full bg-cover bg-center"
+                className="h-[60vh]  w-full bg-cover bg-center"
                 style={{ backgroundImage: `url(${bannerImg})` }}
                 aria-hidden
             />
