@@ -1501,7 +1501,205 @@ class ProductSeeder extends Seeder
 
         #endregion
         
+        #region Producto 37: MORRIGAN®
 
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaMorrigan = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoMorrigan = PrincipioActivo::firstOrCreate(['nombre' => 'Diclosulam 84%']);
+
+        // 3. Crear el Producto
+        $productoMorrigan = Producto::create([
+            'nombre' => 'MORRIGAN®',
+            'categoria_id' => $categoriaHerbicidaMorrigan->id,
+            'principio_activo_id' => $principioActivoMorrigan->id,
+            'formulacion' => 'Polvo Mojable (WP)',
+            'descripcion' => "MORRIGAN es un herbicida selectivo para el control de malezas de hoja ancha y gramíneas, que compiten con los cultivos de soja y maní. Posee baja retención por rastrojos, permitiendo ser aplicado con coberturas verdes sin ser retenido por la intercepción de tejido vegetal verde.\n\nEs activo en tratamientos de suelo (pre-siembra, pre-emergencia), su efecto residual permite controlar los flujos de emergencia de las malezas durante las etapas iniciales del cultivo y también tiene efecto post-emergencia.",
+            'accion' => 'Sistémico y residual.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B.',
+            'malezas' => "Latifoliadas: Abrojos, Bejuco, Campanilla, Chamico, Chinchilla, Ipomea, Malva, Quinoa, Rama negra, Saetilla o Amor seco, Verdolaga, Yuyo colorado.\n\nGramíneas anuales: Capin, Cola de zorro, Eleusine, Pasto Cuaresma.",
+            'dosis' => "Soja: 0.030 kg/ha.\nManí: 0.024 kg/ha.",
+            'recomendaciones_de_uso' => "MORRIGAN es un herbicida selectivo para el control de malezas de hoja ancha y gramíneas, que compiten con los cultivos de soja y maní. Posee baja retención por rastrojos, permitiendo ser aplicado con coberturas verdes sin ser retenido por la intercepción de tejido vegetal verde.\n\nEs activo en tratamientos de suelo (pre-siembra, pre-emergencia), su efecto residual permite controlar los flujos de emergencia de las malezas durante las etapas iniciales del cultivo y también tiene efecto post-emergencia.",
+            'imagen' => '/images/productos/Morrigan-producto.jpg',
+            'imagen_portada' => '/images/productos/Morrigan-portada.png',
+            'pdfs' => ['/PDFs/Morrigan - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Morrigan - Marbete.pdf', '/PDFs/Morrigan - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosMorriganNombres = ['Maní', 'Soja'];
+        $cultivoMorriganIds = [];
+        foreach ($cultivosMorriganNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoMorriganIds[] = $cultivo->id;
+        }
+        $productoMorrigan->cultivos()->sync($cultivoMorriganIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesMorriganNombres = [
+            'Soja en post emergencia',
+            'Maní en barbecho corto primavera',
+            'Maní en pre emergencia',
+            'Maní en post emergencia',
+            'Soja en barbecho corto primavera'
+        ];
+        $arbolMorriganIds = [];
+        foreach ($arbolesMorriganNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolMorriganIds[] = $arbol->id;
+        }
+        $productoMorrigan->arbolesRecomendacion()->sync($arbolMorriganIds);
+
+        #endregion
+        
+        #region Producto 38: MULAN®
+
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaMulan = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoMulan = PrincipioActivo::firstOrCreate(['nombre' => 'Flumetsulam 12%']);
+
+        // 3. Crear el Producto
+        $productoMulan = Producto::create([
+            'nombre' => 'MULAN®',
+            'categoria_id' => $categoriaHerbicidaMulan->id,
+            'principio_activo_id' => $principioActivoMulan->id,
+            'formulacion' => 'SC (Suspensión Concentrada)',
+            'descripcion' => "Herbicida residual y selectivo para el control de malezas de hoja ancha. Absorción foliar y radical, con rápida translocación vía xilema y floema, acumulándose en las regiones meristemáticas, por lo que las malezas detienen rápidamente su crecimiento.",
+            'accion' => 'Sistémico y residual.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima aceto lactato sintetasa (ALS).',
+            'malezas' => 'Anagallis, Bolsa de pastor, Calabacilla, Capiquí, Cardo negro, Cardo pendiente, Cardo ruso, Chinchilla, Cicuta negra, Correhuela, Enredadera anual, Erisimo, Flor morada, Girasol guacho, Lengua de vaca, Manzanilla cimarrona, Margarita, Margarita de Piria, Mastuerzo, Mostacilla, Nabón, Ortiga mansa, Quinoa, Rábano, Rabizón, Roseta, Sanguinaria, Spergula, Verdolaga, Viznaga, Yuyo colorado.',
+            'dosis' => "Pasturas: Pre emergente: 0.4 – 0.6 L/ha. Post emergente: 0.2 – 0.24 L/ha.",
+            'recomendaciones_de_uso' => "El suelo debe presentar condiciones adecuadas de humedad. La maleza tiene que estar en activo crecimiento. Pre-emergencia: Aplicar después de la siembra y antes de la emergencia de la pastura. Post-emergencia: Aplicar con malezas pequeñas (de cotiledón hasta 6 hojas o rosetas de 10 cm de diámetro) y a partir de que las leguminosas tengan 2-3 trifolios.",
+            'imagen' => '/images/productos/Mulan-producto.jpg',
+            'imagen_portada' => '/images/productos/Mulan-portada.png',
+            'pdfs' => ['/PDFs/Mulan - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Mulan - Marbete.pdf', '/PDFs/Mulan - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosMulanNombres = ['Alfalfa', 'Caña de azúcar', 'Maíz', 'Poroto', 'Soja'];
+        $cultivoMulanIds = [];
+        foreach ($cultivosMulanNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoMulanIds[] = $cultivo->id;
+        }
+        $productoMulan->cultivos()->sync($cultivoMulanIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesMulanNombres = [
+            'Alfalfa en barbecho',
+            'Alfalfa en pre emergencia',
+            'Alfalfa en post emergencia',
+            'Caña de azúcar en barbecho',
+            'Caña de azúcar en post emergencia',
+            'Caña de azúcar en pre emergencia',
+            'Maíz en barbecho',
+            'Poroto en pre emergencia'
+        ];
+        $arbolMulanIds = [];
+        foreach ($arbolesMulanNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolMulanIds[] = $arbol->id;
+        }
+        $productoMulan->arbolesRecomendacion()->sync($arbolMulanIds);
+
+        #endregion
+
+        #region Producto 39: NIFRAN®
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaFungicida = Categoria::firstOrCreate(['nombre' => 'Fungicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoNifran = PrincipioActivo::firstOrCreate(['nombre' => 'Fluazinam 50%']);
+
+        // 3. Crear el Producto
+        $productoNifran = Producto::create([
+            'nombre' => 'NIFRAN®',
+            'categoria_id' => $categoriaFungicida->id,
+            'principio_activo_id' => $principioActivoNifran->id,
+            'formulacion' => 'Suspensión Concentrada (SC)',
+            'descripcion' => "Es un fungicida preventivo, de contacto y con modo de acción multisitio. Cuando es aplicado sobre la planta queda en la superficie de la misma, brindando una muy buena protección basada en su efecto residual y su resistencia al lavado por lluvias. Esta combinación permite un control efectivo sobre el complejo de hongos resistentes a otros grupos de fungicidas. Ideal para prevenir la aparición de resistencias.",
+            'accion' => 'Contacto, con efecto preventivo.',
+            'mecanismo_de_accion' => 'Inhibe el crecimiento del micelio del hongo y su desarrollo reproductivo. (acción multisitio).',
+            'cultivos' => 'Maní, Papa, Poroto, Vid.',
+            'dosis' => 'Maní: 1 L/ha, Papa: 0,4 – 0,6 L/ha, Poroto: 0,75 – 1 L/ha, Vid: 0,8 L/ha.',
+            'recomendaciones_de_uso' => "Papa: Tizón tardío (Phytophthora infestans), 0,4 – 0,6 L/ha. Aplicar 20 a 30 días después de la emergencia del cultivo. Repetir c/7 días.\n\nPoroto: Sclerotinia (Sclerotinia sclerotiorum), 0,75-1 l/ha, aplicar al inicio y al final de floración.\n\nManí: Sclerotinia sclerotiorum, 1 l/ha. Dos aplicaciones: la primera al inicio de clavado o floración y la segunda aplicación 21 días después en período de llenado de fruto.\n\nVid: Podredumbre gris (Botritis cinerea), 0,8 L/ha, Cuatro aplicaciones: en floración, en cierre de racimo, en envero, y en madurez.",
+            'imagen' => '/images/productos/Nifran-producto.jpg',
+            'imagen_portada' => '/images/productos/Nifran-portada.png',
+            'pdfs' => ['/PDFs/Nifran - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Nifran - Marbete.pdf', '/PDFs/Nifran - Flyer comercial.pdf'],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosNifranNombres = ['Maní', 'Papa', 'Poroto', 'Vid'];
+        $cultivoNifranIds = [];
+        foreach ($cultivosNifranNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoNifranIds[] = $cultivo->id;
+        }
+        $productoNifran->cultivos()->sync($cultivoNifranIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesNifranNombres = [
+            'Maní en post emergencia',
+            'Poroto en post emergencia'
+        ];
+        $arbolNifranIds = [];
+        foreach ($arbolesNifranNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolNifranIds[] = $arbol->id;
+        }
+        $productoNifran->arbolesRecomendacion()->sync($arbolNifranIds);
+
+        #endregion
+        
+        #region Producto 40: PARAQUAT® 27,6
+        
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoParaquat = PrincipioActivo::firstOrCreate(['nombre' => 'Paraquat dicloruro 27,6%']);
+
+        // 3. Crear el Producto
+        $productoParaquat = Producto::create([
+            'nombre' => 'PARAQUAT® 27,6',
+            'categoria_id' => $categoriaHerbicida->id,
+            'principio_activo_id' => $principioActivoParaquat->id,
+            'formulacion' => 'Concentrado Soluble (SL)',
+            'descripcion' => "Paraquat actúa por contacto, su acción es rápida y enérgica sobre el follaje y partes verdes de la planta y no afecta los tallos de corteza marrón. Se inactiva en contacto con el suelo o agua con tierra en suspensión.\n\nNecesita de la fotosíntesis activa para manifestar su efecto herbicida, que se caracteriza por el colapso de la estructura celular y la desecación, en condiciones cálidas y soleadas, la actividad herbicida se desarrolla rápidamente en unas pocas horas. En condiciones nubladas o hacia el fin del día, la acción se hace más lenta pero más efectiva, ya que el producto se transloca mejor en la planta.",
+            'accion' => 'Actúa solamente por contacto.',
+            'mecanismo_de_accion' => 'Actúa inhibiendo el fotosistema I (Grupo D)',
+            'dosis' => '1,5 – 4 L/ha.',
+            'recomendaciones_de_uso' => "Utilizar las dosis mayores cuando las malezas o el cultivo a desecar tengan abundante follaje o como primer tratamiento. Usar la dosis baja como segundo tratamiento o para tratar rebrotes.\n\nEs conveniente aplicar cuando las malezas son pequeñas y tienen una altura menor a 10 cm. Para lograr la máxima eficacia del producto se recomienda aplicarlo acompañado con humectante no iónico a concentración 0,2 % (200cc/100 l de agua).\n\nHumectante: en situaciones donde sean necesarias diluciones en una concentración menor de 1 litro de PARAQUAT 27,6 AGROFINA en 100 litros de agua, agregar 100 cm3 de humectante no iónico por cada 100 l adicionales de agua.",
+            'imagen' => '/images/productos/Paraquat-producto.jpg',
+            'imagen_portada' => '/images/productos/Paraquat-portada.png',
+            'pdfs' => ['/PDFs/Paraquat - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Paraquat - Marbete.pdf'],
+            'activo' => true,
+        ]);
+
+        #endregion
+
+        #region Producto 41: Poroto: Árbol de recomendación completo
+
+        // Crear el Producto
+        $productoPorotoCompleto = Producto::create([
+            'nombre' => 'POROTO: Árbol de recomendación completo',
+            'imagen' => '/images/productos/Poroto-completo.jpg',
+            'imagen_portada' => '/images/productos/Poroto-completo.jpg',
+            'pdfs' => ['/PDFs/Poroto - Arbol de Recomendacion Completo.pdf'],
+            'activo' => true,
+        ]);
+
+        // Asociar Árbol de Recomendación
+        $arbolPorotoCompleto = ArbolRecomendacion::firstOrCreate(['nombre' => 'Poroto (completo)']);
+        $productoPorotoCompleto->arbolesRecomendacion()->sync([$arbolPorotoCompleto->id]);
+
+        #endregion
         
         //NO BORRAR ESTE ESPACIO
 
