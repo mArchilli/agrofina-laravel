@@ -1206,7 +1206,7 @@ class ProductSeeder extends Seeder
             'descripcion' => "Exclusiva fomulación de 2,4-D con comprobada ultra baja volatilidad.\n\nPermite aplicar dosis con cantidades menores de ingrediente activo por hectárea comparadas con las demás sales y ésteres de 2,4-D, manteniendo la misma eficacia. Sin olor.\n\nHerbicida sistémico y de acción hormonal, para el control de malezas de hoja ancha en barbecho.\n\nMezcla de sales alquilamidopropildimetilamonio y dietanolamonio del ácido 2,4-D.",
             'accion' => 'Sistémico.',
             'mecanismo_de_accion' => 'Acción similar al acido indolacetico (Auxinas sinteticas). GRUPO O.',
-            'malezas' => 'Cerraja (Sonchus oleraceus), Escoba amarilla (Flaveria bidentis), Yuyo Colorado (Amarantus quitensis), Mastuerzo (Coronopus didymus), Bolsa de pastor (Capsella bursa-pastoris), Arrancamoños (Xanthium spinosum), Chamico (Datura ferox), Quínoa (Chenopodium album), Rama negra (Conyza sumatrensis), Verdolaga (Portulaca oleracea)',
+            'malezas' => 'Cerraja (Sonchus oleraceus), Escoba amarilla (Flaveria bidentis), Yuyo Colorado (Amarantus quitensis), Mastuerzo (Coronopus didimus), Bolsa de pastor (Capsella bursa-pastoris), Arrancamoños (Xanthium spinosum), Chamico (Datura ferox), Quínoa (Chenopodium album), Rama negra (Conyza sumatrensis), Verdolaga (Portulaca oleracea)',
             'dosis' => '0.9 a 1.5 L/ha.',
             'recomendaciones_de_uso' => 'Utilizar dosis inferiores contra malezas susceptibles, cuando sean pequeñas y en condiciones climáticas y suelo óptimas. Utilizar las dosis mayores cuando la maleza esté más desarrollada, o se trate de malezas mediana susceptibilidad.',
             'imagen' => '/images/productos/Mabyn-producto.jpg',
@@ -1403,7 +1403,7 @@ class ProductSeeder extends Seeder
             'descripcion' => "March max es un herbicida no selectivo para el control postemergente de las malezas anuales y perennes en áreas agrícolas, industriales, caminos, vías férrea.\n\nDe acción sistemática, es absorbido por hojas y tallos verdes y traslocado hacia las raíces y órganos vegetativos subterráneos, ocasionando la muerte total de las malezas emergidas. Los efectos son lentos sobre todo en las especies perennes, donde después de transcurridos 4 a 5 días desde la aplicación comienza el amarillamiento y marchitamiento de las hojas y tallos que culminan con la muerte total de las malezas.",
             'accion' => 'Sistémica.',
             'mecanismo_de_accion' => 'Inhibidor de enolpiruvil-shikimato-3-fosfato sintasa (EPSP). Grupo G.',
-            'malezas' => "Anuales:\nGRAMINEAS: Capín /Pasto cañada (Echinochloa colonum), Capín (Echinochloa crus-galli), Cebadilla criolla (Bromus unioloides) Cola de zorro (Setaria spp.). Pasto cuaresma (Digitaria spp).\n\nLATIFOLIADAS: Yuyo Colorado / ataco (Amaranthus spp), Quinoa (Chenopodium album), Enredadera anual (Polygonum convolvulus), Ciennudos / sanguinaria (Polygonum aviculare), Chamico (Datura ferox), Amor seco / saetilla (Bidens pilosa).\n\nPerennes:\nSorgo de alepo/Cañota (Sorgum halepense), Gramón/gramilla/chepica (Cynodon Dactylon) Cebollín/cípero/junquillo (Cyperus rotundus), Cípero/junquillo (Cyperus esculentus), Camalote / Pasto de guinea (Panichum), Yuyo sapo (Wedelia glauca)",
+            'malezas' => "Anuales:\nGRAMINEAS: Capín /Pasto cañada (Echinochloa colonum), Capín (Echinochloa crus-galli), Cebadilla criolla (Bromus unioloides) Cola de zorro (Setaria spp.). Pasto cuaresma (Digitaria spp).\n\nLATIFOLIADAS: Yuyo Colorado / ataco (Amaranthus spp), Quinoa (Chenopodium album), Enredadera anual (Polygonum convolvulus), Ciennudos / sanguinaria (Polygonum aviculare), Chamico (Datura ferox), Amor seco / saetilla (Bidens pilosa).\n\nPerennes:\nSorgo de alepo/Cañota (Sorgum halepense), Gramón/gramilla/chepica (Cynodon dactylon) Cebollín/cípero/junquillo (Cyperus rotundus), Cípero/junquillo (Cyperus esculentus), Camalote / Pasto de guinea (Panichum), Yuyo sapo (Wedelia glauca)",
             'dosis' => "Malezas anuales: dosis de 1 kg/ha a 2.05 kg/ha.\nMalezas perennes: dosis de 1.25 kg/ha a 3 kg/ha.",
             'recomendaciones_de_uso' => "Aplicarse cuando las malezas se encuentran en activo crecimiento, con una altura menor a 15 cm, evitando aplicaciones sobre malezas cubiertas de tierra. No pulverizar si se preven lluvias durante las 6 horas posteriores a la aplicación o cuando el follaje de las malezas esté mojado.\n\nEl glifosato pierde efectividad en presencia de aguas duras (aquellas con alto contenido de Calcio y Magnesio), Por lo cual se recomienda corregir la dureza del agua antes del agregado de MARCH MAX AGROFINA utilizando productos especiales disponibles para tal fin. Con respecto al pH de la solución se recomienda que el mismo sea neutro levemente ácido.",
             'imagen' => '/images/productos/March-Max-producto.jpg',
@@ -1470,8 +1470,8 @@ class ProductSeeder extends Seeder
             'accion' => 'Contacto.',
             'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinogeno oxidasa (PPO). Grupo E',
             'malezas' => 'Chamico, Chinchilla, Flor de Santa Lucía, Malva Cimarrona, Nabo, Yuyo Colorado, Verdolaga, Albahaca silvestre, Alkekenje, Farolito, Yuyo colorado resistente a ALS.',
-            'dosis' => "Maní: 0.250- 0.350 L/ha.\nSoja: 0.250 – 0.350 L/ha.",
-            'recomendaciones_de_uso' => "Aplicar una vez que todas las malezas hayan emergido, cuando las mismas sean jóvenes y en activo crecimiento.\n\nPara control de Yuyo Colorado resistente a ALS en soja consultar por mezcla con DASEN.\n\nNo aplicar bajo condiciones de sequía o en casos de falta de humedad prolongada y/o baja humedad relativa ambiente, no aplicar en horas del día de máxima insolación y alta temperatura, no aplicar en presencia de rocío, ni ante la inminencia de lluvias.",
+            'dosis' => "Mani: 0,175 L/ha.\nSoja: 0,24 – 0,3 L/ha.",
+            'recomendaciones_de_uso' => 'Aplicar una vez que todas las malezas hayan emergido, cuando las mismas sean jóvenes y en activo crecimiento. Para control de Yuyo Colorado resistente a ALS en soja consultar por mezcla con DASEN. No aplicar bajo condiciones de sequía o en casos de falta de humedad prolongada y/o baja humedad relativa ambiente, no aplicar en horas del día de máxima insolación y alta temperatura, no aplicar en presencia de rocío, ni ante la inminencia de lluvias.',
             'imagen' => '/images/productos/Million-producto.jpg',
             'imagen_portada' => '/images/productos/Million-portada.png',
             'pdfs' => ['/PDFs/Million - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Million - Marbete.pdf', '/PDFs/Million - Flyer comercial.pdf'],
@@ -1627,7 +1627,7 @@ class ProductSeeder extends Seeder
             'mecanismo_de_accion' => 'Inhibe el crecimiento del micelio del hongo y su desarrollo reproductivo. (acción multisitio).',
             'cultivos' => 'Maní, Papa, Poroto, Vid.',
             'dosis' => 'Maní: 1 L/ha, Papa: 0,4 – 0,6 L/ha, Poroto: 0,75 – 1 L/ha, Vid: 0,8 L/ha.',
-            'recomendaciones_de_uso' => "Papa: Tizón tardío (Phytophthora infestans), 0,4 – 0,6 L/ha. Aplicar 20 a 30 días después de la emergencia del cultivo. Repetir c/7 días.\n\nPoroto: Sclerotinia (Sclerotinia sclerotiorum), 0,75-1 l/ha, aplicar al inicio y al final de floración.\n\nManí: Sclerotinia sclerotiorum, 1 l/ha. Dos aplicaciones: la primera al inicio de clavado o floración y la segunda aplicación 21 días después en período de llenado de fruto.\n\nVid: Podredumbre gris (Botritis cinerea), 0,8 L/ha, Cuatro aplicaciones: en floración, en cierre de racimo, en envero, y en madurez.",
+            'recomendaciones_de_uso' => "Papa: Tizón tardío (Phytophthora infestans), 0,4 – 0,6 L/ha. Aplicar 20 a 30 días después de la emergencia del cultivo. Repetir c/7 días.\n\nPoroto: Sclerotinia (Sclerotinia sclerotiorum), 0,75-1 l/ha, aplicar al inicio y al final de floración.\n\nManí: Sclerotinia sclerotiorum, 1 l/ha. Dos aplicaciones: la primera al inicio de clavado o floración y la segunda 21 días después en período de llenado de fruto.\n\nVid: Podredumbre gris (Botritis cinerea), 0,8 L/ha, Cuatro aplicaciones: en floración, en cierre de racimo, en envero, y en madurez.",
             'imagen' => '/images/productos/Nifran-producto.jpg',
             'imagen_portada' => '/images/productos/Nifran-portada.png',
             'pdfs' => ['/PDFs/Nifran - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Nifran - Marbete.pdf', '/PDFs/Nifran - Flyer comercial.pdf'],
@@ -1701,11 +1701,259 @@ class ProductSeeder extends Seeder
 
         #endregion
         
-        //NO BORRAR ESTE ESPACIO
+        #region Producto 42: S-METOLACLORO 96
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaSMetolacloro = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
-        //NO BORRAR ESTE ESPACIO
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoSMetolacloro = PrincipioActivo::firstOrCreate([
+            'nombre' => 'S-Metolacloro 96%'
+        ]);
 
-        //NO BORRAR ESTE ESPACIO
+        // 3. Crear el Producto
+        $productoSMetolacloro = Producto::create([
+            'nombre' => 'S-METOLACLORO 96',
+            'categoria_id' => $categoriaHerbicidaSMetolacloro->id,
+            'principio_activo_id' => $principioActivoSMetolacloro->id,
+            'formulacion' => 'Concentrado Emulsionable (EC)',
+            'descripcion' => 'Es un herbicida preemergente de acción sistémica, que controla un amplio espectro de malezas de hoja angosta y algunas de hoja ancha, su control es sobre la emergencia de las malezas. Actúa inhibiendo el crecimiento al afectar el metabolismo de los lípidos, la síntesis de proteínas y la formación de ceras de la cutícula. Es selectivo para los cultivos de maíz, girasol, soja, sorgo granífero (tratado con antídoto de herbicida fluxofenim 96 % p/v), maní, poroto, algodón, tabaco y remolacha, entre otras hortícolas.',
+            'accion' => 'Sistémico y Residual.',
+            'mecanismo_de_accion' => 'Inhibidores de los ácidos grasos de cadena larga (Grupo K)',
+            'malezas' => 'Bolsa de pastor, Capín, Cebollín, Cola de zorro, Grama carraspera, Gramilla, Pasto cuaresma, Sorgo de alepo de semilla, Verdolaga, Yuyo colorado.',
+            'dosis' => "Algodón, Girasol, Maíz, Maní, Soja: 0.8 a 1.6 L/ha.\nPoroto: 0.8 L/ha.\nSorgo granífero: 1.14 a 1.35 L/ha.",
+            'recomendaciones_de_uso' => 'Debe ser aplicado antes que las malezas hagan su aparición sobre el terreno. Es importante tener en cuenta que este producto no ejercerá control si es aplicado sobre malezas emergidas. Se debe realizar la aplicación sobre el terreno húmedo, antes o después de una lluvia o del riego, y sobre el suelo bien desmenuzado y sin terrones.',
+            'imagen' => '/images/products/S-metolacloro-96-producto.jpg',
+            'imagen_portada' => '/images/products/S-metolacloro-96-portada.png',
+            'pdfs' => [
+                '/pdfs/products/S-Metacloro 96 - Marbete.pdf',
+                '/pdfs/products/S-Metacloro 96 - Flyer comercial.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivosSMetolacloroNombres = ['Algodón', 'Girasol', 'Maíz', 'Maní', 'Poroto', 'Soja', 'Sorgo granífero', 'Tabaco'];
+        $cultivoSMetolacloroIds = [];
+        foreach ($cultivosSMetolacloroNombres as $nombre) {
+            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+            $cultivoSMetolacloroIds[] = $cultivo->id;
+        }
+        $productoSMetolacloro->cultivos()->sync($cultivoSMetolacloroIds);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesSMetolacloroNombres = [
+            'Algodón en pre emergencia',
+            'Sorgo en pre emergencia',
+            'Sorgo en barbecho',
+            'Girasol en pre emergencia',
+            'Maíz en pre emergencia',
+            'Maní en pre emergencia',
+            'Poroto en pre emergencia'
+        ];
+        $arbolSMetolacloroIds = [];
+        foreach ($arbolesSMetolacloroNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolSMetolacloroIds[] = $arbol->id;
+        }
+        $productoSMetolacloro->arbolesRecomendacion()->sync($arbolSMetolacloroIds);
+        #endregion
+
+        #region Producto 43: S-MILLION®
+
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicidaSMillion = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoSMillion = PrincipioActivo::firstOrCreate([
+            'nombre' => 'S-Lactofen 36%'
+        ]);
+
+        // 3. Crear el Producto
+        $productoSMillion = Producto::create([
+            'nombre' => 'S-MILLION®',
+            'categoria_id' => $categoriaHerbicidaSMillion->id,
+            'principio_activo_id' => $principioActivoSMillion->id,
+            'formulacion' => 'EC (Concentrado Emulsionable)',
+            'descripcion' => 'Herbicida post emergente de contacto y selectivo para SOJA y MANÍ, para el control de malezas difíciles latifoliadas, como Yuyo colorado. Innovadora formulación con 100 % isómero S, otorgando mayor actividad biológica, permitiendo reducir la dosis final al 50 % respecto a lactofen 24% y asegurando selectividad en el cultivo. La excelente calidad de formulación mejora la compatibilidad de la mezcla de tanque. El producto cuando se incorpora en agua forma una microemulsión que aumenta la biodisponibilidad del ingrediente activo, asegura una buena distribución en el caldo y garantiza una aplicación uniforme. Formulación sustentable, donde aplicamos principios de “Green Chemistry” (Química Verde).',
+            'accion' => 'Contacto.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinogeno oxidasa (PPO). Grupo E.',
+            'malezas' => 'Chamico (Datura ferox). Malva cimarrona (Anoda cristata). Nabo (Brassica campestris). Yuyo colorado (Amaranthus quitensis). Albahaca silvestre (Galinsoga parviflora). Alkekenje (Physalis angulata). Farolito (Nicandra physaloides). Verdolaga (Portulaca oleracea). Chinchilla (Tagetes minuta).',
+            'dosis' => "Mani: 0,175 L/ha.\nSoja: 0,24 – 0,3 L/ha.",
+            'recomendaciones_de_uso' => 'Aplicar una vez que todas las malezas hayan emergido, cuando las mismas sean jóvenes y en activo crecimiento. Para control de Yuyo Colorado resistente a ALS en soja consultar por mezcla con DASEN. No aplicar bajo condiciones de sequía o en casos de falta de humedad prolongada y/o baja humedad relativa ambiente, no aplicar en horas del día de máxima insolación y alta temperatura, no aplicar en presencia de rocío, ni ante la inminencia de lluvias.',
+            'imagen' => '/images/products/S-million-producto.jpg',
+            'imagen_portada' => '/images/products/S-million-portada.jpg',
+            'pdfs' => [
+                '/pdfs/products/S-Million - Marbete.pdf',
+                '/pdfs/products/S-Million - Hoja de Datos de Seguridad (MSDS).pdf',
+                '/pdfs/products/S-Million - Flyer comercial.pdf'
+            ],
+            'activo' => true,
+        ]);
+
+        // 4. Asociar Cultivos
+        $cultivoManiSMillion = Cultivo::firstOrCreate(['nombre' => 'Maní']);
+        $cultivoSojaSMillion = Cultivo::firstOrCreate(['nombre' => 'Soja']);
+        $productoSMillion->cultivos()->sync([$cultivoManiSMillion->id, $cultivoSojaSMillion->id]);
+
+        // 5. Asociar Árboles de Recomendación
+        $arbolesSMillionNombres = [
+            'Soja en post de emergencia',
+            'Maní en post emergencia'
+        ];
+        $arbolSMillionIds = [];
+        foreach ($arbolesSMillionNombres as $nombre) {
+            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+            $arbolSMillionIds[] = $arbol->id;
+        }
+        $productoSMillion->arbolesRecomendacion()->sync($arbolSMillionIds);
+        #endregion
+
+        #region Producto 44: SOJA: Árbol de recomendación completo
+        $productoSojaCompleto = Producto::create([
+            'nombre' => 'SOJA: Árbol de recomendación completo',
+            'imagen' => '/images/products/Soja-completo.jpg',
+            'imagen_portada' => '/images/products/Soja-completo.jpg',
+            'pdfs' => ['/pdfs/products/Soja - Arbol de Recomendacion Completo.pdf'],
+            'activo' => true,
+        ]);
+
+        // Asociar Árbol de Recomendación
+        $arbolSojaCompleto = ArbolRecomendacion::firstOrCreate(['nombre' => 'Soja (completo)']);
+        $productoSojaCompleto->arbolesRecomendacion()->sync([$arbolSojaCompleto->id]);
+        #endregion
+
+        #region Producto 45: SORGO: Árbol de recomendación completo
+
+        $productoSorgoCompleto = Producto::create([
+            'nombre' => 'SORGO: Árbol de recomendación completo',
+            'imagen' => '/images/products/Sorgo-completo.jpg',
+            'imagen_portada' => '/images/products/Sorgo-completo.jpg',
+            'pdfs' => ['/pdfs/products/Sorgo - Arbol de Recomendacion Completo.pdf'],
+            'activo' => true,
+        ]);
+
+        // Asociar Árbol de Recomendación
+        $arbolSorgoCompleto = ArbolRecomendacion::firstOrCreate(['nombre' => 'Sorgo (Completo)']);
+        $productoSorgoCompleto->arbolesRecomendacion()->sync([$arbolSorgoCompleto->id]);
+        #endregion
+
+        #region Producto 46: Sulfenax 50®
+
+            // 1. Buscar o crear la Categoría
+            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoSulfenax = PrincipioActivo::firstOrCreate(['nombre' => 'Sulfentrazone 50%']);
+
+            // 3. Crear el Producto
+            $productoSulfenax = Producto::create([
+                'nombre' => 'SULFENAX® 50',
+                'categoria_id' => $categoriaHerbicida->id,
+                'principio_activo_id' => $principioActivoSulfenax->id,
+                'formulacion' => 'suspensión concentrada (SC)',
+                'descripcion' => 'Es un herbicida del grupo químico de las ariltriazolinonas, selectivo para los cultivos de soja, maní y girasol. Es un herbicida residual, que al ser aplicado e incorporado al suelo, ingresa a las plántulas de malezas por la raíz inhibiendo la síntesis de la clorofila. Las plantas que emergen del suelo se ponen necróticas y mueren al poco tiempo de estar en contacto con la luz.',
+                'accion' => 'Sistémica y residual.',
+                'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinogeno oxidasa (PPO). Grupo E.',
+                'malezas' => 'Bowlesia (Bowlesia incana), Cien nudos (Polygonum aviculare), Malva cimarrona (Anoda cristata), Peludilla (Gamochaeta subfalcata), Quinoa blanca (Chenopodium album), Senecio (Senecio spp.), Verdolaga (Portulaca oleracea) Yuyo colorado (Amaranthus quitensis), Cardo ruso (Salsola kali).',
+                'dosis' => 'Soja y Girasol: 0,250- 0,400 L/ha.\nManí: 0,250- 0,350 L/ha.',
+                'recomendaciones_de_uso' => 'Las dosis están directamente relacionadas con las características de los lotes en que se utilizará el producto. Por ello se debe tener especialmente en cuenta el tipo de suelo, textura, contenido de materia orgánica, pH, relieve, etc. Usar dosis mayores en suelos de pH menores a 7.',
+                'imagen' => '/images/products/Sulfenax-50-producto.jpg',
+                'imagen_portada' => '/images/products/Sulfenax-50-portada.png',
+                'pdfs' => [
+                    '/pdfs/products/Sulfenax - Marbete.pdf',
+                    '/pdfs/products/Sulfenax 50 - Hoja de Datos de Seguridad (MSDS).pdf',
+                    '/pdfs/products/Sulfenax 50 - Flyer comercial.pdf',
+                ],
+                'activo' => true,
+            ]);
+
+            // 4. Asociar Cultivos
+            $cultivosSulfenaxNombres = ['Soja', 'Girasol', 'Maní'];
+            $cultivoSulfenaxIds = [];
+            foreach ($cultivosSulfenaxNombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoSulfenaxIds[] = $cultivo->id;
+            }
+            $productoSulfenax->cultivos()->sync($cultivoSulfenaxIds);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolesSulfenaxNombres = [
+                'Girasol en barbecho corto primavera',
+                'Maní en barbecho corto primavera',
+                'Soja en barbecho corto primavera',
+            ];
+            $arbolSulfenaxIds = [];
+            foreach ($arbolesSulfenaxNombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolSulfenaxIds[] = $arbol->id;
+            }
+            $productoSulfenax->arbolesRecomendacion()->sync($arbolSulfenaxIds);
+
+            #endregion
+
+            #region Producto 47: 
+
+                #region Producto 47: TALIS®
+
+                // 1. Buscar o crear la Categoría
+                $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+                // 2. Buscar o crear el Principio Activo
+                $principioActivoTalis = PrincipioActivo::firstOrCreate(['nombre' => 'Flurocloridona 25%']);
+
+                // 3. Crear el Producto
+                $productoTalis = Producto::create([
+                    'nombre' => 'TALIS®',
+                    'categoria_id' => $categoriaHerbicida->id,
+                    'principio_activo_id' => $principioActivoTalis->id,
+                    'formulacion' => 'Concentrado Emulsionable (EC)',
+                    'descripcion' => 'Herbicida residual selectivo pre y post-emergente temprano que controla un amplio espectro de malezas, especialmente las de hoja ancha. Por su acción sistémica penetra por cotiledones, hojas jóvenes, y raíces y se trasloca acropetalmente hacia hojas y tallos provocando la muerte de las malezas. El periodo de control de maleza se extiende por más de 90 días en distintos tipos de suelo sin afectar a los cultivos que siguen en la rotación. Se activa con escasa humedad en suelo, no se lava por lluvias. Los efectos son visibles a los 4 a 6 días de su aplicación comenzando por el amarillamiento y marchitamiento de las hojas y tallos.',
+                    'accion' => 'Sistémico y Residual.',
+                    'mecanismo_de_accion' => 'Inhibidores de la enzima fitoeno desaturasa (Grupo F1).',
+                    'malezas' => 'Abrojo grande, Albahaca silvestre, Bejuco, Bolsa del pastor, Capín arroz, Capiquí, Cardo, Chamico, Chinchilla, Cola de zorro, Enredadera anual, Malva cimarrona, Manzanilla, Mastuerzo, Mostacilla, Nabo, Nabón, Ortiga, Ortiga mansa, Pasto blanco, Pasto de cuaresma, Quinoa blanca, Rábano, Sanguinaria, Sorgo de Alepo de semilla, Verdolaga, Verdolaga rastrera, Verónica, Viola silvestre, Yuyo colorado.',
+                    'dosis' => 'Trigo: en barbecho químico y preemergencia 1,5 – 2 L/ha. En postemergencia: 0,3 – 0,5 L/ha.\nGirasol, papa, algodón, maíz: 2 – 4 L/ha. Avena, Cebada, Centeno, Lenteja, Perejil, Zanahoria: 2 – 4 L/ha.\nCaña de azúcar: 4-5,5 L/ha.',
+                    'recomendaciones_de_uso' => 'Aplicar las dosis mayores recomendadas en el cuadro de usos cuando la infestación de malezas sea alta y/o en suelos con más de 3% de materia orgánica.',
+                    'imagen' => '/images/products/Talis-producto.jpg',
+                    'imagen_portada' => '/images/products/Talis-portada.png',
+                    'pdfs' => [
+                        // PDFs: se asume el mismo formato de nombres que los anteriores productos
+                        '/pdfs/products/Talis - Marbete.pdf',
+                        '/pdfs/products/Talis - Hoja de Datos de Seguridad (MSDS).pdf',
+                        '/pdfs/products/Talis - Flyer comercial.pdf',
+                    ],
+                    'activo' => true,
+                ]);
+
+                // 4. Asociar Cultivos
+                $cultivosTalisNombres = ['Girasol', 'Avena', 'Cebada', 'Centeno', 'Lenteja', 'Perejil', 'Zanahoria', 'Caña de azúcar', 'Papa', 'Algodón', 'Maíz', 'Trigo', 'Chia'];
+                $cultivoTalisIds = [];
+                foreach ($cultivosTalisNombres as $nombre) {
+                    $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                    $cultivoTalisIds[] = $cultivo->id;
+                }
+                $productoTalis->cultivos()->sync($cultivoTalisIds);
+
+                // 5. Asociar Árboles de Recomendación
+                $arbolesTalisNombres = [
+                    'Algodón en pre emergencia',
+                    'Caña de azúcar en barbecho',
+                    'Caña de azúcar en post emergencia',
+                    'Caño de azúcar en pre emergencia',
+                    'Trigo y cebada en post emergencia',
+                    'Trigo y cebada en barbecho',
+                    'Girasol en barbecho corto primavera',
+                    'Girasol en pre emergencia',
+                    'Maíz en barbecho',
+                    'Maíz en pre emergencia',
+                ];
+                $arbolTalisIds = [];
+                foreach ($arbolesTalisNombres as $nombre) {
+                    $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                    $arbolTalisIds[] = $arbol->id;
+                }
+                $productoTalis->arbolesRecomendacion()->sync($arbolTalisIds);
+
+                #endregion
 
     }
 }
