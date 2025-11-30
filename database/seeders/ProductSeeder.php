@@ -1839,32 +1839,32 @@ class ProductSeeder extends Seeder
 
         #region Producto 46: Sulfenax 50®
 
-            // 1. Buscar o crear la Categoría
-            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
-            // 2. Buscar o crear el Principio Activo
-            $principioActivoSulfenax = PrincipioActivo::firstOrCreate(['nombre' => 'Sulfentrazone 50%']);
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoSulfenax = PrincipioActivo::firstOrCreate(['nombre' => 'Sulfentrazone 50%']);
 
-            // 3. Crear el Producto
-            $productoSulfenax = Producto::create([
-                'nombre' => 'SULFENAX® 50',
-                'categoria_id' => $categoriaHerbicida->id,
-                'principio_activo_id' => $principioActivoSulfenax->id,
-                'formulacion' => 'suspensión concentrada (SC)',
-                'descripcion' => 'Es un herbicida del grupo químico de las ariltriazolinonas, selectivo para los cultivos de soja, maní y girasol. Es un herbicida residual, que al ser aplicado e incorporado al suelo, ingresa a las plántulas de malezas por la raíz inhibiendo la síntesis de la clorofila. Las plantas que emergen del suelo se ponen necróticas y mueren al poco tiempo de estar en contacto con la luz.',
-                'accion' => 'Sistémica y residual.',
-                'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinogeno oxidasa (PPO). Grupo E.',
-                'malezas' => 'Bowlesia (Bowlesia incana), Cien nudos (Polygonum aviculare), Malva cimarrona (Anoda cristata), Peludilla (Gamochaeta subfalcata), Quinoa blanca (Chenopodium album), Senecio (Senecio spp.), Verdolaga (Portulaca oleracea) Yuyo colorado (Amaranthus quitensis), Cardo ruso (Salsola kali).',
-                'dosis' => 'Soja y Girasol: 0,250- 0,400 L/ha.\nManí: 0,250- 0,350 L/ha.',
-                'recomendaciones_de_uso' => 'Las dosis están directamente relacionadas con las características de los lotes en que se utilizará el producto. Por ello se debe tener especialmente en cuenta el tipo de suelo, textura, contenido de materia orgánica, pH, relieve, etc. Usar dosis mayores en suelos de pH menores a 7.',
-                'imagen' => '/images/products/Sulfenax-50-producto.jpg',
-                'imagen_portada' => '/images/products/Sulfenax-50-portada.png',
-                'pdfs' => [
-                    '/pdfs/products/Sulfenax - Marbete.pdf',
-                    '/pdfs/products/Sulfenax 50 - Hoja de Datos de Seguridad (MSDS).pdf',
-                    '/pdfs/products/Sulfenax 50 - Flyer comercial.pdf',
-                ],
-                'activo' => true,
+        // 3. Crear el Producto
+        $productoSulfenax = Producto::create([
+            'nombre' => 'SULFENAX® 50',
+            'categoria_id' => $categoriaHerbicida->id,
+            'principio_activo_id' => $principioActivoSulfenax->id,
+            'formulacion' => 'suspensión concentrada (SC)',
+            'descripcion' => 'Es un herbicida del grupo químico de las ariltriazolinonas, selectivo para los cultivos de soja, maní y girasol. Es un herbicida residual, que al ser aplicado e incorporado al suelo, ingresa a las plántulas de malezas por la raíz inhibiendo la síntesis de la clorofila. Las plantas que emergen del suelo se ponen necróticas y mueren al poco tiempo de estar en contacto con la luz.',
+            'accion' => 'Sistémica y residual.',
+            'mecanismo_de_accion' => 'Inhibidor de la enzima protoporfirinogeno oxidasa (PPO). Grupo E.',
+            'malezas' => 'Bowlesia (Bowlesia incana), Cien nudos (Polygonum aviculare), Malva cimarrona (Anoda cristata), Peludilla (Gamochaeta subfalcata), Quinoa blanca (Chenopodium album), Senecio (Senecio spp.), Verdolaga (Portulaca oleracea) Yuyo colorado (Amaranthus quitensis), Cardo ruso (Salsola kali).',
+            'dosis' => 'Soja y Girasol: 0,250- 0,400 L/ha.\nManí: 0,250- 0,350 L/ha.',
+            'recomendaciones_de_uso' => 'Las dosis están directamente relacionadas con las características de los lotes en que se utilizará el producto. Por ello se debe tener especialmente en cuenta el tipo de suelo, textura, contenido de materia orgánica, pH, relieve, etc. Usar dosis mayores en suelos de pH menores a 7.',
+            'imagen' => '/images/products/Sulfenax-50-producto.jpg',
+            'imagen_portada' => '/images/products/Sulfenax-50-portada.png',
+            'pdfs' => [
+                '/pdfs/products/Sulfenax - Marbete.pdf',
+                '/pdfs/products/Sulfenax 50 - Hoja de Datos de Seguridad (MSDS).pdf',
+                '/pdfs/products/Sulfenax 50 - Flyer comercial.pdf',
+            ],
+            'activo' => true,
             ]);
 
             // 4. Asociar Cultivos
@@ -1892,65 +1892,71 @@ class ProductSeeder extends Seeder
             #endregion
 
         #region Producto 47: Talis®
-                // 1. Buscar o crear la Categoría
-                $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
-                // 2. Buscar o crear el Principio Activo
-                $principioActivoTalis = PrincipioActivo::firstOrCreate(['nombre' => 'Flurocloridona 25%']);
+        // 1. Buscar o crear la Categoría
+            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
-                // 3. Crear el Producto
-                $productoTalis = Producto::create([
-                    'nombre' => 'TALIS®',
-                    'categoria_id' => $categoriaHerbicida->id,
-                    'principio_activo_id' => $principioActivoTalis->id,
-                    'formulacion' => 'Concentrado Emulsionable (EC)',
-                    'descripcion' => 'Herbicida residual selectivo pre y post-emergente temprano que controla un amplio espectro de malezas, especialmente las de hoja ancha. Por su acción sistémica penetra por cotiledones, hojas jóvenes, y raíces y se trasloca acropetalmente hacia hojas y tallos provocando la muerte de las malezas. El periodo de control de maleza se extiende por más de 90 días en distintos tipos de suelo sin afectar a los cultivos que siguen en la rotación. Se activa con escasa humedad en suelo, no se lava por lluvias. Los efectos son visibles a los 4 a 6 días de su aplicación comenzando por el amarillamiento y marchitamiento de las hojas y tallos.',
-                    'accion' => 'Sistémico y Residual.',
-                    'mecanismo_de_accion' => 'Inhibidores de la enzima fitoeno desaturasa (Grupo F1).',
-                    'malezas' => 'Abrojo grande, Albahaca silvestre, Bejuco, Bolsa del pastor, Capín arroz, Capiquí, Cardo, Chamico, Chinchilla, Cola de zorro, Enredadera anual, Malva cimarrona, Manzanilla, Mastuerzo, Mostacilla, Nabo, Nabón, Ortiga, Ortiga mansa, Pasto blanco, Pasto de cuaresma, Quinoa blanca, Rábano, Sanguinaria, Sorgo de Alepo de semilla, Verdolaga, Verdolaga rastrera, Verónica, Viola silvestre, Yuyo colorado.',
-                    'dosis' => 'Trigo: en barbecho químico y preemergencia 1,5 – 2 L/ha. En postemergencia: 0,3 – 0,5 L/ha.\nGirasol, papa, algodón, maíz: 2 – 4 L/ha. Avena, Cebada, Centeno, Lenteja, Perejil, Zanahoria: 2 – 4 L/ha.\nCaña de azúcar: 4-5,5 L/ha.',
-                    'recomendaciones_de_uso' => 'Aplicar las dosis mayores recomendadas en el cuadro de usos cuando la infestación de malezas sea alta y/o en suelos con más de 3% de materia orgánica.',
-                    'imagen' => '/images/products/Talis-producto.jpg',
-                    'imagen_portada' => '/images/products/Talis-portada.png',
-                    'pdfs' => [
-                        // PDFs: se asume el mismo formato de nombres que los anteriores productos
-                        '/pdfs/products/Talis - Marbete.pdf',
-                        '/pdfs/products/Talis - Hoja de Datos de Seguridad (MSDS).pdf',
-                        '/pdfs/products/Talis - Flyer comercial.pdf',
-                    ],
-                    'activo' => true,
-                ]);
+        // 2. Buscar o crear el Principio Activo
+            $principioActivoTalis = PrincipioActivo::firstOrCreate(['nombre' => 'Flurocloridona 25%']);
 
-                // 4. Asociar Cultivos
-                $cultivosTalisNombres = ['Girasol', 'Avena', 'Cebada', 'Centeno', 'Lenteja', 'Perejil', 'Zanahoria', 'Caña de azúcar', 'Papa', 'Algodón', 'Maíz', 'Trigo', 'Chia'];
-                $cultivoTalisIds = [];
-                foreach ($cultivosTalisNombres as $nombre) {
-                    $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
-                    $cultivoTalisIds[] = $cultivo->id;
-                }
-                $productoTalis->cultivos()->sync($cultivoTalisIds);
+        // 3. Crear el Producto
+            $productoTalis = Producto::create([
+                'nombre' => 'TALIS®',
+                'categoria_id' => $categoriaHerbicida->id,
+                'principio_activo_id' => $principioActivoTalis->id,
+                'formulacion' => 'Concentrado Emulsionable (EC)',
+                'descripcion' => 'Herbicida residual selectivo pre y post-emergente temprano que controla un amplio espectro de malezas, especialmente las de hoja ancha. Por su acción sistémica penetra por cotiledones, hojas jóvenes, y raíces y se trasloca acropetalmente hacia hojas y tallos provocando la muerte de las malezas. El periodo de control de maleza se extiende por más de 90 días en distintos tipos de suelo sin afectar a los cultivos que siguen en la rotación. Se activa con escasa humedad en suelo, no se lava por lluvias. Los efectos son visibles a los 4 a 6 días de su aplicación comenzando por el amarillamiento y marchitamiento de las hojas y tallos.',
+                'accion' => 'Sistémico y Residual.',
+                'mecanismo_de_accion' => 'Inhibidores de la enzima fitoeno desaturasa (Grupo F1).',
+                'malezas' => 'Abrojo grande, Albahaca silvestre, Bejuco, Bolsa del pastor, Capín arroz, Capiquí, Cardo, Chamico, Chinchilla, Cola de zorro, Enredadera anual, Malva cimarrona, Manzanilla, Mastuerzo, Mostacilla, Nabo, Nabón, Ortiga, Ortiga mansa, Pasto blanco, Pasto de cuaresma, Quinoa blanca, Rábano, Sanguinaria, Sorgo de Alepo de semilla, Verdolaga, Verdolaga rastrera, Verónica, Viola silvestre, Yuyo colorado.',
+                'dosis' => 'Trigo: en barbecho químico y preemergencia 1,5 – 2 L/ha. En postemergencia: 0,3 – 0,5 L/ha.\nGirasol, papa, algodón, maíz: 2 – 4 L/ha. Avena, Cebada, Centeno, Lenteja, Perejil, Zanahoria: 2 – 4 L/ha.\nCaña de azúcar: 4-5,5 L/ha.',
+                'recomendaciones_de_uso' => 'Aplicar las dosis mayores recomendadas en el cuadro de usos cuando la infestación de malezas sea alta y/o en suelos con más de 3% de materia orgánica.',
+                'imagen' => '/images/products/Talis-producto.jpg',
+                'imagen_portada' => '/images/products/Talis-portada.png',
+                'pdfs' => [
+                    // PDFs: se asume el mismo formato de nombres que los anteriores productos
+                    '/pdfs/products/Talis - Marbete.pdf',
+                    '/pdfs/products/Talis - Hoja de Datos de Seguridad (MSDS).pdf',
+                    '/pdfs/products/Talis - Flyer comercial.pdf',
+                ],
+                'activo' => true,
+            ]);
 
-                // 5. Asociar Árboles de Recomendación
-                $arbolesTalisNombres = [
-                    'Algodón en pre emergencia',
-                    'Caña de azúcar en barbecho',
-                    'Caña de azúcar en post emergencia',
-                    'Caño de azúcar en pre emergencia',
-                    'Trigo y cebada en post emergencia',
-                    'Trigo y cebada en barbecho',
-                    'Girasol en barbecho corto primavera',
-                    'Girasol en pre emergencia',
-                    'Maíz en barbecho',
-                    'Maíz en pre emergencia',
-                ];
-                $arbolTalisIds = [];
-                foreach ($arbolesTalisNombres as $nombre) {
-                    $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
-                    $arbolTalisIds[] = $arbol->id;
-                }
-                $productoTalis->arbolesRecomendacion()->sync($arbolTalisIds);
+        // 4. Asociar Cultivos
+            $cultivosTalisNombres = ['Girasol', 'Avena', 'Cebada', 'Centeno', 'Lenteja', 'Perejil', 'Zanahoria', 'Caña de azúcar', 'Papa', 'Algodón', 'Maíz', 'Trigo', 'Chia'];
+            $cultivoTalisIds = [];
+            foreach ($cultivosTalisNombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoTalisIds[] = $cultivo->id;
+            }
+            $productoTalis->cultivos()->sync($cultivoTalisIds);
 
-                #endregion
+        // 5. Asociar Árboles de Recomendación
+            $arbolesTalisNombres = [
+                'Algodón en pre emergencia',
+                'Caña de azúcar en barbecho',
+                'Caña de azúcar en post emergencia',
+                'Caño de azúcar en pre emergencia',
+                'Trigo y cebada en post emergencia',
+                'Trigo y cebada en barbecho',
+                'Girasol en barbecho corto primavera',
+                'Girasol en pre emergencia',
+                'Maíz en barbecho',
+                'Maíz en pre emergencia',
+            ];
+            $arbolTalisIds = [];
+            foreach ($arbolesTalisNombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolTalisIds[] = $arbol->id;
+            }
+            $productoTalis->arbolesRecomendacion()->sync($arbolTalisIds);
 
+        #endregion
+        
+                
+
+
+            
+        //NO BORRAR ESTE COMENTARIO
     }
 }
