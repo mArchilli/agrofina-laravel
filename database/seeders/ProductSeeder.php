@@ -1953,10 +1953,394 @@ class ProductSeeder extends Seeder
 
         #endregion
         
-                
+        #region Producto 48: Tiembla®
+
+            // 1. Buscar o crear la Categoría
+            $categoriaInsecticida = Categoria::firstOrCreate(['nombre' => 'Insecticidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoTiembla = PrincipioActivo::firstOrCreate(['nombre' => 'Tiametoxam 14,1% + Lambdacialotrina 10,6% (SC)']);
+
+            // 3. Crear el Producto
+            $productoTiembla = Producto::create([
+                'nombre' => 'TIEMBLA',
+                'categoria_id' => $categoriaInsecticida->id,
+                'principio_activo_id' => $principioActivoTiembla->id,
+                'formulacion' => 'SC',
+                'descripcion' => 'TIEMBLA es un insecticida foliar de amplio espectro, que combina dos principios activos, con características complementarias. El Tiametoxam, es un neonicotinoide sistémico de alta residualidad que controla insectos succionadores, mientras la Lambdacialotrina es un piretroide que actúa sobre insectos succionadores y masticadores, otorgando poder de volteo. De esta manera, TIEMBLA se caracteriza por su buen poder de volteo y persistencia de control.',
+                'accion' => 'TIEMBLA se caracteriza por su buen poder de volteo y persistencia de control.',
+                'mecanismo_de_accion' => 'Tiametoxam: Modulador competitivo del receptor nicotínico de la acetilcolina. Lambdacialotrina: Modulador de los canales de sodio.',
+                'malezas' => 'Chinche verde (Nezara viridula), Alquiche chico (Edessa meditabunda), Oruga de las leguminosas (Anticarsia gemmatalis), Oruga medidora (Rachiplusia nu), Tucuras (Dichroplus spp.), Chinche de la alfalfa (Piezodorus guildinii), Picudo Negro de la Vaina (Rhysomatus subtilis), Picudo Grande de la Soja (Sternechus subsignatus), Trips (Caliothrips phaseoli), Arañuela roja común (Tetranychus urticae), Pulgón verde de los cereales (Schizaphis graminum), Pulgón de la espiga (Sitobium avenae), Pulgón del algodonero (Aphis gossypii).',
+                'dosis' => '0,2 L/ha.',
+                'recomendaciones_de_uso' => 'Las ninfas y adultos se alimentan de la savia de los tejidos vegetales, inyectando enzimas y toxinas que producen necrosis en los tejidos. Una correcta identificación de las chinches es fundamental para definir un adecuado y oportuno método de control.',
+                'imagen' => '/images/products/Tiembla-producto.jpg',
+                'imagen_portada' => '/images/products/Tiembla-portada.jpg',
+                'pdfs' => [
+                    '/pdfs/products/Tiembla - Marbete.pdf',
+                    '/pdfs/products/Tiembla - Hoja de Datos de Seguridad (MSDS).pdf',
+                    '/pdfs/products/Tiembla - Flyer comercial.pdf',
+                ],
+                'activo' => true,
+            ]);
+
+            // 4. Asociar Cultivos
+            $cultivosTiemblaNombres = ['Algodón', 'Cebolla', 'Durazno', 'Pasturas a base de Alfalfa', 'Soja', 'Tomate', 'Trigo'];
+            $cultivoTiemblaIds = [];
+            foreach ($cultivosTiemblaNombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoTiemblaIds[] = $cultivo->id;
+            }
+            $productoTiembla->cultivos()->sync($cultivoTiemblaIds);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolesTiemblaNombres = [
+                'Algodón en post emergencia',
+                'Arroz en post emergencia',
+                'Soja en post emergencia',
+            ];
+            $arbolTiemblaIds = [];
+            foreach ($arbolesTiemblaNombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolTiemblaIds[] = $arbol->id;
+            }
+            $productoTiembla->arbolesRecomendacion()->sync($arbolTiemblaIds);
+
+            #endregion
+
+        #region Producto 49: Top Ground®
+
+            // 1. Buscar o crear la Categoría
+            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoTopGround = PrincipioActivo::firstOrCreate(['nombre' => 'Imazapir 17,5% + Imazapic 52,5%']);
+
+            // 3. Crear el Producto
+            $productoTopGround = Producto::create([
+                    'nombre' => 'TOP GROUND®',
+                    'categoria_id' => $categoriaHerbicida->id,
+                    'principio_activo_id' => $principioActivoTopGround->id,
+                    'formulacion' => 'Polvo Soluble (SP)',
+                    'descripcion' => 'TOP GROUND es un herbicida con una elevada acción residual, más de 90 días, para aplicaciones pre-emergentes y post-emergentes tempranas de MAÍZ y SORGO IMI (tolerantes a imidazolinonas), aplicaciones en BARBECHOS LARGOS EN SOJA y aplicaciones pre emergentes en CAÑA DE AZÚCAR. TOP GROUND es un herbicida con acción de contacto, sistémico y residual. Estas características le permiten controlar malezas en pre-emergencia como en post-emergencia garantizando un período de control prolongado y sin competencia.',
+                    'accion' => 'Contacto, Sistémico y Residual.',
+                    'mecanismo_de_accion' => 'Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B',
+                    'malezas' => 'Abrojo grande, Capín arroz, Cebollín, Chamico, Chinchilla, Chufa, Cola de zorro, Farolito, Girasolillo, Gramón, Malva cimarrona, Nabo, Pata de gallina, Pasto de cuaresma, Quinoa, Sorgo de Alepo (RIZ/SEM), Verdolaga, Yerba del pollo, Yuyo colorado, Rye grass.',
+                    'dosis' => 'Maíz y sorgo IMI: 114 g/ha (1 Pack cada 20 has).\nSoja: hasta 120 días antes de la siembra: 150 g/ha (1 pack cada 15 has). Hasta 90 días antes de la siembra: 114 g/ha (1 pack cada 20 has).\nCaña de azúcar: Suelos livianos: 200 g/ha. Suelos pesados: 250 g/ha.',
+                    'recomendaciones_de_uso' => 'TOP GROUND debe ser activado por una pequeña cantidad de humedad del suelo después de la aplicación. Lluvias posteriores de 15-20 mm asegurarán la incorporación de los herbicidas a la matriz del suelo, garantizando su efectividad. En suelos con menos de 5% de materia orgánica y lluvias torrenciales en un corto periodo de tiempo, el producto puede estar expuesto a lixiviación disminuyendo su capacidad de control.\n\nMaíz IMI: El maíz no debe presentar un estado de desarrollo superior a 6ta hoja desplegada con lígula visible. No aplicar en casos de falta de humedad prolongada y cuando la maleza presenta síntomas de marchitez.\n\nSoja: Aplicar la dosis menor 90 días previo a la siembra y la dosis mayor 120 días previo a la siembra. Comenzando a contar los días luego de la primera precipitación de 20 mm post aplicación.\n\nCaña de azúcar: Aplicar en preemergencia del cultivo o antes de que brote la soca. Se puede aplicar en pre emergencia o post emergencia temprana de malezas. Para alcanzar la máxima actividad del producto, es preferible que las malezas se encuentren emergidas, que no superen las 4 hojas verdaderas y estén en un período de activo crecimiento\n\nSorgo IMI: Sorgo Forrajero: Una aplicación en premergencia del cultivo. Sorgo Granífero: una aplicación entre la siembra y hasta 4 hojas verdaderas del sorgo.',
+                    'banda_toxicologica' => 'Verde',
+                    'imagen' => '/images/products/Top-ground-producto.jpg',
+                    'imagen_portada' => '/images/products/Top-ground-portada.png',
+                    'pdfs' => [
+                        '/pdfs/products/Top Ground - Marbete.pdf',
+                        '/pdfs/products/Top Ground - Hojas de Datos de Seguridad (MSDS).pdf',
+                        '/pdfs/products/Top Ground - Flyer comercial.pdf',
+                        '/pdfs/products/Top Ground - Flyer comercial (Caña de azucar).pdf',
+                    ],
+                    'activo' => true,
+                ]);
+
+            // 4. Asociar Cultivos
+            $cultivosTopGroundNombres = ['Maiz y sorgo IMI', 'Barbecho químico soja', 'caña de azúcar'];
+            $cultivoTopGroundIds = [];
+            foreach ($cultivosTopGroundNombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoTopGroundIds[] = $cultivo->id;
+            }
+            $productoTopGround->cultivos()->sync($cultivoTopGroundIds);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolesTopGroundNombres = [
+                'Caña de azúcar en pre emergencia',
+                'Caña de azúcar en barbecho',
+                'Sorgo en post emergencia',
+                'Sorgo en pre emergencia',
+                'Maíz en pre emergencia',
+                'Top Ground',
+                'Soja en barbecho largo',
+            ];
+            $arbolTopGroundIds = [];
+            foreach ($arbolesTopGroundNombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolTopGroundIds[] = $arbol->id;
+            }
+            $productoTopGround->arbolesRecomendacion()->sync($arbolTopGroundIds);
+
+            #endregion
+
+        #region Producto 50: Top Rice®
+            // 1. Buscar o crear la Categoría
+            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoTopRice = PrincipioActivo::firstOrCreate(['nombre' => 'Imazapic 17,5% + Imazapir 52,5%']);
+
+            // 3. Crear el Producto
+            $productoTopRice = Producto::create([
+                'nombre' => 'TOP RICE®',
+                'categoria_id' => $categoriaHerbicida->id,
+                'principio_activo_id' => $principioActivoTopRice->id,
+                'formulacion' => 'Polvo Soluble (SP)',
+                'descripcion' => 'Es un herbicida de residualidad prolongada para aplicación secuencial en pre-emergencia y post-emergencia temprana indicado para cultivos de arroz tolerante a las imidazolinonas. Su acción herbicida, especialmente contra arroz colorado, se complementa con la inundación temprana del cultivo. Por su acción residual controla malezas que nacen después de la aplicación, una vez que ha sido incorporado al suelo por precipitaciones adecuadas.',
+                'accion' => 'Sistémico, residual.',
+                'mecanismo_de_accion' => 'Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B',
+                'malezas' => 'LATIFOLIADAS: Laguinilla, Porotillo, Duraznillo de agua, Verdolaga, Eclipta, Pata de loro, Eichornia, Caperonia.\nGRAMÍNEAS: Arroz colorado, Arroz común, Capín colorado, Capín arroz, Chacrilla, Pasto brachiaria, Pasto colchón, Cola de zorro, Pasto cuaresma, Pasto dulce, Gramón, Pastos de agua, Pasto moro.\nCIPERÁCEAS: Chufa, Junquillo, Totorilla.',
+                'dosis' => 'Pre-emergencia: 140 g/ha – Post-emergencia: 140 g/ha + coadyuvante.',
+                'recomendaciones_de_uso' => 'Debe ser aplicado en forma secuencial: 1er aplicación, en pre emergencia, es necesario disponer de buena humedad en el suelo siendo favorecida la incorporación del producto al suelo por las lluvias posteriores a la aplicación. Por su acción residual, controla malezas que aun no han emergido, siempre y cuando las condiciones de humedad en el suelo sean las adecuadas.\nLa 2da aplicación, en post-emergencia, se realiza con la adición de coadyuvante para mejorar la absorción foliar del producto. De 2 a 4 días de la aplicación post-emergente, se completa la acción del producto con la inundación del cultivo.\nNo aplicar en condiciones de sequía prolongada o con el cultivo y malezas con síntomas de marchitez.\n1) Para el control de malezas emergidas en aplicaciones de pre emergencia del cultivo, aplicar Glifosato a dosis recomendadas, en aplicaciones separadas.\n2) Para aplicaciones post-emergentes del cultivo, agregar surfactante en dosis mínima de 250 g de ingrediente activo del surfactante cada 100 L de caldo.',
+                'imagen' => '/images/products/Top-rice-producto.jpg',
+                'imagen_portada' => '/images/products/Top-rice-portada.png',
+                'pdfs' => [
+                    '/pdfs/products/Top Rice - Marbete.pdf',
+                    '/pdfs/products/Top Rice - Hoja de Datos de Seguridad (MSDS).pdf',
+                    '/pdfs/products/Top Rice - Flyer Comercial.pdf',
+                ],
+                'activo' => true,
+            ]);
+
+            // 4. Asociar Cultivos
+            $cultivosTopRiceNombres = ['Arroz'];
+            $cultivoTopRiceIds = [];
+            foreach ($cultivosTopRiceNombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoTopRiceIds[] = $cultivo->id;
+            }
+            $productoTopRice->cultivos()->sync($cultivoTopRiceIds);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolesTopRiceNombres = [
+                'Arroz en barbecho corto primavera',
+                'Arroz en pre emergencia',
+                'Arroz en post emergencia',
+            ];
+            $arbolTopRiceIds = [];
+            foreach ($arbolesTopRiceNombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolTopRiceIds[] = $arbol->id;
+            }
+            $productoTopRice->arbolesRecomendacion()->sync($arbolTopRiceIds);
+
+            #endregion
+
+        #region Producto 51: Trevor®
+            // 1. Buscar o crear la Categoría
+            $categoriaInsecticida = Categoria::firstOrCreate(['nombre' => 'Insecticidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoTrevor = PrincipioActivo::firstOrCreate(['nombre' => 'Clorantraniliprole 20 % SC']);
+
+            // 3. Crear el Producto
+            $productoTrevor = Producto::create([
+                'nombre' => 'TREVOR®',
+                'categoria_id' => $categoriaInsecticida->id,
+                'principio_activo_id' => $principioActivoTrevor->id,
+                'formulacion' => 'SC (Suspensión Concentrada)',
+                'descripcion' => 'Insecticida de última generación perteneciente a la familia química de las diamidas, recomendado para el control de orugas difíciles, como la oruga bolillera, en una amplia gama de cultivos. Su bajo impacto sobre la fauna benéfica lo convierte en el aliado perfecto para programas de manejo integrado de plagas (MIP), garantizando protección máxima y segura sin comprometer a los insectos benéficos.',
+                'accion' => 'Contacto e Ingestión.',
+                'mecanismo_de_accion' => 'Moduladores de receptores de ryanodine.',
+                'malezas' => 'Isoca bolillera (Helicoverpa gelotopoeon), Falsa medidora (Pseudoplusia includens), Oruga del yuyo colorado (Spodoptera cosmioides), Oruga capullera (Helicoverpa armigera), Gusano cogollero (Spodoptera frugiperda), Barrenador del tallo (Diatraea saccharalis), Polilla del tomate (Tuta absoluta), Oruga de la hoja (Alabama argillacea), Polilla de la vid (Lobesia botrana).',
+                'dosis' => '30 ml/ha (VER MARBETE según cultivo y plaga).',
+                'recomendaciones_de_uso' => 'Tratar el cultivo con TREVOR® según umbrales de daño económico (UDE) con el agregado de 0,5 L/ha de Zinax (EMAG). Se recomienda rotar el uso de TREVOR® o cualquier otro producto perteneciente al Grupo 28 de insecticidas con productos de diferentes modos de acción. No realizar más de 2 aplicaciones a un mismo cultivo. Lea atentamente el marbete antes de uso.',
+                'imagen' => '/images/products/Trevor-producto.jpg',
+                'imagen_portada' => '/images/products/Trevor-portada.jpg',
+                'pdfs' => [
+                    '/pdfs/products/Trevor - Marbete.pdf',
+                    '/pdfs/products/Trevor - Hoja de Datos de Seguridad (MSDS).pdf',
+                    '/pdfs/products/Trevor - Flyer comercial.pdf',
+                ],
+                'activo' => true,
+            ]);
+
+            // 4. Asociar Cultivos
+            $cultivosTrevorNombres = ['Soja', 'Maíz', 'Girasol', 'Tomate', 'Algodón', 'Vid', 'Frutales de Pepita y Carozo', 'Poroto'];
+            $cultivoTrevorIds = [];
+            foreach ($cultivosTrevorNombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoTrevorIds[] = $cultivo->id;
+            }
+            $productoTrevor->cultivos()->sync($cultivoTrevorIds);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolesTrevorNombres = [
+                'Algodón en post emergencia',
+                'Soja en post emergencia',
+                'Girasol en post emergencia',
+                'Maíz en post emergencia',
+                'Poroto en post emergencia',
+            ];
+            $arbolTrevorIds = [];
+            foreach ($arbolesTrevorNombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolTrevorIds[] = $arbol->id;
+            }
+            $productoTrevor->arbolesRecomendacion()->sync($arbolTrevorIds);
+
+            #endregion
+
+        #region Producto 52: Trigo y Cebada: Arbol de recomendación completo
+            $productoTrigoCebadaCompleto = Producto::create([
+                'nombre' => 'TRIGO Y CEBADA: Árbol de recomendación completo',
+                'imagen' => '/images/products/Trigo-y-cebada-completo.jpg',
+                'imagen_portada' => '/images/products/Trigo-y-cebada-completo.jpg',
+                'pdfs' => ['/pdfs/products/Trigo y Cebada - Arbol de Recomendacion Completo.pdf'],
+                'activo' => true,
+            ]);
+
+            // Asociar Árbol de Recomendación
+            $arbolTrigoCebadaCompleto = ArbolRecomendacion::firstOrCreate(['nombre' => 'Trigo y cebada (completo)']);
+            $productoTrigoCebadaCompleto->arbolesRecomendacion()->sync([$arbolTrigoCebadaCompleto->id]);
+
+            #endregion
+
+        #region Producto 53: Verosil®
+            // 1. Buscar o crear la Categoría
+            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoVerosil = PrincipioActivo::firstOrCreate(['nombre' => 'Imazetapir 10,59%']);
+
+            // 3. Crear el Producto
+            $productoVerosil = Producto::create([
+                'nombre' => 'VEROSIL®',
+                'categoria_id' => $categoriaHerbicida->id,
+                'principio_activo_id' => $principioActivoVerosil->id,
+                'formulacion' => 'SL (Concentración Soluble)',
+                'descripcion' => 'Herbicida sistémico selectivo de acción residual, en aplicaciones post emergentes es absorbido por follaje y raíz. También tiene aplicación como herbicida selectivo pre emergente en poroto. Ejerce un control residual en las malezas que germinan después de la aplicación.',
+                'accion' => 'Sistémico y residual.',
+                'mecanismo_de_accion' => 'Inhibidor de la enzima aceto lactato sintetasa (ALS).',
+                'malezas' => 'Abrojillo, abrojo grande, afata, amor seco, bejuco, bolsa de pastor, capín, capiquí, cebada cervecera, cebollín, chamico, chinchilla, enredadera anual, falsa biznaga, farolito, girasolillo, lengua de vaca, malva, mastuerzo, mostacilla, nabo, nabón, ortiga, ortiga mansa, pasto colorado, pasto cuaresma, perejilillo, quinoa, revienta caballo, sanguinaria, sorgo de alepo, trigo, verdolaga, yuyo colorado.',
+                'dosis' => 'Soja, Maní, Maíz IMI, alfalfa, arveja: 0,8 – 1 L/ha. Poroto: 0,5 L/ha.',
+                'recomendaciones_de_uso' => 'Iniciar el control de las malezas desde su emergencia hasta la 4ta hoja verdadera de ellas. En caso de alta infestación se consigue control óptimo aplicando antes de la 2da hoja verdadera de la maleza. Para un óptimo control, las condiciones de humedad deben ser tales que favorezcan un activo crecimiento de las malezas.',
+                'imagen' => '/images/products/Verosil-producto.jpg',
+                'imagen_portada' => '/images/products/Verosil-portada.png',
+                'pdfs' => [
+                    '/pdfs/products/Verosil - Marbete.pdf',
+                    '/pdfs/products/Verosil - Hoja de Datos de Seguridad (MSDS).pdf',
+                    '/pdfs/products/Verosil - Flyer comercial.pdf',
+                ],
+                'activo' => true,
+            ]);
+
+            // 4. Asociar Cultivos
+            $cultivosVerosilNombres = ['Soja', 'Maní', 'Maíz IMI', 'Alfalfa', 'Arveja', 'Poroto'];
+            $cultivoVerosilIds = [];
+            foreach ($cultivosVerosilNombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoVerosilIds[] = $cultivo->id;
+            }
+            $productoVerosil->cultivos()->sync($cultivoVerosilIds);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolesVerosilNombres = [
+                'Alfalfa en pre emergencia',
+                'Alfalfa post emergencia',
+                'Soja en post emergencia',
+                'Maíz en pre emergencia',
+                'Maíz en post emergencia',
+                'Maní en pre emergencia',
+                'Maní en post emergencia',
+                'Poroto en pre emergencia',
+            ];
+            $arbolVerosilIds = [];
+            foreach ($arbolesVerosilNombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolVerosilIds[] = $arbol->id;
+            }
+            $productoVerosil->arbolesRecomendacion()->sync($arbolVerosilIds);
+
+            #endregion
+
+        #region Producto 54: Verosil 40®
+            // 1. Buscar o crear la Categoría
+            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+            // 2. Buscar o crear el Principio Activo
+            $principioActivoVerosil40 = PrincipioActivo::firstOrCreate(['nombre' => 'Imazetapir 40 % SL']);
+
+            // 3. Crear el Producto
+            $productoVerosil40 = Producto::create([
+                'nombre' => 'VEROSIL 40',
+                'categoria_id' => $categoriaHerbicida->id,
+                'principio_activo_id' => $principioActivoVerosil40->id,
+                'formulacion' => 'SL (Concentrado Soluble)',
+                'descripcion' => 'Verosil 40 es un herbicida sistémico selectivo de acción residual. En aplicaciones post emergentes es absorbido por follaje y raíz. Ejerce un control residual en las malezas que germinan después de la aplicación. Al estar 4 veces más concentrado, permite disminuir la dosis a 0,25 L/ha, mejorando la logística del productor y disminuyendo la emisión de plástico y costos asociados al transporte.',
+                'accion' => 'Sistémico y residual.',
+                'mecanismo_de_accion' => 'Inhibidor de la enzima aceto lactato sintetasa (ALS).',
+                'malezas' => 'Abrojillo, abrojo grande, afata, amor seco, bejuco, bolsa de pastor, capín, capiquí, cebada cervecera, cebollín, chamico, chinchilla, enredadera anual, falsa biznaga, farolito, girasolillo, lengua de vaca, malva, mastuerzo, mostacilla, nabo, nabón, ortiga, ortiga mansa, pasto colorado, pasto cuaresma, perejilillo, quinoa, revienta caballo, sanguinaria, sorgo de alepo, trigo, verdolaga, yuyo colorado.',
+                'dosis' => '0,25 L/ha.',
+                'recomendaciones_de_uso' => 'Iniciar el control de las malezas desde su emergencia hasta la 4ta hoja verdadera de ellas. En caso de alta infestación se consigue control óptimo aplicando antes de la 2da hoja verdadera de la maleza. Para un óptimo control, las condiciones de humedad deben ser tales que favorezcan un activo crecimiento de las malezas.',
+                'imagen' => '/images/products/Verosil-40-producto.jpg',
+                'imagen_portada' => '/images/products/Verosil-40-portada.jpg',
+                'pdfs' => [
+                    '/pdfs/products/Verosil 40 - Marbete.pdf',
+                    '/pdfs/products/Verosil 40 - Hoja de Datos de Seguridad (MSDS).pdf',
+                    '/pdfs/products/Verosil 40 - Flyer comercial.pdf',
+                ],
+                'activo' => true,
+            ]);
+
+            // 4. Asociar Cultivos
+            $cultivosVerosil40Nombres = ['Soja', 'Maní', 'Maíz IMI', 'Alfalfa', 'Arveja', 'Poroto'];
+            $cultivoVerosil40Ids = [];
+            foreach ($cultivosVerosil40Nombres as $nombre) {
+                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
+                $cultivoVerosil40Ids[] = $cultivo->id;
+            }
+            $productoVerosil40->cultivos()->sync($cultivoVerosil40Ids);
+
+            // 5. Asociar Árboles de Recomendación
+            $arbolesVerosil40Nombres = [
+                'Maíz en pre emergencia',
+                'Maíz en post emergencia',
+                'Maní en pre emergencia',
+                'Maní en post emergencia',
+                'Poroto en pre emergencia',
+            ];
+            $arbolVerosil40Ids = [];
+            foreach ($arbolesVerosil40Nombres as $nombre) {
+                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
+                $arbolVerosil40Ids[] = $arbol->id;
+            }
+            $productoVerosil40->arbolesRecomendacion()->sync($arbolVerosil40Ids);
+
+            #endregion
+
+        #region Producto 55: Zinax®
 
 
-            
-        //NO BORRAR ESTE COMENTARIO
+                // 1. Buscar o crear la Categoría
+                $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+
+                // 2. Buscar o crear el Principio Activo
+                $principioActivoZinax = PrincipioActivo::firstOrCreate(['nombre' => 'EMAG 75%']);
+
+                // 3. Crear el Producto
+                $productoZinax = Producto::create([
+                    'nombre' => 'ZINAX',
+                    'categoria_id' => $categoriaHerbicida->id,
+                    'principio_activo_id' => $principioActivoZinax->id,
+                    'formulacion' => null,
+                    'descripcion' => 'Coadyuvante para mezclar con otros plaguicidas. Actúa como vehículo, haciendo más eficiente el mojado y mejorando la absorción foliar de los plaguicidas en las plantas. Adherente, mejorando la adherencia sobre la hoja, protegiendo al producto, reduciendo el lavado por lluvias, permaneciendo más tiempo para facilitar la absorción y reduciendo el escurrimiento. Antievaporante, reduciendo pérdidas de productos y ayudando a la deposición.',
+                    'accion' => null,
+                    'mecanismo_de_accion' => null,
+                    'malezas' => null,
+                    'dosis' => 'La dosis recomendadas varían entre el 0,2% y el 0,5% del volumen de aplicación. Seguir las recomendaciones específicas del fabricante o formulador del producto fitosanitario que se habrá de aplicar.',
+                    'recomendaciones_de_uso' => 'Agitar bien el envase antes de usar. Una vez preparada la solución con el plaguicida, agregar la dosis correspondiente del coadyuvante, agitando continuamente para lograr una mezcla uniforme.',
+                    'imagen' => '/images/products/Zinax-producto.jpg',
+                    'imagen_portada' => '/images/products/Zinax-portada.png',
+                    'pdfs' => [
+                        '/pdfs/products/Zinax - Marbete.pdf',
+                        '/pdfs/products/Zinax - Hoja de Datos de Seguridad (MSDS).pdf',
+                    ],
+                    'activo' => true,
+                ]);
+
+                // 4. No hay cultivos ni árboles de recomendación asociados
+
+                #endregion
+
+        //NO BORRAR ESTE ESPACIO        
+
+        //NO BORRAR ESTE ESPACIO
+
+        //NO BORRAR ESTE ESPACIO
     }
 }
