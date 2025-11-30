@@ -1891,10 +1891,7 @@ class ProductSeeder extends Seeder
 
             #endregion
 
-            #region Producto 47: 
-
-                #region Producto 47: TALIS®
-
+        #region Producto 47: Talis®
                 // 1. Buscar o crear la Categoría
                 $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
