@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Estilos para texto en novedades */
+@layer base {
+    p {
+        @apply mb-4 leading-relaxed;
+    }
+}
+
 /* Utilidades adicionales */
 .line-clamp-2 {
     display: -webkit-box;
