@@ -1,9 +1,36 @@
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
 
 const bannerImg = '/images/products/banner-products.jpg';
 
 export default function ShowProduct({ producto }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Bloquear scroll y ocultar elementos cuando el modal está abierto
+    useEffect(() => {
+        const navbar = document.querySelector('nav, header');
+        
+        if (isModalOpen) {
+            document.body.style.overflow = 'hidden';
+            if (navbar) {
+                navbar.style.display = 'none';
+            }
+        } else {
+            document.body.style.overflow = 'unset';
+            if (navbar) {
+                navbar.style.display = '';
+            }
+        }
+        
+        return () => {
+            document.body.style.overflow = 'unset';
+            if (navbar) {
+                navbar.style.display = '';
+            }
+        };
+    }, [isModalOpen]);
+
     return (
         <GuestLayout container={false}>
             <Head title={`${producto.nombre} | Productos`} />
@@ -35,11 +62,20 @@ export default function ShowProduct({ producto }) {
                         {/* Imagen del producto */}
                         <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-2xl overflow-hidden ring-1 ring-emerald-200/60 shadow-sm">
                             {producto.imagen ? (
-                                <img
-                                    src={`${producto.imagen}`}
-                                    alt={producto.nombre}
-                                    className="w-full h-full object-cover"
-                                />
+                                <div className="relative group cursor-pointer" onClick={() => setIsModalOpen(true)}>
+                                    <img
+                                        src={`${producto.imagen}`}
+                                        alt={producto.nombre}
+                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-3 shadow-lg">
+                                            <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
                             ) : (
                                 <div className="flex items-center justify-center h-96">
                                     <svg className="w-32 h-32 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,6 +296,58 @@ export default function ShowProduct({ producto }) {
 
                 </div>
             </div>
+
+            {/* Modal de previsualización */}
+            {isModalOpen && producto.imagen && (
+                <div 
+                    className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-gradient-to-br from-emerald-900/95 via-emerald-800/95 to-lime-900/95 backdrop-blur-md animate-fadeIn"
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    <div className="relative w-full max-w-6xl animate-scaleIn">
+                        {/* Botón cerrar */}
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute -top-4 -right-4 sm:-top-5 sm:-right-5 z-10 bg-white/10 hover:bg-emerald-600 text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded-full p-2 sm:p-3 backdrop-blur-sm border border-white/20 hover:scale-110 hover:rotate-90 shadow-lg"
+                            aria-label="Cerrar previsualización"
+                        >
+                            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        
+                        {/* Imagen ampliada */}
+                        <div 
+                            className="bg-gradient-to-br from-white via-emerald-50/30 to-lime-50/30 rounded-2xl overflow-hidden shadow-2xl ring-2 ring-emerald-400/50 hover:ring-emerald-400 transition-all duration-300"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <img
+                                src={`${producto.imagen}`}
+                                alt={producto.nombre}
+                                className="w-full h-full object-contain max-h-[70vh] sm:max-h-[75vh] md:max-h-[80vh] p-4 sm:p-6"
+                            />
+                        </div>
+
+                        {/* Nombre del producto */}
+                        <div className="mt-4 sm:mt-6 text-center">
+                            <div className="inline-block bg-gradient-to-r from-emerald-600 to-lime-600 px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg border border-white/20">
+                                <p className="text-white text-sm sm:text-base md:text-lg font-semibold drop-shadow-lg">
+                                    {producto.nombre}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Indicación de cierre */}
+                        <div className="mt-3 sm:mt-4 text-center">
+                            <p className="flex items-center justify-center gap-2 text-white/60 text-xs sm:text-sm">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                                </svg>
+                                Haz clic fuera para cerrar
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </GuestLayout>
     );
 }
