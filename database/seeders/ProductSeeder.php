@@ -2305,42 +2305,37 @@ class ProductSeeder extends Seeder
 
         #region Producto 55: Zinax®
 
+        // 1. Buscar o crear la Categoría
+        $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
-                // 1. Buscar o crear la Categoría
-                $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+        // 2. Buscar o crear el Principio Activo
+        $principioActivoZinax = PrincipioActivo::firstOrCreate(['nombre' => 'EMAG 75%']);
 
-                // 2. Buscar o crear el Principio Activo
-                $principioActivoZinax = PrincipioActivo::firstOrCreate(['nombre' => 'EMAG 75%']);
+        // 3. Crear el Producto
+        $productoZinax = Producto::create([
+            'nombre' => 'ZINAX',
+            'categoria_id' => $categoriaHerbicida->id,
+            'principio_activo_id' => $principioActivoZinax->id,
+            'formulacion' => null,
+            'descripcion' => 'Coadyuvante para mezclar con otros plaguicidas. Actúa como vehículo, haciendo más eficiente el mojado y mejorando la absorción foliar de los plaguicidas en las plantas. Adherente, mejorando la adherencia sobre la hoja, protegiendo al producto, reduciendo el lavado por lluvias, permaneciendo más tiempo para facilitar la absorción y reduciendo el escurrimiento. Antievaporante, reduciendo pérdidas de productos y ayudando a la deposición.',
+            'accion' => null,
+            'mecanismo_de_accion' => null,
+            'malezas' => null,
+            'dosis' => 'La dosis recomendadas varían entre el 0,2% y el 0,5% del volumen de aplicación. Seguir las recomendaciones específicas del fabricante o formulador del producto fitosanitario que se habrá de aplicar.',
+            'recomendaciones_de_uso' => 'Agitar bien el envase antes de usar. Una vez preparada la solución con el plaguicida, agregar la dosis correspondiente del coadyuvante, agitando continuamente para lograr una mezcla uniforme.',
+            'imagen' => '/images/products/Zinax-producto.jpg',
+            'imagen_portada' => '/images/products/Zinax-portada.png',
+            'pdfs' => [
+                '/pdfs/products/Zinax - Marbete.pdf',
+                '/pdfs/products/Zinax - Hoja de Datos de Seguridad (MSDS).pdf',
+            ],
+            'activo' => true,
+        ]);
 
-                // 3. Crear el Producto
-                $productoZinax = Producto::create([
-                    'nombre' => 'ZINAX',
-                    'categoria_id' => $categoriaHerbicida->id,
-                    'principio_activo_id' => $principioActivoZinax->id,
-                    'formulacion' => null,
-                    'descripcion' => 'Coadyuvante para mezclar con otros plaguicidas. Actúa como vehículo, haciendo más eficiente el mojado y mejorando la absorción foliar de los plaguicidas en las plantas. Adherente, mejorando la adherencia sobre la hoja, protegiendo al producto, reduciendo el lavado por lluvias, permaneciendo más tiempo para facilitar la absorción y reduciendo el escurrimiento. Antievaporante, reduciendo pérdidas de productos y ayudando a la deposición.',
-                    'accion' => null,
-                    'mecanismo_de_accion' => null,
-                    'malezas' => null,
-                    'dosis' => 'La dosis recomendadas varían entre el 0,2% y el 0,5% del volumen de aplicación. Seguir las recomendaciones específicas del fabricante o formulador del producto fitosanitario que se habrá de aplicar.',
-                    'recomendaciones_de_uso' => 'Agitar bien el envase antes de usar. Una vez preparada la solución con el plaguicida, agregar la dosis correspondiente del coadyuvante, agitando continuamente para lograr una mezcla uniforme.',
-                    'imagen' => '/images/products/Zinax-producto.jpg',
-                    'imagen_portada' => '/images/products/Zinax-portada.png',
-                    'pdfs' => [
-                        '/pdfs/products/Zinax - Marbete.pdf',
-                        '/pdfs/products/Zinax - Hoja de Datos de Seguridad (MSDS).pdf',
-                    ],
-                    'activo' => true,
-                ]);
-
-                // 4. No hay cultivos ni árboles de recomendación asociados
-
-                #endregion
-
-        //NO BORRAR ESTE ESPACIO        
-
+        #endregion
+       
         //NO BORRAR ESTE ESPACIO
-
+        //NO BORRAR ESTE ESPACIO
         //NO BORRAR ESTE ESPACIO
     }
 }

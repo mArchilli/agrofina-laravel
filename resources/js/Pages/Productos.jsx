@@ -1,6 +1,7 @@
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
+import Pagination from '@/Components/Pagination';
 
 const bannerImg = '/images/img-products.jpg';
 
@@ -272,19 +273,19 @@ export default function Productos({
                 {/* Contador de resultados */}
                 <div className="flex items-center justify-between">
                     <p className="text-sm text-emerald-700">
-                        {productos.length === 0 ? (
+                        {productos.total === 0 ? (
                             <span className="font-medium">No se encontraron productos</span>
                         ) : (
                             <>
-                                Mostrando <span className="font-semibold">{productos.length}</span> 
-                                {productos.length === 1 ? ' producto' : ' productos'}
+                                Mostrando <span className="font-semibold">{productos.from}</span> a <span className="font-semibold">{productos.to}</span> de <span className="font-semibold">{productos.total}</span> 
+                                {productos.total === 1 ? ' producto' : ' productos'}
                             </>
                         )}
                     </p>
                 </div>
 
                 {/* Grid de productos */}
-                {productos.length === 0 ? (
+                {productos.data.length === 0 ? (
                     <div className=" rounded-2xl p-12 text-center ring-1 ring-emerald-200/60">
                         <svg className="mx-auto h-16 w-16 text-emerald-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
@@ -297,11 +298,20 @@ export default function Productos({
                         </p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {productos.map((producto) => (
-                            <ProductCard key={producto.id} producto={producto} />
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {productos.data.map((producto) => (
+                                <ProductCard key={producto.id} producto={producto} />
+                            ))}
+                        </div>
+
+                        {/* Paginación */}
+                        {productos.last_page > 1 && (
+                            <div className="mt-8">
+                                <Pagination links={productos.links} />
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

@@ -32,8 +32,9 @@ class ProductController extends Controller
 
         // Filtro por cultivo
         if ($request->filled('cultivo')) {
-            $query->whereHas('cultivos', function ($q) use ($request) {
-                $q->where('cultivos.id', $request->cultivo);
+            $cultivosArray = is_array($request->cultivo) ? $request->cultivo : explode(',', $request->cultivo);
+            $query->whereHas('cultivos', function ($q) use ($cultivosArray) {
+                $q->whereIn('cultivos.id', $cultivosArray);
             });
         }
 
@@ -49,14 +50,14 @@ class ProductController extends Controller
             });
         }
 
-        $productos = $query->latest()->get();
+        $productos = $query->latest()->paginate(20)->withQueryString();
 
         // Obtener las rutas del frontend
         $frontendImagesPath = env('VITE_PRODUCT_IMAGES_PATH', '/images/products/');
         $frontendPdfsPath = env('VITE_PRODUCT_PDFS_PATH', '/PDFs/products/');
 
         // Transformar las rutas de productos para el frontend
-        $productosTransformados = $productos->map(function ($producto) use ($frontendImagesPath, $frontendPdfsPath) {
+        $productos->getCollection()->transform(function ($producto) use ($frontendImagesPath, $frontendPdfsPath) {
             $productoArray = $producto->toArray();
             
             // Transformar ruta de imagen
@@ -79,6 +80,9 @@ class ProductController extends Controller
             return $productoArray;
         });
 
+        // Mantener los parámetros de filtro en la paginación
+        $productos->appends($request->all());
+
         // Obtener datos para los filtros
         $categorias = Categoria::where('activo', true)
             ->orderBy('nombre')
@@ -97,7 +101,7 @@ class ProductController extends Controller
             ->get(['id', 'nombre']);
 
         return Inertia::render('Productos', [
-            'productos' => $productosTransformados,
+            'productos' => $productos,
             'categorias' => $categorias,
             'cultivos' => $cultivos,
             'principiosActivos' => $principiosActivos,
