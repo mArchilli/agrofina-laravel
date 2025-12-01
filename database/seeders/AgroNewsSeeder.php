@@ -14,13 +14,11 @@ class AgroNewsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Asegurar que el directorio de PDFs existe
         $pdfDirectory = public_path('PDFs/agronews');
         if (!File::exists($pdfDirectory)) {
             File::makeDirectory($pdfDirectory, 0755, true);
         }
 
-        // Crear agronews de ejemplo
         $agronews = [
             [
                 'title' => 'AgroNews: Abril 2023',
