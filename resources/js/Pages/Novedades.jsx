@@ -1,14 +1,44 @@
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
 
 const bannerImg = '/images/novedades/banner-novedades.jpg';
 
-export default function Novedades({ novedades = [] }) {
+export default function Novedades({ novedades, filters }) {
+    const [search, setSearch] = useState(filters.search || '');
+    const [order, setOrder] = useState(filters.order || 'desc');
+
+    const handleFilter = () => {
+        router.get(route('novedades'), 
+            { search, order }, 
+            { 
+                preserveState: true, 
+                preserveScroll: true,
+                replace: true 
+            }
+        );
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleFilter();
+        }
+    };
+
     return (
         <GuestLayout container={false}>
             <Head title="Novedades" />
             <div className="w-full">
                 <Hero />
+                <FiltersBar 
+                    search={search}
+                    setSearch={setSearch}
+                    order={order}
+                    setOrder={setOrder}
+                    total={novedades.total}
+                    handleFilter={handleFilter}
+                    handleKeyPress={handleKeyPress}
+                />
                 <NovedadesGrid novedades={novedades} />
             </div>
         </GuestLayout>
@@ -55,8 +85,100 @@ function Hero() {
     );
 }
 
+function FiltersBar({ search, setSearch, order, setOrder, total, handleFilter, handleKeyPress }) {
+    return (
+        <div className="mx-auto max-w-7xl px-4 py-6">
+            <div className="bg-gradient-to-br from-emerald-50 to-lime-50 rounded-2xl shadow-md ring-1 ring-emerald-200/60 p-6">
+                <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+                    {/* Buscador */}
+                    <div className="flex-1">
+                        <label className="block text-sm font-semibold text-emerald-900 mb-2">
+                            Buscar novedades
+                        </label>
+                        <div className="relative">
+                            <svg 
+                                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-600" 
+                                fill="none" 
+                                viewBox="0 0 24 24" 
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input
+                                type="text"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                placeholder="Buscar por título o contenido..."
+                                className="w-full pl-12 pr-12 py-3 bg-white border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all shadow-sm hover:border-emerald-300"
+                            />
+                            {search && (
+                                <button
+                                    onClick={() => setSearch('')}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-emerald-600 transition-colors"
+                                >
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Filtro de orden */}
+                    <div className="lg:w-64">
+                        <label className="block text-sm font-semibold text-emerald-900 mb-2">
+                            Ordenar por fecha
+                        </label>
+                        <div className="relative">
+                            <svg 
+                                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-600 pointer-events-none" 
+                                fill="none" 
+                                viewBox="0 0 24 24" 
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                            </svg>
+                            <select
+                                value={order}
+                                onChange={(e) => setOrder(e.target.value)}
+                                className="w-full pl-12 pr-10 py-3 bg-white border-2 border-emerald-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all appearance-none cursor-pointer shadow-sm hover:border-emerald-300"
+                            >
+                                <option value="desc">Más reciente primero</option>
+                                <option value="asc">Más antigua primero</option>
+                            </select>
+                            <svg 
+                                className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-600 pointer-events-none" 
+                                fill="none" 
+                                viewBox="0 0 24 24" 
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    {/* Botón de búsqueda */}
+                    <div className="lg:w-auto flex items-end">
+                        <button
+                            onClick={handleFilter}
+                            className="w-full lg:w-auto group inline-flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    );
+}
+
 function NovedadesGrid({ novedades }) {
-    if (!novedades || novedades.length === 0) {
+    if (!novedades || !novedades.data || novedades.data.length === 0) {
         return (
             <div className="mx-auto max-w-7xl px-4 py-12">
                 <div className="text-center py-12 bg-white rounded-lg shadow">
@@ -73,11 +195,60 @@ function NovedadesGrid({ novedades }) {
     return (
         <div className="mx-auto max-w-7xl px-4 py-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {novedades.map((novedad) => (
+                {novedades.data.map((novedad) => (
                     <NovedadCard key={novedad.id} novedad={novedad} />
                 ))}
             </div>
+            
+            {/* Paginación */}
+            {novedades.last_page > 1 && (
+                <Pagination links={novedades.links} />
+            )}
         </div>
+    );
+}
+
+function Pagination({ links }) {
+    return (
+        <nav className="flex items-center justify-center gap-2 mt-8">
+            {links.map((link, index) => {
+                // Parsear el label para mostrar símbolos más bonitos
+                let label = link.label;
+                if (label === '&laquo; Previous') {
+                    label = (
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    );
+                } else if (label === 'Next &raquo;') {
+                    label = (
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    );
+                }
+
+                return (
+                    <Link
+                        key={index}
+                        href={link.url || '#'}
+                        preserveScroll
+                        className={`
+                            inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 rounded-lg font-medium text-sm transition-all duration-200
+                            ${link.active 
+                                ? 'bg-[#00833E] text-white shadow-md' 
+                                : link.url 
+                                    ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 hover:border-[#00833E] hover:text-[#00833E]' 
+                                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                            }
+                        `}
+                        disabled={!link.url}
+                    >
+                        {label}
+                    </Link>
+                );
+            })}
+        </nav>
     );
 }
 

@@ -11,38 +11,62 @@ class NovedadController extends Controller
     /**
      * Display a listing of the resource for public view.
      */
-    public function showPublic()
+    public function showPublic(Request $request)
     {
-        $novedades = Novedad::where('activo', true)
-            ->orderBy('fecha_carga', 'desc')
-            ->get();
+        $query = Novedad::where('activo', true);
+        
+        // Búsqueda
+        if ($request->has('search') && $request->search) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('titulo', 'like', "%{$searchTerm}%")
+                  ->orWhere('texto', 'like', "%{$searchTerm}%");
+            });
+        }
+        
+        // Ordenamiento por fecha (por defecto descendente)
+        $order = $request->get('order', 'desc');
+        $query->orderBy('fecha_carga', $order);
+        
+        $novedades = $query->paginate(9)->appends($request->only(['search', 'order']));
         
         // Obtener las rutas del frontend
         $frontendImagesPath = env('VITE_NOVEDADES_IMAGES_PATH', '/images/novedades/');
         $frontendPdfsPath = env('VITE_NOVEDADES_PDFS_PATH', '/PDFs/novedades/');
         
         return Inertia::render('Novedades', [
-            'novedades' => $novedades->map(function ($novedad) use ($frontendImagesPath, $frontendPdfsPath) {
-                return [
-                    'id' => $novedad->id,
-                    'titulo' => $novedad->titulo,
-                    'texto' => $novedad->texto,
-                    'fecha_carga' => $novedad->fecha_carga,
-                    'activo' => $novedad->activo,
-                    'imagenes' => $novedad->imagenes ? collect($novedad->imagenes)->map(function ($imagen) use ($frontendImagesPath) {
-                        return [
-                            'nombre' => $imagen['nombre'],
-                            'path' => asset(trim($frontendImagesPath, '/') . '/' . basename($imagen['path']))
-                        ];
-                    })->toArray() : [],
-                    'archivos' => $novedad->archivos ? collect($novedad->archivos)->map(function ($archivo) use ($frontendPdfsPath) {
-                        return [
-                            'nombre' => $archivo['nombre'],
-                            'path' => asset(trim($frontendPdfsPath, '/') . '/' . basename($archivo['path']))
-                        ];
-                    })->toArray() : [],
-                ];
-            })
+            'novedades' => [
+                'data' => $novedades->map(function ($novedad) use ($frontendImagesPath, $frontendPdfsPath) {
+                    return [
+                        'id' => $novedad->id,
+                        'titulo' => $novedad->titulo,
+                        'texto' => $novedad->texto,
+                        'fecha_carga' => $novedad->fecha_carga,
+                        'activo' => $novedad->activo,
+                        'imagenes' => $novedad->imagenes ? collect($novedad->imagenes)->map(function ($imagen) use ($frontendImagesPath) {
+                            return [
+                                'nombre' => $imagen['nombre'],
+                                'path' => asset(trim($frontendImagesPath, '/') . '/' . basename($imagen['path']))
+                            ];
+                        })->toArray() : [],
+                        'archivos' => $novedad->archivos ? collect($novedad->archivos)->map(function ($archivo) use ($frontendPdfsPath) {
+                            return [
+                                'nombre' => $archivo['nombre'],
+                                'path' => asset(trim($frontendPdfsPath, '/') . '/' . basename($archivo['path']))
+                            ];
+                        })->toArray() : [],
+                    ];
+                }),
+                'links' => $novedades->linkCollection()->toArray(),
+                'current_page' => $novedades->currentPage(),
+                'last_page' => $novedades->lastPage(),
+                'per_page' => $novedades->perPage(),
+                'total' => $novedades->total(),
+            ],
+            'filters' => [
+                'search' => $request->search ?? '',
+                'order' => $request->order ?? 'desc',
+            ]
         ]);
     }
 
