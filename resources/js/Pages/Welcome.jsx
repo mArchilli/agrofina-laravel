@@ -17,21 +17,21 @@ export default function Welcome() {
 }
 
 function Hero() {
+    const homeVideoSrc = import.meta.env.VITE_HOME_VIDEO_PATH || '/images/home/Agrofina-Video-Inicio.mp4';
+
     return (
         <section className="relative w-full overflow-hidden h-screen">
             {/* Background video */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <iframe
-                        className="w-[177.78vh] h-screen min-w-full min-h-full max-w-none max-h-none scale-[1.25] md:scale-[1.35] lg:scale-[1.45]"
-                        src="https://www.youtube.com/embed/YBaXGmzZL60?autoplay=1&mute=1&controls=0&loop=1&playlist=YBaXGmzZL60&modestbranding=1&rel=0&playsinline=1&showinfo=0"
-                        title="Agrofina background video"
-                        frameBorder="0"
-                        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-                        allowFullScreen
-                        referrerPolicy="strict-origin-when-cross-origin"
-                    />
-                </div>
+                <video
+                    className="absolute inset-0 h-full w-full object-cover scale-[1.1] md:scale-[1.2] lg:scale-[1.25]"
+                    src={homeVideoSrc}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent" />
             </div>
 
@@ -290,6 +290,21 @@ function ProductCategoriesGrid() {
         { id: 5, name: 'Fitoreguladores', img: '/images/AGF_ICO_Fitoreguladores.png' },
     ];
 
+    // Rutas de los PDFs desde variables de entorno
+    const catalogoCompletoPdf = import.meta.env.VITE_CATALOGO_COMPLETO_PDF || '/PDFs/catalogo-completo.pdf';
+    const arbolRecomendacionesPdf = import.meta.env.VITE_ARBOL_RECOMENDACIONES_PDF || '/PDFs/arbol-recomendaciones-cultivo.pdf';
+    const resumenPortafolioPdf = import.meta.env.VITE_RESUMEN_PORTAFOLIO_PDF || '/PDFs/resumen-portafolio.pdf';
+
+    const handleDownload = (pdfPath, fileName) => {
+        const link = document.createElement('a');
+        link.href = pdfPath;
+        link.download = fileName;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <section id="categorias-productos" className="relative mx-auto max-w-7xl px-4">
             {/* Gradient circular derecho entre secciones - semicírculo invertido */}
@@ -326,23 +341,61 @@ function ProductCategoriesGrid() {
                 />
             </div>
             
-            <div className="mb-4">
-                <h2 className="text-xl md:text-2xl font-semibold text-emerald-900">Explorá por categoría</h2>
-                <div className="my-2">
-                    <div
-                        className="rounded-full mx-0"
-                        style={{
-                            width: '80px',
-                            height: '6px',
-                            background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)'
-                        }}
-                    />
-                </div>
-                    <div className="mt-2">
-                        <p className="text-emerald-800/80 text-base md:text-lg font-medium">
+            {/* Header con título y botones de descarga */}
+            <div className="mb-6">
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-8">
+                    {/* Lado izquierdo - Título y descripción */}
+                    <div className="flex-1">
+                        <h2 className="text-xl md:text-2xl font-semibold text-emerald-900 mb-2">Explorá por categoría</h2>
+                        <div className="mb-3">
+                            <div
+                                className="rounded-full mx-0"
+                                style={{
+                                    width: '80px',
+                                    height: '6px',
+                                    background: 'linear-gradient(90deg, #00833E 0%, #7ED957 100%)'
+                                }}
+                            />
+                        </div>
+                        <p className="text-emerald-800/80 text-base md:text-lg font-medium block md:hidden">
                             Conocé la amplitud de nuestro catálogo y encontrá el producto que más se adecúe a tu necesidad.
                         </p>
                     </div>
+                    
+                    {/* Lado derecho - Botones de descarga */}
+                    <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 lg:gap-3 lg:min-w-fit">
+                        <button
+                            onClick={() => handleDownload(catalogoCompletoPdf, 'catalogo-completo-agrofina.pdf')}
+                            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-xs lg:text-sm font-medium text-white shadow-sm transition-all duration-300 hover:bg-emerald-700 hover:shadow-md hover:scale-105 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/70 whitespace-nowrap"
+                        >
+                            <svg className="h-3 w-3 lg:h-4 lg:w-4 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Descargar catálogo completo
+                        </button>
+                        <button
+                            onClick={() => handleDownload(arbolRecomendacionesPdf, 'arbol-recomendaciones-cultivo-agrofina.pdf')}
+                            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-xs lg:text-sm font-medium text-white shadow-sm transition-all duration-300 hover:bg-emerald-700 hover:shadow-md hover:scale-105 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/70 whitespace-nowrap"
+                        >
+                            <svg className="h-3 w-3 lg:h-4 lg:w-4 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Descargar árbol de recomendaciones
+                        </button>
+                        <button
+                            onClick={() => handleDownload(resumenPortafolioPdf, 'resumen-portafolio-agrofina.pdf')}
+                            className="group inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-xs lg:text-sm font-medium text-white shadow-sm transition-all duration-300 hover:bg-emerald-700 hover:shadow-md hover:scale-105 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/70 whitespace-nowrap"
+                        >
+                            <svg className="h-3 w-3 lg:h-4 lg:w-4 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Descargar resumen del portafolio
+                        </button>
+                    </div>
+                </div>
+                        <p className="text-emerald-800/80 text-base md:text-lg font-medium hidden md:block mt-2">
+                            Conocé la amplitud de nuestro catálogo y encontrá el producto que más se adecúe a tu necesidad.
+                        </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5 [&>*:last-child]:col-span-2 [&>*:last-child]:w-[calc(50%-0.5rem)] [&>*:last-child]:sm:w-[calc(50%-0.625rem)] [&>*:last-child]:justify-self-center [&>*:last-child]:md:col-span-1 [&>*:last-child]:md:w-auto [&>*:last-child]:md:justify-self-auto">
@@ -376,7 +429,6 @@ function ProductCategoriesGrid() {
                     </Link>
                 ))}
             </div>
-            
             
         </section>
     );
