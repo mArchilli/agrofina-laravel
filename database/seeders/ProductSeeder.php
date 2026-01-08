@@ -2190,64 +2190,6 @@ class ProductSeeder extends Seeder
 
             #endregion
 
-        #region Producto 53: Verosil®
-            // 1. Buscar o crear la Categoría
-            $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
-
-            // 2. Buscar o crear el Principio Activo
-            $principioActivoVerosil = PrincipioActivo::firstOrCreate(['nombre' => 'Imazetapir 10,59%']);
-
-            // 3. Crear el Producto
-            $productoVerosil = Producto::create([
-                'nombre' => 'VEROSIL®',
-                'categoria_id' => $categoriaHerbicida->id,
-                'principio_activo_id' => $principioActivoVerosil->id,
-                'formulacion' => 'SL (Concentración Soluble)',
-                'descripcion' => 'Herbicida sistémico selectivo de acción residual, en aplicaciones post emergentes es absorbido por follaje y raíz. También tiene aplicación como herbicida selectivo pre emergente en poroto. Ejerce un control residual en las malezas que germinan después de la aplicación.',
-                'accion' => 'Sistémico y residual.',
-                'mecanismo_de_accion' => 'Inhibidor de la enzima aceto lactato sintetasa (ALS).',
-                'malezas' => 'Abrojillo, abrojo grande, afata, amor seco, bejuco, bolsa de pastor, capín, capiquí, cebada cervecera, cebollín, chamico, chinchilla, enredadera anual, falsa biznaga, farolito, girasolillo, lengua de vaca, malva, mastuerzo, mostacilla, nabo, nabón, ortiga, ortiga mansa, pasto colorado, pasto cuaresma, perejilillo, quinoa, revienta caballo, sanguinaria, sorgo de alepo, trigo, verdolaga, yuyo colorado.',
-                'dosis' => 'Soja, Maní, Maíz IMI, alfalfa, arveja: 0,8 – 1 L/ha. Poroto: 0,5 L/ha.',
-                'recomendaciones_de_uso' => 'Iniciar el control de las malezas desde su emergencia hasta la 4ta hoja verdadera de ellas. En caso de alta infestación se consigue control óptimo aplicando antes de la 2da hoja verdadera de la maleza. Para un óptimo control, las condiciones de humedad deben ser tales que favorezcan un activo crecimiento de las malezas.',
-                'imagen' => '/images/products/Verosil-producto.jpg',
-                'imagen_portada' => '/images/products/Verosil-portada.png',
-                'pdfs' => [
-                    '/pdfs/products/Verosil - Marbete.pdf',
-                    '/pdfs/products/Verosil - Hoja de Datos de Seguridad (MSDS).pdf',
-                    '/pdfs/products/Verosil - Flyer comercial.pdf',
-                ],
-                'activo' => true,
-            ]);
-
-            // 4. Asociar Cultivos
-            $cultivosVerosilNombres = ['Soja', 'Maní', 'Maíz IMI', 'Alfalfa', 'Arveja', 'Poroto'];
-            $cultivoVerosilIds = [];
-            foreach ($cultivosVerosilNombres as $nombre) {
-                $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
-                $cultivoVerosilIds[] = $cultivo->id;
-            }
-            $productoVerosil->cultivos()->sync($cultivoVerosilIds);
-
-            // 5. Asociar Árboles de Recomendación
-            $arbolesVerosilNombres = [
-                'Alfalfa en pre emergencia',
-                'Alfalfa post emergencia',
-                'Soja en post emergencia',
-                'Maíz en pre emergencia',
-                'Maíz en post emergencia',
-                'Maní en pre emergencia',
-                'Maní en post emergencia',
-                'Poroto en pre emergencia',
-            ];
-            $arbolVerosilIds = [];
-            foreach ($arbolesVerosilNombres as $nombre) {
-                $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
-                $arbolVerosilIds[] = $arbol->id;
-            }
-            $productoVerosil->arbolesRecomendacion()->sync($arbolVerosilIds);
-
-            #endregion
-
         #region Producto 54: Verosil 40®
             // 1. Buscar o crear la Categoría
             $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
