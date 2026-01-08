@@ -525,40 +525,6 @@ class ProductSeeder extends Seeder
 
         #endregion
 
-        #region Producto 16: ECTRAN® PLUS
-        
-        // 1. Buscar o crear la Categoría
-        $categoriaHerbicidaEctran = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
-
-        // 2. Buscar o crear el Principio Activo
-        $principioActivoEctran = PrincipioActivo::firstOrCreate(['nombre' => 'Bispyribac-sodio + quinclorac']);
-
-        // 3. Crear el Producto
-        $productoEctran = Producto::create([
-            'nombre' => 'ECTRAN® PLUS',
-            'categoria_id' => $categoriaHerbicidaEctran->id,
-            'principio_activo_id' => $principioActivoEctran->id,
-            'formulacion' => 'Polvo mojable (WP)',
-            'descripcion' => "Ectran plus es un herbicida selectivo y post-emergente para el cultivo de arroz. Controla gramíneas, latifoliadas y ciperáceas, actuando sobre malezas nacidas y sobre los futuros nacimientos debido al poder residual.\n\nECTRAN PLUS combina Bispiribac sodio y Quinclorac.\n\nBispiribac sodio es un herbicida post-emergente para cultivos de arroz de inundación y secano. Es de acción sistémica y selectiva, con la característica de ser absorbido tanto por el follaje como por las raíces de gramíneas, ciperáceas y latifoliadas.\n\nQuinclorac es un herbicida sistémico, con efecto residual en el cultivo de arroz indicado especialmente para el control de Echinochloa (Capín) como así también de otras malezas de hoja ancha y gramíneas. Es absorbido por semillas en germinación, por las raíces y también por vía foliar. Debido a su efecto residual controla capín que germina luego de su aplicación.",
-            'accion' => 'Sistémico.',
-            'mecanismo_de_accion' => 'Bispiribac sodio: Inhibidor de la enzima acetolactato sintasa (ALS). Grupo B. Quinclorac: Inhibidor de la síntesis de celulosa. Grupo A.',
-            'malezas' => 'Chacrilla (Echinocloa cruspavonis), Pasto bandera (Urochloa platyphyla), Arroz-maleza (Oryza sativa L. f. spontanea), Pasto colonial o colorado (Echinochloa colonum), Pata de gallo (Echinochloa crus-galli), Duraznillo de agua (Ludwigia bonariensis), Papiro bravo (Cyperus virens), Chufa (Ciperus esculentus), Chufa salvaje (Cyperus esculentus var. legotoschyus).',
-            'dosis' => '1 Kg/ha de ECTRAN PLUS + 0,5 L/ha de Zinax.',
-            'recomendaciones_de_uso' => 'Para lograr un control más efectivo debe procederse a inundar definitivamente el cultivo 4 días después de la aplicación del producto. El caldo deberá usarse dentro de las 24 horas de preparado, caso contrario puede haber degradación del principio activo. De usarse una mezcla con otro plaguicida, cargar éste después de haberse homogeneizado la carga del herbicida. No aplicar con vientos superiores a 10 km/h, ni en condiciones de estrés hídrico y/o inversión térmica.',
-            'imagen' => '/images/productos/Ectran-plus-producto.jpg',
-            'imagen_portada' => '/images/productos/Ectran-plus-portada.jpg',
-            'pdfs' => ['/PDFs/Ectran Plus - Marbete.pdf', '/PDFs/Ectran Plus - Hoja de Datos de Seguridad (MSDS).pdf', '/PDFs/Ectran Plus - Flyer comercial.pdf'],
-            'activo' => true,
-        ]);
-
-        // 4. Asociar Cultivos
-        $cultivoArrozEctran = Cultivo::firstOrCreate(['nombre' => 'Arroz']);
-        $productoEctran->cultivos()->sync([$cultivoArrozEctran->id]);
-
-        // 5. NO tiene Árboles de Recomendación
-
-        #endregion
-
         #region Producto 17: ECTRAN®
         
         // 1. Buscar o crear la Categoría
