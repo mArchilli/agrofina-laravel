@@ -449,28 +449,6 @@ function TeamAndMap() {
 
   return (
     <section id="contacto-servicio-tecnico" className="mx-auto max-w-7xl w-full px-4 py-10">
-      <div className="rounded-2xl bg-white p-6 shadow ring-1 ring-black/5">
-        <h2 className="text-xl md:text-2xl font-semibold text-emerald-800">Departamento comercial</h2>
-        <p className="mt-1 text-gray-600 text-sm">Elegí el contacto de tu región para coordinar asesoramiento y disponibilidad.</p>
-
-        <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {reps.map((r) => (
-            <article
-              key={r.email}
-              className="rounded-xl border border-emerald-100 p-5 hover:shadow-sm transition-shadow"
-              style={{ boxShadow: '0 0 0 3px rgba(16, 185, 129, 0.08) inset' }}
-            >
-              <h3 className="font-medium text-emerald-800">{r.nombre}</h3>
-              <p className="text-sm text-gray-600">{r.rol}</p>
-              <div className="mt-2 h-1.5 w-16 rounded-full bg-emerald-500/60" aria-hidden />
-              <div className="mt-2 text-sm">
-                <a className="text-emerald-700 hover:underline" href={`mailto:${r.email}`}>{r.email}</a>
-                <div className="text-gray-600">{r.telefono}</div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
       <div className="mt-8 rounded-2xl bg-white p-6 shadow ring-1 ring-black/5">
         <h3 className="text-lg md:text-xl font-semibold text-emerald-800">Asesoras/os por región</h3>
         <p className="mt-1 text-gray-600 text-sm">Encontrá el contacto comercial específico de cada zona.</p>
