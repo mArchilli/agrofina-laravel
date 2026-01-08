@@ -27,10 +27,6 @@ Route::get('/I+D', function () {
 })->name('i-d');
 
 // Rutas públicas del sitio
-Route::get('/servicio-tecnico', function () {
-    return Inertia::render('ServicioTecnico');
-})->name('servicio-tecnico');
-
 Route::get('/red-comercial', function () {
     return Inertia::render('RedComercial');
 })->name('red-comercial');

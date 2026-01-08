@@ -71,15 +71,7 @@ function Hero() {
                                     </svg>
                                     Conocé nuestros productos
                                 </a>
-                                <Link
-                                    href={route('servicio-tecnico')}
-                                    className="group inline-flex items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 py-3 font-medium text-white backdrop-blur transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 gap-2"
-                                >
-                                    Contactá a un asesor técnico
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-300 group-hover:translate-x-1">
-                                        <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                </Link>
+                               
                             </div>
                         </div>
                     </div>
