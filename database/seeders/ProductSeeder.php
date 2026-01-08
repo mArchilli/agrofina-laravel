@@ -854,61 +854,6 @@ class ProductSeeder extends Seeder
         $productoHalox->arbolesRecomendacion()->sync($arbolHaloxIds);
         #endregion
 
-        #region Producto 26: IDRIS®
-
-        // 1. Buscar o crear la Categoría
-        $categoriaInsecticidaIdris = Categoria::firstOrCreate(['nombre' => 'Insecticidas']);
-
-        // 2. Buscar o crear el Principio Activo
-        $principioActivoIdris = PrincipioActivo::firstOrCreate([
-            'nombre' => 'Flubendiamide 48%'
-        ]);
-
-        // 3. Crear el Producto
-        $productoIdris = Producto::create([
-            'nombre' => 'IDRIS®',
-            'categoria_id' => $categoriaInsecticidaIdris->id,
-            'principio_activo_id' => $principioActivoIdris->id,
-            'formulacion' => 'SC (Suspensión Concentrada)',
-            'descripcion' => 'Insecticida de primera línea tecnologica perteneciente a la clase química diamidas, recomendado para el control de las orugas más difíciles en una amplia gama de cultivos, selectivo en fauna benéfica y perfil favorable para el comercio de alimentos. Única flubendiamide banda verde.',
-            'accion' => 'Contacto e Ingestión.',
-            'mecanismo_de_accion' => 'Moduladores de receptores de ryanodine.',
-            'malezas' => 'Oruga medidora (Rachiplusia), Oruga de las leguminosas (Anticarsia gemmatalis), Falsa medidora (Pseudoplusia includens), Oruga bolillera (Helicoverpa sp.), Oruga de la hoja (Alabama argillacea), Gusano cortador (Agrotis sp.), Isoca de la espiga (Heliothis zea), Polilla del Tomate (Tutta absoluta), Gusano de la pera y la manzana, Carpocapsa (Cydia pomonella), Bicho canasto (Oiketicus platensis), Oruguita enruladota (Argyrotaenia sphaleropa), Cogollero del maíz (Spodoptera frugiperda), Isoca de las coles (Plutella xylostella), Isoca medidora (Rachiplusia nu), Oruga Cortadora (Agrotis ipsylon), Oruga militar tardía (Spodoptera frugiperda), Palomita transparente del zapallo (Diaphanea hyalinata), Gusano del brote del duraznero (Grafolita Molesta).',
-            'dosis' => '0,02 a 0,1 L/ha dependiendo de cultivo y plaga (ver marbete).',
-            'recomendaciones_de_uso' => 'Tratar el cultivo con IDRIS según umbrales de daño económico (UDE) con el agregado de 0,5 L/ha de Zinax (EMAG). Se recomienda rotar el uso de IDRIS o cualquier otro producto perteneciente al Grupo 28 de insecticidas con productos de diferentes modos de acción. No realizar más de 2 aplicaciones a un mismo cultivo. Lea atentamente el marbete antes de uso.',
-            'imagen' => '/images/products/Idris-producto.jpg',
-            'imagen_portada' => '/images/products/Idris-portada.jpg',
-            'pdfs' => [
-                '/pdfs/products/Idris - Marbete.pdf',
-                '/pdfs/products/Idris - Hoja de Datos de Seguridad.pdf',
-                '/pdfs/products/Idris - Flyer Comercial.pdf'
-            ],
-            'activo' => true,
-        ]);
-
-        // 4. Asociar Cultivos
-        $cultivosIdrisNombres = ['Soja', 'Poroto', 'Maíz', 'Maíz dulce', 'Algodón', 'Tabaco', 'Tomate', 'Pera', 'Manzano', 'Brócoli', 'Coliflor', 'Lechuga', 'Melón', 'Sandía', 'Zapallo', 'Duraznero', 'Ciruelo'];
-        $cultivoIdrisIds = [];
-        foreach ($cultivosIdrisNombres as $nombre) {
-            $cultivo = Cultivo::firstOrCreate(['nombre' => $nombre]);
-            $cultivoIdrisIds[] = $cultivo->id;
-        }
-        $productoIdris->cultivos()->sync($cultivoIdrisIds);
-
-        // 5. Asociar Árboles de Recomendación
-        $arbolesIdrisNombres = [
-            'Algodón en post emergencia',
-            'Soja en post emergencia',
-            'Maíz en post emergencia',
-            'Poroto en post emergencia'
-        ];
-        $arbolIdrisIds = [];
-        foreach ($arbolesIdrisNombres as $nombre) {
-            $arbol = ArbolRecomendacion::firstOrCreate(['nombre' => $nombre]);
-            $arbolIdrisIds[] = $arbol->id;
-        }
-        $productoIdris->arbolesRecomendacion()->sync($arbolIdrisIds);
-        #endregion
 
         #region Producto 27: KIER III®
         // 1. Buscar o crear la Categoría
