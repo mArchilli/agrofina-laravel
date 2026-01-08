@@ -30,11 +30,6 @@ class CategorySeeder extends Seeder
                 'activo' => true,
             ],
             [
-                'nombre' => 'Fertilizantes',
-                'descripcion' => 'Productos nutricionales para el desarrollo y crecimiento óptimo de los cultivos. Incluye fertilizantes foliares y de suelo.',
-                'activo' => true,
-            ],
-            [
                 'nombre' => 'Coadyuvantes',
                 'descripcion' => 'Productos que mejoran la eficacia de otros agroquímicos. Incluye adherentes, dispersantes y surfactantes para optimizar las aplicaciones.',
                 'activo' => true,
