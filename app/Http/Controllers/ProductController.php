@@ -50,7 +50,7 @@ class ProductController extends Controller
             });
         }
 
-        $productos = $query->latest()->paginate(20)->withQueryString();
+        $productos = $query->orderBy('nombre')->paginate(20)->withQueryString();
 
         // Obtener las rutas del frontend
         $frontendImagesPath = env('VITE_PRODUCT_IMAGES_PATH', '/images/products/');
@@ -163,7 +163,7 @@ class ProductController extends Controller
     public function index()
     {
         $productos = Producto::with('categoria')
-            ->latest()
+            ->orderBy('nombre')
             ->paginate(50); // Aumentamos para mostrar más productos en las tarjetas
         
         $categorias = Categoria::where('activo', true)
