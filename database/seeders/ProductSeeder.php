@@ -700,45 +700,6 @@ class ProductSeeder extends Seeder
 
         #endregion
 
-        #region Producto 21: Formax III®
-
-        // 1. Buscar o crear la Categoría
-        $categoriaFungicida = Categoria::firstOrCreate(['nombre' => 'Fungicidas']);
-
-        // 2. Buscar o crear el Principio Activo
-        $principioActivoFormax = PrincipioActivo::firstOrCreate([
-            'nombre' => 'Azoxistrobin 5,62% + Cyproconazole 3% + Boscalid 6%'
-        ]);
-
-        // 3. Crear el Producto
-        $productoFormax = Producto::create([
-            'nombre' => 'FORMAX III®',
-            'categoria_id' => $categoriaFungicida->id,
-            'principio_activo_id' => $principioActivoFormax->id,
-            'formulacion' => 'Suspensión Concentrada (SC)',
-            'descripcion' => 'Es un fungicida sistémico para el control de enfermedades foliares en cultivo de soja y maní, compuesto por 3 principios activos de diferentes modos de acción. Por un lado, se combina la destacada acción preventiva y antiesporulante de azoxistrobina, perteneciente al grupo de las estrobilurinas, con el efecto curativo y erradicante de cyproconazole, perteneciente al grupo de los triazoles. El tercer componente, Boscalid, es una carboxamida, de acción sistémica local y que se transloca translaminarmente. De esta manera, se logra tener una herramienta para el manejo de resistencias, con una mayor residualidad en el control de enfermedades por el agregado de la carboxamida.',
-            'accion' => 'Preventivo, antiesporulante, curativo, erradicante, sistémico.',
-            'mecanismo_de_accion' => "Azoxystrobina: Inhibe la respiración mitocondrial de los hongos a través del bloqueo de la transferencia de electrones entre el mitocondrio b y el citocromo c. (Grupo 11).\nCiproconazole: Inhibe la síntesis de Ergosterol (Grupo 3).\nBoscalid: Inhibe el complejo II en la mitocondria. (Grupo 7).",
-            'malezas' => 'Mancha marrón (Septoria glycines), Mancha púrpura de la semilla o Tizón de la hoja (Cercospora kickuchii); Viruela tardía (Cercosporidium personatum), Viruela temprana (Cercospora arachidicola).',
-            'dosis' => 'Maní: 1,1 L/ha + 0,5 L/ha de ZINAX (EMAG).\nSoja: 0,75 L/ha + 0,5 L/ha de ZINAX (EMAG).',
-            'recomendaciones_de_uso' => 'Maní: Realizar la primera aplicación con la aparición de los primeros síntomas y repetir en caso de ser necesario a los 21 días.\n\nSoja: A partir de R3 hasta R6, cuando se observen los primeros síntomas en la planta. En caso de persistir condiciones favorables para la enfermedad y ante la aparición de nuevas pústulas, realizar una segunda aplicación.',
-            'imagen' => '/images/products/Formax III-producto.jpg',
-            'imagen_portada' => '/images/products/Formax III-portada.png',
-            'pdfs' => [
-                '/pdfs/products/Formax III - Marbete.pdf',
-                '/pdfs/products/Formax III - Hoja de Datos de Seguridad (MSDS).pdf',
-                '/pdfs/products/Formax III - Flyer comercial.pdf',
-                '/pdfs/products/Formax III - Flyer Soja y Mani.pdf'
-            ],
-            'activo' => true,
-        ]);
-
-        // 4. Asociar Cultivos
-        $cultivoMani = Cultivo::firstOrCreate(['nombre' => 'Maní']);
-        $cultivoSoja = Cultivo::firstOrCreate(['nombre' => 'Soja']);
-        $productoFormax->cultivos()->sync([$cultivoMani->id, $cultivoSoja->id]);
-        #endregion
-
         #region Producto 22: Formax Neo®
         
 
