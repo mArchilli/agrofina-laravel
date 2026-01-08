@@ -2248,7 +2248,7 @@ class ProductSeeder extends Seeder
         #region Producto 55: Zinax®
 
         // 1. Buscar o crear la Categoría
-        $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
+        $categoriaHerbicida = Categoria::firstOrCreate(['nombre' => 'Coadyuvantes']);
 
         // 2. Buscar o crear el Principio Activo
         $principioActivoZinax = PrincipioActivo::firstOrCreate(['nombre' => 'EMAG 75%']);
