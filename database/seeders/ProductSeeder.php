@@ -1075,7 +1075,8 @@ class ProductSeeder extends Seeder
             'categoria_id' => $categoriaHerbicidaMabyn->id,
             'principio_activo_id' => $principioActivoMabyn->id,
             'formulacion' => 'SL (Concentrado Soluble)',
-            'descripcion' => "Exclusiva fomulación de 2,4-D con comprobada ultra baja volatilidad.\n\nPermite aplicar dosis con cantidades menores de ingrediente activo por hectárea comparadas con las demás sales y ésteres de 2,4-D, manteniendo la misma eficacia. Sin olor.\n\nHerbicida sistémico y de acción hormonal, para el control de malezas de hoja ancha en barbecho.\n\nMezcla de sales alquilamidopropildimetilamonio y dietanolamonio del ácido 2,4-D.",
+            'descripcion' => "Exclusiva fomulación de 2,4-D con comprobada ultra baja volatilidad.\n\nPermite aplicar dosis con cantidades menores de ingrediente activo por hectárea comparadas con las demás sales y ésteres de 2,4-D, manteniendo la misma eficacia. Sin olor.\n\nHerbicida sistémico y de acción hormonal, para el control de malezas de hoja ancha en barbecho.\n\nMezcla de sales alquilamidopropildimetilamonio y dietanolamonio del ácido 2,4-D.
+            \n\nApto soja tolerante a 2,4-D",
             'accion' => 'Sistémico.',
             'mecanismo_de_accion' => 'Acción similar al acido indolacetico (Auxinas sinteticas). GRUPO O.',
             'malezas' => 'Cerraja (Sonchus oleraceus), Escoba amarilla (Flaveria bidentis), Yuyo Colorado (Amarantus quitensis), Mastuerzo (Coronopus didimus), Bolsa de pastor (Capsella bursa-pastoris), Arrancamoños (Xanthium spinosum), Chamico (Datura ferox), Quínoa (Chenopodium album), Rama negra (Conyza sumatrensis), Verdolaga (Portulaca oleracea)',
