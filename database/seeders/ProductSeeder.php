@@ -769,7 +769,7 @@ class ProductSeeder extends Seeder
             'categoria_id' => $categoriaHerbicidaGlufan->id,
             'principio_activo_id' => $principioActivoGlufan->id,
             'formulacion' => 'Concentrado Soluble (SL).',
-            'descripcion' => 'Herbicida de contacto para el control de malezas de hoja ancha y gramíneas . Inhibidorde la glutamino sintetasa. Formulación 2 veces concentrada vs las más conocidas del mercado.
+            'descripcion' => 'Herbicida de contacto para el control de malezas de hoja ancha y gramíneas. Inhibidor de la glutamino sintetasa. Formulación 2 veces concentrada vs las más conocidas del mercado.
             2 veces concentrada vs las más conocidas del mercado.',
             'accion' => 'Contacto, con cierta acción sistémica.',
             'mecanismo_de_accion' => 'Inhibidor de la glutamino sintetasa. Grupo H.',
