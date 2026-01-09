@@ -769,12 +769,12 @@ class ProductSeeder extends Seeder
             'categoria_id' => $categoriaHerbicidaGlufan->id,
             'principio_activo_id' => $principioActivoGlufan->id,
             'formulacion' => 'Concentrado Soluble (SL).',
-            'descripcion' => 'GLUFAN es un herbicida de contacto con cierta sistemia, para aplicaciones en barbecho químico y post-emergente selectivo en aplicaciones de cobertura total sobre maíces que indiquen la posibilidad de dicho uso en los rótulos y en bolsas de semillas híbridas de maíz resistente a Glufosinato de amonio.',
+            'descripcion' => 'GLUFAN PLUS es un herbicida de contacto con cierta sistemia, para aplicaciones en barbecho químico y post-emergente selectivo en aplicaciones de cobertura total sobre maíces que indiquen la posibilidad de dicho uso en los rótulos y en bolsas de semillas híbridas de maíz resistente a Glufosinato de amonio.',
             'accion' => 'Contacto, con cierta acción sistémica.',
             'mecanismo_de_accion' => 'Inhibidor de la glutamino sintetasa. Grupo H.',
             'malezas' => 'Gramineas y Hoja anchas. Ciperaceas.',
             'dosis' => '0,75 a 1,75 L/ha, dependiendo de maleza y cultivo.',
-            'recomendaciones_de_uso' => 'Aplicar cuando el cultivo de maíz resistente a Glufosinato tenga entre 3 a 4 hojas. Emplear las dosis más bajas en los primeros estadíos vegetativos de las malezas latifoliadas (2-4 hojas) y al comienzo del macollaje en gramíneas. Las dosis más altas son para malezas de mayor tamaño. Factores ambientales como temperaturas menores a 10°C o superiores a 25 °C, y/o estrés hídrico pueden disminuir la performance de Glufan.',
+            'recomendaciones_de_uso' => 'Aplicar cuando el cultivo de maíz resistente a Glufosinato tenga entre 3 a 4 hojas. Emplear las dosis más bajas en los primeros estadíos vegetativos de las malezas latifoliadas (2-4 hojas) y al comienzo del macollaje en gramíneas. Las dosis más altas son para malezas de mayor tamaño. Factores ambientales como temperaturas menores a 10°C o superiores a 25 °C, y/o estrés hídrico pueden disminuir la performance de Glufan Plus.',
             'imagen' => '/images/products/Glufan-plus-producto.png',
             'imagen_portada' => '/images/products/Glufan-plus-portada.png',
             'pdfs' => [
@@ -853,7 +853,6 @@ class ProductSeeder extends Seeder
         }
         $productoHalox->arbolesRecomendacion()->sync($arbolHaloxIds);
         #endregion
-
 
         #region Producto 27: KIER III®
         // 1. Buscar o crear la Categoría
