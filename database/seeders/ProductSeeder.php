@@ -754,18 +754,18 @@ class ProductSeeder extends Seeder
         $productoGirasol->arbolesRecomendacion()->sync([$arbolGirasol->id]);
         #endregion
 
-        #region Producto 24: GLUFAN®
+        #region Producto 24: GLUFAN PLUS®
         // 1. Buscar o crear la Categoría
         $categoriaHerbicidaGlufan = Categoria::firstOrCreate(['nombre' => 'Herbicidas']);
 
         // 2. Buscar o crear el Principio Activo
         $principioActivoGlufan = PrincipioActivo::firstOrCreate([
-            'nombre' => 'Glufosinato de Amonio 20%'
+            'nombre' => 'Glufosinato de Amonio 40%'
         ]);
 
         // 3. Crear el Producto
         $productoGlufan = Producto::create([
-            'nombre' => 'GLUFAN®',
+            'nombre' => 'GLUFAN PLUS®',
             'categoria_id' => $categoriaHerbicidaGlufan->id,
             'principio_activo_id' => $principioActivoGlufan->id,
             'formulacion' => 'Concentrado Soluble (SL).',
@@ -773,14 +773,14 @@ class ProductSeeder extends Seeder
             'accion' => 'Contacto, con cierta acción sistémica.',
             'mecanismo_de_accion' => 'Inhibidor de la glutamino sintetasa. Grupo H.',
             'malezas' => 'Gramineas y Hoja anchas. Ciperaceas.',
-            'dosis' => 'Barbecho químico 1,5 a 3,5 l/ha.\nÁreas sin cultivo y frutales 2,5 a 8 l/ha.',
+            'dosis' => '0,75 a 1,75 L/ha, dependiendo de maleza y cultivo.',
             'recomendaciones_de_uso' => 'Aplicar cuando el cultivo de maíz resistente a Glufosinato tenga entre 3 a 4 hojas. Emplear las dosis más bajas en los primeros estadíos vegetativos de las malezas latifoliadas (2-4 hojas) y al comienzo del macollaje en gramíneas. Las dosis más altas son para malezas de mayor tamaño. Factores ambientales como temperaturas menores a 10°C o superiores a 25 °C, y/o estrés hídrico pueden disminuir la performance de Glufan.',
-            'imagen' => '/images/products/Glufan-producto.jpg',
-            'imagen_portada' => '/images/products/Glufan-portada.png',
+            'imagen' => '/images/products/Glufan-plus-producto.png',
+            'imagen_portada' => '/images/products/Glufan-plus-portada.png',
             'pdfs' => [
-                '/pdfs/products/Glufan - Marbete.pdf',
-                '/pdfs/products/Glufan - Hoja de Datos de Seguridad.pdf',
-                '/pdfs/products/Glufan - Flyer Comercial.pdf'
+                '/pdfs/products/Glufan Plus - Marbete.pdf',
+                '/pdfs/products/Glufan Plus - Hoja de Datos de Seguridad.pdf',
+                '/pdfs/products/Glufan Plus - Flyer Comercial.pdf'
             ],
             'activo' => true,
         ]);
