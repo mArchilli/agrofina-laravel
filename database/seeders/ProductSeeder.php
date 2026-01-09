@@ -769,7 +769,8 @@ class ProductSeeder extends Seeder
             'categoria_id' => $categoriaHerbicidaGlufan->id,
             'principio_activo_id' => $principioActivoGlufan->id,
             'formulacion' => 'Concentrado Soluble (SL).',
-            'descripcion' => 'GLUFAN PLUS es un herbicida de contacto con cierta sistemia, para aplicaciones en barbecho químico y post-emergente selectivo en aplicaciones de cobertura total sobre maíces que indiquen la posibilidad de dicho uso en los rótulos y en bolsas de semillas híbridas de maíz resistente a Glufosinato de amonio.',
+            'descripcion' => 'Herbicida de contacto para el control de malezas de hoja ancha y gramíneas . Inhibidorde la glutamino sintetasa. Formulación 2 veces concentrada vs las más conocidas del mercado.
+            2 veces concentrada vs las más conocidas del mercado.',
             'accion' => 'Contacto, con cierta acción sistémica.',
             'mecanismo_de_accion' => 'Inhibidor de la glutamino sintetasa. Grupo H.',
             'malezas' => 'Gramineas y Hoja anchas. Ciperaceas.',
