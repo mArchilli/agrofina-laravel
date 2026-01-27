@@ -780,7 +780,7 @@ class ProductSeeder extends Seeder
             'imagen_portada' => '/images/products/Glufan-plus-portada.png',
             'pdfs' => [
                 '/pdfs/products/Glufan Plus - Marbete.pdf',
-                '/pdfs/products/Glufan Plus - Hoja de Datos de Seguridad.pdf',
+                '/pdfs/products/Glufan Plus - Hoja de Datos de Seguridad (MSDS).pdf',
                 '/pdfs/products/Glufan Plus - Flyer Comercial.pdf'
             ],
             'activo' => true,

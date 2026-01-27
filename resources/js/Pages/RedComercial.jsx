@@ -30,7 +30,7 @@ const regionColors = {
   'bsascentro-sur-sudoeste': '#AA55FF', // Rosa vivo
 }
 
-// Asesoras/es por región (usado en tooltips y en las cards)
+// Representantes Técnicos comerciales por región (usado en tooltips y en las cards)
 const advisorsByRegion = {
   'noa-cordobanorte': [
     { nombre: 'Santiago Araoz', telefono: '+54 9 11 2744-9683', email: 'saraoz@agrofina.com.ar' },
@@ -177,7 +177,7 @@ function Intro() {
                 aria-live="polite"
               >
                 <div className="text-[13px] font-semibold text-emerald-800">{regionLabels[hoverKey] || 'Región'}</div>
-                <div className="text-xs text-gray-700 mt-0.5">Asesoras/os comerciales</div>
+                <div className="text-xs text-gray-700 mt-0.5">Representantes Técnicos comerciales</div>
                 {advisorsByRegion[hoverKey] && (
                   <div className="mt-1 space-y-2">
                     {advisorsByRegion[hoverKey].map((p, idx) => (
@@ -215,8 +215,8 @@ function TeamAndMap() {
   return (
     <section id="contacto-servicio-tecnico" className="mx-auto max-w-7xl w-full px-4 py-10">
       <div className="mt-8 rounded-2xl bg-white p-6 shadow ring-1 ring-black/5">
-        <h3 className="text-lg md:text-xl font-semibold text-emerald-800">Asesoras/os por región</h3>
-        <p className="mt-1 text-gray-600 text-sm">Encontrá el contacto comercial específico de cada zona.</p>
+        <h3 className="text-lg md:text-xl font-semibold text-emerald-800">Representantes Técnicos comerciales</h3>
+        <p className="mt-1 text-gray-600 text-sm">Encontrá el representante técnico comercial específico de cada zona.</p>
         <RegionCards advisorsByRegion={advisorsByRegion} />
       </div>
     </section>

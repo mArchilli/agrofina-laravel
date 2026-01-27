@@ -127,15 +127,10 @@ export default function Footer() {
                     <a href="https://www.grupolosgrobo.com/ideas-para-transformar/medios/premio-fortuna-a-la-mejor-empresa-de-agroservicios-agrofina" target="_blank" rel="noopener noreferrer">
                       <img src="/images/premio-fortuna.png" alt="Premio Fortuna" className="h-10 w-auto" />
                     </a>
-                    <a href="https://www.grupolosgrobo.com/" target="_blank" rel="noopener noreferrer">
-                      <img src="/images/grupo-los-grobos.png" alt="Grupo Los Grobo" className="h-24 w-40 object-contain" />
-                    </a>
                   </div>
                 </div>
               </div>
             </div>
-
-
         </div>
       </footer>
     </>
