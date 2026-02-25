@@ -6,7 +6,6 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CultivoController;
 use App\Http\Controllers\PrincipioActivoController;
 use App\Http\Controllers\ArbolRecomendacionController;
-use App\Http\Controllers\AgroNewsController;
 use App\Http\Controllers\NovedadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -51,7 +50,6 @@ Route::get('/politicas', function () {
 Route::get('/novedades', [NovedadController::class, 'showPublic'])->name('novedades');
 Route::get('/novedades/{novedad}', [NovedadController::class, 'show'])->name('novedades.show');
 
-Route::get('/agro-news', [AgroNewsController::class, 'showPublic'])->name('agro-news');
 
 Route::get('/trabaja-con-nosotros', function () {
     return Inertia::render('TrabajaConNosotros');
@@ -141,13 +139,6 @@ Route::middleware('auth')->group(function () {
         
         // Ruta adicional para obtener categorías activas (para selects)
         Route::get('categorias-activas', [CategoriaController::class, 'getActive'])->name('categorias.active');
-        
-        // Rutas para AgroNews Dashboard
-        Route::get('agronews', [AgroNewsController::class, 'index'])->name('agronews.index');
-        Route::get('agronews/create', [AgroNewsController::class, 'create'])->name('agronews.create');
-        Route::post('agronews', [AgroNewsController::class, 'store'])->name('agronews.store');
-        Route::delete('agronews/{agroNews}', [AgroNewsController::class, 'destroy'])->name('agronews.destroy');
-        Route::get('agronews/{agroNews}/download', [AgroNewsController::class, 'download'])->name('agronews.download');
         
         // Rutas para Novedades Dashboard
         Route::resource('novedades', NovedadController::class)->except(['show'])->parameters([

@@ -134,12 +134,6 @@ export default function EditNovedad({ novedad }) {
                                 >
                                     Novedades
                                 </Link>
-                                <Link
-                                    href={route('admin.agronews.index')}
-                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
-                                >
-                                    AgroNews
-                                </Link>
                             </nav>
 
                             {/* User Info & Actions - Desktop */}
@@ -214,12 +208,6 @@ export default function EditNovedad({ novedad }) {
                                         className="block px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-emerald-500 to-lime-500 text-white shadow-lg shadow-emerald-500/30"
                                     >
                                         📢 Novedades
-                                    </Link>
-                                    <Link
-                                        href={route('admin.agronews.index')}
-                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
-                                    >
-                                        📰 AgroNews
                                     </Link>
                                 </nav>
 

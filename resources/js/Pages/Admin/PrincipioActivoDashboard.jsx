@@ -72,12 +72,6 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                                 >
                                     Novedades
                                 </Link>
-                                <Link
-                                    href={route('admin.agronews.index')}
-                                    className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
-                                >
-                                    AgroNews
-                                </Link>
                             </nav>
 
                             {/* User Info & Actions - Desktop */}
@@ -150,13 +144,6 @@ export default function PrincipioActivoDashboard({ principiosActivos }) {
                                     >
                                         <span>📢</span>
                                         <span>Novedades</span>
-                                    </Link>
-                                    <Link
-                                        href={route('admin.agronews.index')}
-                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
-                                    >
-                                        <span>📰</span>
-                                        <span>AgroNews</span>
                                     </Link>
                                 </div>
 

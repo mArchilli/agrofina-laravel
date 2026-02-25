@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Administrador Agrofina',
+            'name' => 'Agrofina',
             'email' => 'admin@agrofina.com.ar',
             'password' => Hash::make('Agrofina1-'),
         ]);

@@ -34,11 +34,6 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class
         ]);
 
-        // Seed AgroNews
-        $this->call([
-            AgroNewsSeeder::class,
-        ]);
-
         // Seed Novedades
         $this->call([
             NovedadSeeder::class,

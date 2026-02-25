@@ -34,18 +34,6 @@ export default function Dashboard() {
             route: route('admin.novedades.index'),
             gradient: 'from-lime-400/30 via-green-500/20 to-emerald-400/30',
         },
-        {
-            id: 'agronews',
-            title: 'AgroNews',
-            description: 'Blog y contenido técnico',
-            icon: (
-                <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                </svg>
-            ),
-            route: route('admin.agronews.index'),
-            gradient: 'from-green-400/30 via-lime-500/20 to-yellow-400/30',
-        },
     ];
 
     return (
@@ -141,12 +129,6 @@ export default function Dashboard() {
                                     >
                                         📢 Novedades
                                     </Link>
-                                    <Link
-                                        href={route('admin.agronews.index')}
-                                        className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-300"
-                                    >
-                                        📰 AgroNews
-                                    </Link>
                                 </nav>
 
                                 {/* Acciones */}
@@ -181,7 +163,7 @@ export default function Dashboard() {
                         Bienvenido al <span className="bg-gradient-to-r from-emerald-600 via-lime-500 to-yellow-500 bg-clip-text text-transparent">Panel de Administración</span>
                     </h1>
                     <p className="text-xl text-emerald-700/80 font-light">
-                        Desde aquí vas a poder crear productos, actualizar novedades y subir las agronews
+                        Desde aquí vas a poder crear productos y actualizar novedades
                     </p>
                 </div>                    {/* Cards Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">

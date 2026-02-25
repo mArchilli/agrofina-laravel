@@ -54,12 +54,6 @@ export default function ShowPrincipioActivo({ principioActivo }) {
                                 >
                                     📰 Novedades
                                 </Link>
-                                <Link
-                                    href="#"
-                                    className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
-                                >
-                                    🌾 AgroNews
-                                </Link>
                             </nav>
 
                             {/* User Info */}
@@ -122,12 +116,6 @@ export default function ShowPrincipioActivo({ principioActivo }) {
                                         className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
                                     >
                                         📰 Novedades
-                                    </Link>
-                                    <Link
-                                        href="#"
-                                        className="px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-emerald-50/80 transition-all duration-300"
-                                    >
-                                        🌾 AgroNews
                                     </Link>
                                     <div className="pt-2 border-t border-emerald-200/50">
                                         <div className="px-4 py-2">

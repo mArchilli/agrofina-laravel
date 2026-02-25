@@ -56,7 +56,6 @@ export default function Navbar({ variant = 'client' }) {
         { label: 'Institucional', href: route('institucional') },
         { label: 'Políticas', href: route('politicas') },
         { label: 'Novedades', href: route('novedades') },
-        { label: 'AgroNews', href: route('agro-news') },
         { label: 'Trabajá con nosotros', href: route('trabaja') },
         { label: 'Proveedores', href: route('proveedores') },
     ];
@@ -64,7 +63,6 @@ export default function Navbar({ variant = 'client' }) {
     const adminLinks = [
         { label: 'Productos', href: route('admin.productos') },
         { label: 'Novedades', href: route('admin.novedades.index') },
-        { label: 'AgroNews', href: route('admin.agronews.index') },
     ];
 
     const links = variant === 'client' ? clientLinks : adminLinks;
